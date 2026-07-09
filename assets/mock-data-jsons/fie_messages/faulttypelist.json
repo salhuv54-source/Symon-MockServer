@@ -1,0 +1,556 @@
+{
+  "msg_name": "FaultTypesListMessage",
+  "msg_id": 16021,
+  "msg_library_name": "FIE_MESSAGES",
+  "properties": {
+    "msgHdr": {
+      "messageCode": 16021,
+      "messageSize": 2596
+    },
+    "faultCount": 5,
+    "faults": [
+      {
+        "hwMapIndex": 10000019,
+        "faultId": 0,
+        "description": "fault mock description 0 mock description",
+        "name": "mock description"
+      },
+      {
+        "hwMapIndex": 10000019,
+        "faultId": 1,
+        "description": "fault mock description 0 mock description",
+        "name": "mock description"
+      },
+      {
+        "hwMapIndex": 10000019,
+        "faultId": 5,
+        "description": "fault mock description 0 mock description",
+        "name": "mock description"
+      },
+      {
+        "hwMapIndex": 10000019,
+        "faultId": 9,
+        "description": "fault mock description 1 mock description",
+        "name": "mock description"
+      },
+      {
+        "hwMapIndex": 10000019,
+        "faultId": 2,
+        "description": "fault mock description 2 mock description",
+        "name": "mock description"
+      },
+      {
+        "hwMapIndex": 10000019,
+        "faultId": 3,
+        "description": "fault mock description 3 mock description",
+        "name": "mock description"
+      },
+      {
+        "hwMapIndex": 10000019,
+        "faultId": 4,
+        "description": "fault mock description 4 mock description",
+        "name": "mock description"
+      },
+      {
+        "hwMapIndex": 10000002,
+        "faultId": 70000,
+        "description": "LBA Full internal Bit LBA Full internal Bit",
+        "name": "LBA Full internal Bit"
+      },
+
+      {
+        "hwMapIndex": 10000003,
+        "faultId": 70000,
+        "description": "LBA Full internal Bit LBA Full internal Bit",
+        "name": "LBA Full internal Bit"
+      },
+      {
+        "hwMapIndex": 10000004,
+        "faultId": 70000,
+        "description": "LBA Full internal Bit LBA Full internal Bit",
+        "name": "LBA Full internal Bit"
+      },
+      {
+        "hwMapIndex": 10000005,
+        "faultId": 70000,
+        "description": "LBA Full internal Bit LBA Full internal Bit",
+        "name": "LBA Full internal Bit"
+      },
+      {
+        "hwMapIndex": 10000006,
+        "faultId": 70000,
+        "description": "LBA Full internal Bit LBA Full internal Bit",
+        "name": "LBA Full internal Bit"
+      },
+      {
+        "hwMapIndex": 10000007,
+        "faultId": 70000,
+        "description": "LBA Full internal Bit LBA Full internal Bit",
+        "name": "LBA Full internal Bit"
+      },
+      {
+        "hwMapIndex": 10000002,
+        "faultId": 70002,
+        "description": "LBA Full power up Bit LBA Full power up Bit",
+        "name": "LBA Full power up Bit"
+      },
+      {
+        "hwMapIndex": 10000003,
+        "faultId": 70002,
+        "description": "LBA Full power up Bit LBA Full power up Bit",
+        "name": "LBA Full power up Bit"
+      },
+      {
+        "hwMapIndex": 10000004,
+        "faultId": 70002,
+        "description": "LBA Full power up Bit LBA Full power up Bit",
+        "name": "LBA Full power up Bit"
+      },
+      {
+        "hwMapIndex": 10000005,
+        "faultId": 70002,
+        "description": "LBA Full power up Bit LBA Full power up Bit",
+        "name": "LBA Full power up Bit"
+      },
+      {
+        "hwMapIndex": 10000006,
+        "faultId": 70002,
+        "description": "LBA Full power up Bit LBA Full power up Bit",
+        "name": "LBA Full power up Bit"
+      },
+      {
+        "hwMapIndex": 10000007,
+        "faultId": 70002,
+        "description": "LBA Full power up Bit LBA Full power up Bit",
+        "name": "LBA Full power up Bit"
+      },
+      {
+        "hwMapIndex": 10000002,
+        "faultId": 70001,
+        "description": "LBA Full external Bit LBA Full external Bit",
+        "name": "LBA Full external Bit"
+      },
+      {
+        "hwMapIndex": 10000003,
+        "faultId": 70001,
+        "description": "LBA Full external Bit LBA Full external Bit",
+        "name": "LBA Full external Bit"
+      },
+      {
+        "hwMapIndex": 10000004,
+        "faultId": 70001,
+        "description": "LBA Full external Bit LBA Full external Bit",
+        "name": "LBA Full external Bit"
+      },
+      {
+        "hwMapIndex": 10000005,
+        "faultId": 70001,
+        "description": "LBA Full external Bit LBA Full external Bit",
+        "name": "LBA Full external Bit"
+      },
+      {
+        "hwMapIndex": 10000006,
+        "faultId": 70001,
+        "description": "LBA Full external Bit LBA Full external Bit",
+        "name": "LBA Full external Bit"
+      },
+      {
+        "hwMapIndex": 10000007,
+        "faultId": 70001,
+        "description": "LBA Full external Bit LBA Full external Bit",
+        "name": "LBA Full external Bit"
+      },
+      {
+        "hwMapIndex": 10000002,
+        "faultId": 99999,
+        "description": "BA Calibration operation",
+        "name": "LBA Calibration"
+      },
+      {
+        "hwMapIndex": 10000003,
+        "faultId": 99999,
+        "description": "BA Calibration operation",
+        "name": "LBA Calibration"
+      },
+      {
+        "hwMapIndex": 10000004,
+        "faultId": 99999,
+        "description": "BA Calibration operation",
+        "name": "LBA Calibration"
+      },
+      {
+        "hwMapIndex": 10000025,
+        "faultId": 99999,
+        "description": "BA Calibration operation",
+        "name": "LBA Calibration"
+      },{
+        "hwMapIndex": 10000007,
+        "faultId": 99999,
+        "description": "BA Calibration operation",
+        "name": "LBA Calibration"
+      },{
+        "hwMapIndex": 10000010,
+        "faultId": 99999,
+        "description": "BA Calibration operation",
+        "name": "LBA Calibration"
+      },{
+        "hwMapIndex": 10000013,
+        "faultId": 99999,
+        "description": "BA Calibration operation",
+        "name": "LBA Calibration"
+      },{
+        "hwMapIndex": 10000016,
+        "faultId": 99999,
+        "description": "BA Calibration operation",
+        "name": "LBA Calibration"
+      },{
+        "hwMapIndex": 10000019,
+        "faultId": 99999,
+        "description": "BA Calibration operation",
+        "name": "LBA Calibration"
+      },
+      {
+        "hwMapIndex": 10000003,
+        "faultId": 2,
+        "description": "result of bit mock mock description",
+        "name": "mock description"
+      },
+      {
+        "hwMapIndex": 10000004,
+        "faultId": 2,
+        "description": "result of bit mock mock description",
+        "name": "mock description"
+      },
+      {
+        "hwMapIndex": 10000005,
+        "faultId": 2,
+        "description": "result of bit mock mock description",
+        "name": "mock description"
+      },
+      {
+        "hwMapIndex": 10000006,
+        "faultId": 2,
+        "description": "result of bit mock mock description",
+        "name": "mock description"
+      },
+      {
+        "hwMapIndex": 10000007,
+        "faultId": 2,
+        "description": "result of bit mock mock description",
+        "name": "mock description"
+      },
+      {
+        "hwMapIndex": 10000042,
+        "faultId": 0,
+        "description": "fault mock description 0 mock description",
+        "name": "mock description"
+      },
+      {
+        "hwMapIndex": 10000042,
+        "faultId": 70000,
+        "description": "fault mock description 1 mock description",
+        "name": "mock description"
+      },
+      {
+        "hwMapIndex": 10000042,
+        "faultId": 2,
+        "description": "fault mock description 2 mock description",
+        "name": "mock description"
+      },
+      {
+        "hwMapIndex": 10000042,
+        "faultId": 3,
+        "description": "fault mock description 3 mock description",
+        "name": "mock description"
+      },
+      {
+        "hwMapIndex": 10000042,
+        "faultId": 4,
+        "description": "fault mock description 4 mock description",
+        "name": "mock description"
+      },
+      {
+        "hwMapIndex": 10000041,
+        "faultId": 70000,
+        "description": "DF Full internal Bit DF Full internal Bit",
+        "name": "DF Full internal Bit"
+      },
+      {
+        "hwMapIndex": 10000042,
+        "faultId": 70000,
+        "description": "DF Full internal Bit DF Full internal Bit",
+        "name": "DF Full internal Bit"
+      },
+      {
+        "hwMapIndex": 10000046,
+        "faultId": 70000,
+        "description": "DF Full internal Bit DF Full internal Bit",
+        "name": "DF Full internal Bit"
+      },
+      {
+        "hwMapIndex": 10000058,
+        "faultId": 70000,
+        "description": "DF Full internal Bit DF Full internal Bit",
+        "name": "DF Full internal Bit"
+      },
+      {
+        "hwMapIndex": 10000164,
+        "faultId": 70000,
+        "description": "DF Full internal Bit DF Full internal Bit",
+        "name": "DF Full internal Bit"
+      },
+      {
+        "hwMapIndex": 10000041,
+        "faultId": 70001,
+        "description": "DF Full external Bit DF Full external Bit",
+        "name": "DF Full external Bit"
+      },
+      {
+        "hwMapIndex": 10000042,
+        "faultId": 70001,
+        "description": "DF Full external Bit DF Full external Bit",
+        "name": "DF Full external Bit"
+      },
+      {
+        "hwMapIndex": 10000046,
+        "faultId": 70001,
+        "description": "DF Full external Bit DF Full external Bit",
+        "name": "DF Full external Bit"
+      },
+      {
+        "hwMapIndex": 10000058,
+        "faultId": 70001,
+        "description": "DF Full external Bit DF Full external Bit",
+        "name": "DF Full external Bit"
+      },
+      {
+        "hwMapIndex": 10000164,
+        "faultId": 70001,
+        "description": "DF Full external Bit DF Full external Bit",
+        "name": "DF Full external Bit"
+      },
+      {
+        "hwMapIndex": 10000041,
+        "faultId": 2,
+        "description": "result of bit mock mock description",
+        "name": "mock description"
+      },
+      {
+        "hwMapIndex": 10000042,
+        "faultId": 2,
+        "description": "result of bit mock mock description",
+        "name": "mock description"
+      },
+      {
+        "hwMapIndex": 10000046,
+        "faultId": 2,
+        "description": "result of bit mock mock description",
+        "name": "mock description"
+      },
+      {
+        "hwMapIndex": 10000055,
+        "faultId": 2,
+        "description": "result of bit mock mock description",
+        "name": "mock description"
+      },
+      {
+        "hwMapIndex": 10000058,
+        "faultId": 2,
+        "description": "result of bit mock mock description",
+        "name": "mock description"
+      },
+      {
+        "hwMapIndex": 10000164,
+        "faultId": 2,
+        "description": "result of bit mock mock description",
+        "name": "mock description"
+      },
+      {
+        "hwMapIndex": 10000055,
+        "faultId": 70001,
+        "description": "DF Full external Bit DF Full external Bit",
+        "name": "DF Full external Bit"
+      },
+      {
+        "hwMapIndex": 10000025,
+        "faultId": 70000,
+        "description": "LBA Full internal Bit LBA Full internal Bit",
+        "name": "LBA Full internal Bit"
+      },
+      {
+        "hwMapIndex": 10000010,
+        "faultId": 70000,
+        "description": "LBA Full internal Bit LBA Full external Bit",
+        "name": "LBA Full external Bit"
+      },
+      {
+        "hwMapIndex": 10000013,
+        "faultId": 70000,
+        "description": "LBA Full internal Bit LBA Full internal Bit",
+        "name": "LBA Full internal Bit"
+      },
+      {
+        "hwMapIndex": 10000016,
+        "faultId": 70000,
+        "description": "LBA Full internal Bit LBA Full internal Bit",
+        "name": "LBA Full internal Bit"
+      },
+      {
+        "hwMapIndex": 10000025,
+        "faultId": 70002,
+        "description": "LBA Full power up Bit LBA Full power up Bit",
+        "name": "LBA Full power up Bit"
+      },
+      {
+        "hwMapIndex": 10000010,
+        "faultId": 70002,
+        "description": "LBA Full power up Bit LBA Full power up Bit",
+        "name": "LBA Full power up Bit"
+      },
+      {
+        "hwMapIndex": 10000013,
+        "faultId": 70002,
+        "description": "LBA Full power up Bit LBA Full power up Bit",
+        "name": "LBA Full power up Bit"
+      },
+      {
+        "hwMapIndex": 10000016,
+        "faultId": 70002,
+        "description": "LBA Full power up Bit LBA Full power up Bit",
+        "name": "LBA Full power up Bit"
+      },
+      {
+        "hwMapIndex": 10000025,
+        "faultId": 70001,
+        "description": "LBA Full external Bit LBA Full external Bit",
+        "name": "LBA Full external Bit"
+      },
+      {
+        "hwMapIndex": 10000010,
+        "faultId": 70001,
+        "description": "LBA Full external Bit DF Full external Bit",
+        "name": "DF Full external Bit"
+      },
+      {
+        "hwMapIndex": 10000013,
+        "faultId": 70001,
+        "description": "LBA Full external Bit LBA Full external Bit",
+        "name": "LBA Full external Bit"
+      },
+      {
+        "hwMapIndex": 10000016,
+        "faultId": 70001,
+        "description": "LBA Full external Bit LBA Full external Bit",
+        "name": "LBA Full external Bit"
+      },
+      {
+        "hwMapIndex": 10000019,
+        "faultId": 70001,
+        "description": "LBA Full external Bit DF Full external Bit",
+        "name": "DF Full external Bit"
+      },
+      {
+        "hwMapIndex": 10000019,
+        "faultId": 70000,
+        "description": "LBA Full internal Bit DF Full internal Bit",
+        "name": "DF Full internal Bit"
+      },
+      {
+        "hwMapIndex": 10000019,
+        "faultId": 70002,
+        "description": "LBA Full power up Bit DF Full power up Bit",
+        "name": "DF Full power up Bit"
+      },
+      {
+        "hwMapIndex": 10000055,
+        "faultId": 70000,
+        "description": "DF Full internal Bit DF Full external Bit",
+        "name": "DF Full external Bit"
+      },
+      {
+        "hwMapIndex": 10000025,
+        "faultId": 2,
+        "description": "fault mock description 0 mock description",
+        "name": "mock description"
+      },
+      {
+        "hwMapIndex": 10000013,
+        "faultId": 2,
+        "description": "fault mock description 0 mock description",
+        "name": "mock description"
+      },
+      {
+        "hwMapIndex": 10000016,
+        "faultId": 2,
+        "description": "fault mock description 0 mock description",
+        "name": "mock description"
+      },
+      {
+        "hwMapIndex": 10000038,
+        "faultId": 1,
+        "description": "fault mock description 0 mock description",
+        "name": "mock description"
+      },
+      {
+        "hwMapIndex": 10000038,
+        "faultId": 4,
+        "description": "fault mock description 0 mock description",
+        "name": "mock description"
+      },
+      {
+        "hwMapIndex": 10000038,
+        "faultId": 5,
+        "description": "fault mock description 0 mock description",
+        "name": "mock description"
+      },
+      {
+        "hwMapIndex": 10000020,
+        "faultId": 1,
+        "description": "fault mock description 0 mock description",
+        "name": "mock description"
+      },
+      {
+        "hwMapIndex": 10000020,
+        "faultId": 3,
+        "description": "fault mock description 0 mock description",
+        "name": "mock description"
+      },
+      {
+        "hwMapIndex": 10000020,
+        "faultId": 5,
+        "description": "fault mock description 0 mock description",
+        "name": "mock description"
+      },
+      {
+        "hwMapIndex": 10000039,
+        "faultId": 1,
+        "description": "fault mock description 0 mock description",
+        "name": "mock description"
+      },
+      {
+        "hwMapIndex": 10000039,
+        "faultId": 4,
+        "description": "fault mock description 0 mock description",
+        "name": "mock description"
+      },
+      {
+        "hwMapIndex": 10000039,
+        "faultId": 5,
+        "description": "fault mock description 0 mock description",
+        "name": "mock description"
+      },
+      {
+        "hwMapIndex": 10000002,
+        "faultId": 2,
+        "description": "fault mock description 0 mock description",
+        "name": "mock description"
+      },
+      {
+        "hwMapIndex": 10000010,
+        "faultId": 2,
+        "description": "fault mock description 0 mock description",
+        "name": "mock description"
+      }
+    ]
+  }
+}

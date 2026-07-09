@@ -1,0 +1,24 @@
+﻿<UserAttributes>
+	<AttributesList>
+		<Attribute Name="PowerSupplier" Usage="4" />
+		<Attribute Name="Hidden" Usage="1" />
+	</AttributesList>
+	<NodeTypeAttributes />
+	<NodeInstanceAttributes>
+		<NodeInstance NTII="NTI5_#1" FullPath="System1.SubSystem1.PS" Index="1" NTI="NTI5" HMI="10000008">
+			<Attribute Name="PowerSupplier" Value="Yes..." />
+		</NodeInstance>
+		<NodeInstance NTII="NTI5_#2" FullPath="System1.SubSystem1.PS" Index="2" NTI="NTI5" HMI="10000009">
+			<Attribute Name="PowerSupplier" Value="Yes" />
+		</NodeInstance>
+		<NodeInstance NTII="NTI5_#3" FullPath="System1.SubSystem1.PS" Index="3" NTI="NTI5" HMI="10000010">
+			<Attribute Name="PowerSupplier" Value="Yes" />
+		</NodeInstance>
+		<NodeInstance NTII="NTI5_#4" FullPath="System1.SubSystem1.PS" Index="4" NTI="NTI5" HMI="10000011">
+			<Attribute Name="PowerSupplier" Value="Yes" />
+		</NodeInstance>
+		<NodeInstance NTII="NTI4_#3" FullPath="System1.SubSystem1.Lru1.Sru2" Index="3" NTI="NTI4" HMI="10000007">
+			<Attribute Name="Hidden" Value="Yes" />
+		</NodeInstance>
+	</NodeInstanceAttributes>
+</UserAttributes>

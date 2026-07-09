@@ -1,0 +1,274 @@
+{
+  "id": 481,
+  "title": "SYMON_SYSTEM_INFO",
+  "dbName": "SyMon_MSG",
+  "messageID": "13542130-a319-48b5-a938-96c0f2130be4",
+  "properties": {
+    "msg_hdr": {
+      "message_code_e": 481,
+      "date_time": null,
+      "message_number_u32": 1,
+      "source_process_id_e": 0,
+      "destination_process_id_e": 0
+    },
+    "systems_info": {
+      "system_info": [
+        {
+          "node_id": 10000002,
+          "graph_name_u8": null,
+          "info_id_u32": 3000,
+          "param_type_e": 1,
+          "value_f": 0,
+          "value_description_u8": "INS State",
+          "value_level_e": 2,
+          "text_u8": "Inflight alignment",
+          "unit_type_e": 0,
+          "update_time": {
+            "sec_01011970_till_midnight_s32": null,
+            "time_of_day_in_millisec_s32": null
+          }
+        },
+        {
+          "node_id": 10000002,
+          "graph_name_u8": null,
+          "info_id_u32": 3001,
+          "param_type_e": 1,
+          "value_f": 0,
+          "value_description_u8": "Alignment State",
+          "value_level_e": 2,
+          "text_u8": "Stored heading align complete",
+          "unit_type_e": 0,
+          "update_time": {
+            "sec_01011970_till_midnight_s32": null,
+            "time_of_day_in_millisec_s32": null
+          }
+        },
+        {
+          "node_id": 10000002,
+          "graph_name_u8": null,
+          "info_id_u32": 3002,
+          "param_type_e": 1,
+          "value_f": 0,
+          "value_description_u8": "MACC State",
+          "value_level_e": 2,
+          "text_u8": "Bus controller",
+          "unit_type_e": 0,
+          "update_time": {
+            "sec_01011970_till_midnight_s32": null,
+            "time_of_day_in_millisec_s32": null
+          }
+        },
+        {
+          "node_id": 10000002,
+          "graph_name_u8": null,
+          "info_id_u32": 3006,
+          "param_type_e": 2,
+          "value_f": 65,
+          "value_description_u8": "temperature",
+          "value_level_e": 5,
+          "text_u8": "",
+          "unit_type_e": 3,
+          "update_time": {
+            "sec_01011970_till_midnight_s32": null,
+            "time_of_day_in_millisec_s32": null
+          }
+        },
+        {
+          "node_id": 10000002,
+          "graph_name_u8": null,
+          "info_id_u32": 3007,
+          "param_type_e": 2,
+          "value_f": 12,
+          "value_description_u8": "voltage",
+          "value_level_e": 4,
+          "text_u8": "",
+          "unit_type_e": 1,
+          "update_time": {
+            "sec_01011970_till_midnight_s32": null,
+            "time_of_day_in_millisec_s32": null
+          }
+        },
+        {
+          "node_id": 10000002,
+          "graph_name_u8": null,
+          "info_id_u32": 3003,
+          "param_type_e": 1,
+          "value_f": 0,
+          "value_description_u8": "Hybrid",
+          "value_level_e": 2,
+          "text_u8": "Yes",
+          "unit_type_e": 0,
+          "update_time": {
+            "sec_01011970_till_midnight_s32": null,
+            "time_of_day_in_millisec_s32": null
+          }
+        },
+        {
+          "node_id": 10000002,
+          "graph_name_u8": null,
+          "info_id_u32": 3004,
+          "param_type_e": 1,
+          "value_f": 0,
+          "value_description_u8": "GPS available",
+          "value_level_e": 2,
+          "text_u8": "Yes",
+          "unit_type_e": 0,
+          "update_time": {
+            "sec_01011970_till_midnight_s32": null,
+            "time_of_day_in_millisec_s32": null
+          }
+        },
+        {
+          "node_id": 10000002,
+          "graph_name_u8": null,
+          "info_id_u32": 3005,
+          "param_type_e": 1,
+          "value_f": 0,
+          "value_description_u8": "NAV degraded",
+          "value_level_e": 2,
+          "text_u8": "No",
+          "unit_type_e": 0,
+          "update_time": {
+            "sec_01011970_till_midnight_s32": null,
+            "time_of_day_in_millisec_s32": null
+          }
+        },
+        {
+          "node_id": 10000003,
+          "graph_name_u8": null,
+          "info_id_u32": 1,
+          "param_type_e": 2,
+          "value_f": 152,
+          "value_description_u8": "temperature",
+          "value_level_e": 3,
+          "text_u8": "",
+          "unit_type_e": 3,
+          "update_time": {
+            "sec_01011970_till_midnight_s32": null,
+            "time_of_day_in_millisec_s32": null
+          }
+        },
+        {
+          "node_id": 10000002,
+          "graph_name_u8": null,
+          "info_id_u32": 3008,
+          "param_type_e": 1,
+          "value_f": 0,
+          "value_description_u8": "S/N",
+          "value_level_e": 1,
+          "text_u8": "357c12",
+          "unit_type_e": 0,
+          "update_time": {
+            "sec_01011970_till_midnight_s32": null,
+            "time_of_day_in_millisec_s32": null
+          }
+        },
+        {
+          "node_id": 10000004,
+          "graph_name_u8": null,
+          "info_id_u32": 1,
+          "param_type_e": 1,
+          "value_f": 56,
+          "value_description_u8": "temperature",
+          "value_level_e": 4,
+          "text_u8": "",
+          "unit_type_e": 3,
+          "update_time": {
+            "sec_01011970_till_midnight_s32": null,
+            "time_of_day_in_millisec_s32": null
+          }
+        },
+        {
+          "node_id": 10000003,
+          "graph_name_u8": null,
+          "info_id_u32": 2,
+          "param_type_e": 2,
+          "value_f": 80,
+          "value_description_u8": "voltage",
+          "value_level_e": 5,
+          "text_u8": "",
+          "unit_type_e": 1,
+          "update_time": {
+            "sec_01011970_till_midnight_s32": null,
+            "time_of_day_in_millisec_s32": null
+          }
+        },
+        {
+          "node_id": 10000006,
+          "graph_name_u8": null,
+          "info_id_u32": 1,
+          "param_type_e": 2,
+          "value_f": 80,
+          "value_description_u8": "temperature",
+          "value_level_e": 2,
+          "text_u8": "",
+          "unit_type_e": 3,
+          "update_time": {
+            "sec_01011970_till_midnight_s32": null,
+            "time_of_day_in_millisec_s32": null
+          }
+        },
+        {
+          "node_id": 10000006,
+          "graph_name_u8": null,
+          "info_id_u32": 2,
+          "param_type_e": 2,
+          "value_f": 245,
+          "value_description_u8": "voltage",
+          "value_level_e": 3,
+          "text_u8": "",
+          "unit_type_e": 1,
+          "update_time": {
+            "sec_01011970_till_midnight_s32": null,
+            "time_of_day_in_millisec_s32": null
+          }
+        },
+        {
+          "node_id": 10000008,
+          "graph_name_u8": null,
+          "info_id_u32": 1,
+          "param_type_e": 2,
+          "value_f": 55,
+          "value_description_u8": "temperature",
+          "value_level_e": 4,
+          "text_u8": "",
+          "unit_type_e": 3,
+          "update_time": {
+            "sec_01011970_till_midnight_s32": null,
+            "time_of_day_in_millisec_s32": null
+          }
+        },
+        {
+          "node_id": 10000009,
+          "graph_name_u8": null,
+          "info_id_u32": 1,
+          "param_type_e": 2,
+          "value_f": 70,
+          "value_description_u8": "temperature",
+          "value_level_e": 1,
+          "text_u8": "",
+          "unit_type_e": 3,
+          "update_time": {
+            "sec_01011970_till_midnight_s32": null,
+            "time_of_day_in_millisec_s32": null
+          }
+        },
+        {
+          "node_id": 10000009,
+          "graph_name_u8": null,
+          "info_id_u32": 1,
+          "param_type_e": 2,
+          "value_f": 120,
+          "value_description_u8": "voltage",
+          "value_level_e": 5,
+          "text_u8": "",
+          "unit_type_e": 1,
+          "update_time": {
+            "sec_01011970_till_midnight_s32": null,
+            "time_of_day_in_millisec_s32": null
+          }
+        }
+      ]
+    }
+  }
+}

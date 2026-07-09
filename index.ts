@@ -1,92 +1,165 @@
-import { RabbitMQClient, RabbitMQConfig } from './src/rabbitmq';
+import express from 'express';
+import http from 'http';
+import appStore from './src/app-store';
+import uploadService from './src/upload-service';
+import socketService from './src/socket-service';
+import { createRouteService } from './src/route-service';
+import { SocketEventName } from './src/types';
 
 class MockSymonServer {
-    private rabbitMQ: RabbitMQClient;
+    private app: express.Application;
+    private httpServer: http.Server;
 
     constructor() {
-        this.rabbitMQ = new RabbitMQClient({
-            host: process.env.RABBITMQ_HOST || 'localhost',
-            port: parseInt(process.env.RABBITMQ_PORT || '5672', 10),
-            user: process.env.RABBITMQ_USER || 'guest',
-            password: process.env.RABBITMQ_PASSWORD || 'guest',
-            vhost: process.env.RABBITMQ_VHOST || '/',
-            reconnectDelay: 5000,
-            maxReconnectAttempts: 10,
-        } as RabbitMQConfig);
-
-        this.rabbitMQ.setCallbacks(
-            () => this.onRabbitMQReady(),
-            (err) => this.onRabbitMQClosed(err)
-        );
-
+        this.app = express();
+        this.httpServer = http.createServer(this.app);
         this.init();
-    }
-
-    private async onRabbitMQReady(): Promise<void> {
-        console.log('[MockSymonServer] RabbitMQ is ready');
-
-        try {
-            // Assert queues/exchanges that this server needs
-            await this.rabbitMQ.assertQueue('symon.events');
-            await this.rabbitMQ.assertExchange('symon', 'topic');
-
-            // Bind queue to exchange
-            await this.rabbitMQ.bindQueue('symon.events', 'symon', 'event.*');
-
-            // Start consuming messages
-            await this.rabbitMQ.consume('symon.events', (msg) => {
-                if (msg) {
-                    this.handleMessage(msg);
-                }
-            });
-
-            console.log('[MockSymonServer] Queues and exchanges configured, consumer started');
-        } catch (error) {
-            console.error('[MockSymonServer] Failed to configure RabbitMQ:', error);
-        }
-    }
-
-    private onRabbitMQClosed(err?: Error): void {
-        if (err) {
-            console.error('[MockSymonServer] RabbitMQ connection closed due to error:', err.message);
-        } else {
-            console.log('[MockSymonServer] RabbitMQ connection closed');
-        }
-    }
-
-    private handleMessage(msg: import('amqplib').ConsumeMessage): void {
-        const content = msg.content.toString();
-        const routingKey = msg.fields.routingKey;
-
-        console.log(`[MockSymonServer] Received message on ${routingKey}: ${content}`);
-
-        try {
-            const data = JSON.parse(content);
-            console.log('[MockSymonServer] Parsed message data:', data);
-
-            // Acknowledge the message
-            this.rabbitMQ.ack(msg);
-        } catch (error) {
-            console.error('[MockSymonServer] Error processing message:', error);
-            // Reject the message without requeue
-            this.rabbitMQ.nack(msg, false, false);
-        }
     }
 
     async init(): Promise<void> {
         console.log('[MockSymonServer] Initializing...');
 
-        try {
-            await this.rabbitMQ.connect();
-            console.log('[MockSymonServer] RabbitMQ connection initiated');
-        } catch (error) {
-            console.error('[MockSymonServer] Failed to connect to RabbitMQ:', error);
+        // Parse JSON bodies
+        this.app.use(express.json());
+
+        // Mount all REST API routes from MainRoutes enum
+        this.app.use(createRouteService());
+
+        // List available models in assets/model/
+        const availableModels = uploadService.listAvailableModels();
+        console.log(`[MockSymonServer] Available models: ${availableModels.join(', ') || '(none)'}`);
+
+        // Automatically load the first available model on startup
+        if (availableModels.length > 0) {
+            const modelName = availableModels[0];
+            try {
+                const storedName = await uploadService.uploadModel(modelName);
+                const modelData = appStore.getModel(storedName);
+                if (modelData) {
+                    console.log(`[MockSymonServer] Model loaded. System: ${modelData.system.name}`);
+                    console.log(`[MockSymonServer]   Node types: ${modelData.nodeTypes.length}`);
+                    console.log(`[MockSymonServer]   Events: ${modelData.events.length}`);
+                    console.log(`[MockSymonServer]   Faults: ${modelData.faults.length}`);
+                    console.log(`[MockSymonServer]   Instances: ${modelData.instances.length}`);
+                }
+            } catch (err) {
+                console.error(`[MockSymonServer] Failed to load model "${modelName}":`, (err as Error).message);
+            }
+        } else {
+            console.log('[MockSymonServer] No model files found in assets/model/. Place .fsx files there to load them.');
         }
+
+        // Register explicit handlers for each SocketEventName
+        // Each event has its own handler so different logic can be implemented per event
+        socketService.on(SocketEventName.eventsChange, (client, data) => {
+            console.log(`[MockSymonServer] Received eventsChange:`, JSON.stringify(data));
+        });
+        socketService.on(SocketEventName.faultsChange, (client, data) => {
+            console.log(`[MockSymonServer] Received faultsChange:`, JSON.stringify(data));
+        });
+        socketService.on(SocketEventName.alertsChange, (client, data) => {
+            console.log(`[MockSymonServer] Received alertsChange:`, JSON.stringify(data));
+        });
+        socketService.on(SocketEventName.toDeleteAlerts, (client, data) => {
+            console.log(`[MockSymonServer] Received toDeleteAlerts:`, JSON.stringify(data));
+        });
+        socketService.on(SocketEventName.systemsUnreadAlertsCount, (client, data) => {
+            console.log(`[MockSymonServer] Received systemsUnreadAlertsCount:`, JSON.stringify(data));
+        });
+        socketService.on(SocketEventName.userCommandsChange, (client, data) => {
+            console.log(`[MockSymonServer] Received userCommandsChange:`, JSON.stringify(data));
+        });
+        socketService.on(SocketEventName.commandResultTimeFilterChange, (client, data) => {
+            console.log(`[MockSymonServer] Received commandResultTimeFilterChange:`, JSON.stringify(data));
+        });
+        socketService.on(SocketEventName.startUpInBitSensors, (client, data) => {
+            console.log(`[MockSymonServer] Received startUpInBitSensors:`, JSON.stringify(data));
+        });
+        socketService.on(SocketEventName.graphInfoTimeFilterChange, (client, data) => {
+            console.log(`[MockSymonServer] Received graphInfoTimeFilterChange:`, JSON.stringify(data));
+        });
+        socketService.on(SocketEventName.treeChange, (client, data) => {
+            console.log(`[MockSymonServer] Received treeChange:`, JSON.stringify(data));
+        });
+        socketService.on(SocketEventName.serviceability, (client, data) => {
+            console.log(`[MockSymonServer] Received serviceability:`, JSON.stringify(data));
+        });
+        socketService.on(SocketEventName.clientVersion, (client, data) => {
+            console.log(`[MockSymonServer] Received clientVersion:`, JSON.stringify(data));
+        });
+        socketService.on(SocketEventName.serverHealth, (client, data) => {
+            console.log(`[MockSymonServer] Received serverHealth:`, JSON.stringify(data));
+        });
+        socketService.on(SocketEventName.mapsSelectionNames, (client, data) => {
+            console.log(`[MockSymonServer] Received mapsSelectionNames:`, JSON.stringify(data));
+        });
+        socketService.on(SocketEventName.systemStateChange, (client, data) => {
+            console.log(`[MockSymonServer] Received systemStateChange:`, JSON.stringify(data));
+        });
+        socketService.on(SocketEventName.commandOptions, (client, data) => {
+            console.log(`[MockSymonServer] Received commandOptions:`, JSON.stringify(data));
+        });
+        socketService.on(SocketEventName.sensorInBit, (client, data) => {
+            console.log(`[MockSymonServer] Received sensorInBit:`, JSON.stringify(data));
+        });
+        socketService.on(SocketEventName.systemInfo, (client, data) => {
+            console.log(`[MockSymonServer] Received systemInfo:`, JSON.stringify(data));
+        });
+        socketService.on(SocketEventName.keepAlive, (client, data) => {
+            console.log(`[MockSymonServer] Received keepAlive:`, JSON.stringify(data));
+        });
+        socketService.on(SocketEventName.communicationStatus, (client, data) => {
+            console.log(`[MockSymonServer] Received communicationStatus:`, JSON.stringify(data));
+        });
+        socketService.on(SocketEventName.graphInfo, (client, data) => {
+            console.log(`[MockSymonServer] Received graphInfo:`, JSON.stringify(data));
+        });
+        socketService.on(SocketEventName.treeMapOfflineServiceability, (client, data) => {
+            console.log(`[MockSymonServer] Received treeMapOfflineServiceability:`, JSON.stringify(data));
+        });
+        socketService.on(SocketEventName.bitReport, (client, data) => {
+            console.log(`[MockSymonServer] Received bitReport:`, JSON.stringify(data));
+        });
+        socketService.on(SocketEventName.commandsResults, (client, data) => {
+            console.log(`[MockSymonServer] Received commandsResults:`, JSON.stringify(data));
+        });
+        socketService.on(SocketEventName.systemLogTimeFilterChange, (client, data) => {
+            console.log(`[MockSymonServer] Received systemLogTimeFilterChange:`, JSON.stringify(data));
+        });
+        socketService.on(SocketEventName.treeMapFilterChange, (client, data) => {
+            console.log(`[MockSymonServer] Received treeMapFilterChange:`, JSON.stringify(data));
+        });
+        socketService.on(SocketEventName.serverConfigToClient, (client, data) => {
+            console.log(`[MockSymonServer] Received serverConfigToClient:`, JSON.stringify(data));
+        });
+        socketService.on(SocketEventName.clientsPeriodicalOnlineDataRemovelFromStore, (client, data) => {
+            console.log(`[MockSymonServer] Received clientsPeriodicalOnlineDataRemovelFromStore:`, JSON.stringify(data));
+        });
+        socketService.on(SocketEventName.updateNodeVisibility, (client, data) => {
+            console.log(`[MockSymonServer] Received updateNodeVisibility:`, JSON.stringify(data));
+        });
+
+        // Start the HTTP server (serves both REST API and WebSocket)
+        const httpPort = parseInt(process.env.HTTP_PORT || '5152', 10);
+        const socketPort = parseInt(process.env.SOCKET_PORT || '8081', 10);
+
+        this.httpServer.listen(httpPort, () => {
+            console.log(`[MockSymonServer] HTTP server listening on http://localhost:${httpPort}`);
+        });
+
+        // Start the WebSocket server
+        socketService.start(socketPort);
+
+        console.log('[MockSymonServer] Initialization complete.');
     }
 
     async shutdown(): Promise<void> {
         console.log('[MockSymonServer] Shutting down...');
-        await this.rabbitMQ.close();
+        socketService.stop();
+        this.httpServer.close(() => {
+            console.log('[MockSymonServer] HTTP server closed.');
+        });
+        console.log('[MockSymonServer] Goodbye.');
         process.exit(0);
     }
 }
@@ -97,3 +170,16 @@ const server = new MockSymonServer();
 // Graceful shutdown on SIGINT and SIGTERM
 process.on('SIGINT', () => server.shutdown());
 process.on('SIGTERM', () => server.shutdown());
+
+// Also clean up on uncaught exceptions and unhandled rejections to free ports
+process.on('uncaughtException', (err) => {
+    console.error('[MockSymonServer] Uncaught exception:', err.message);
+    server.shutdown();
+});
+process.on('unhandledRejection', (reason) => {
+    console.error('[MockSymonServer] Unhandled rejection:', reason);
+    server.shutdown();
+});
+process.on('exit', () => {
+    socketService.stop();
+});

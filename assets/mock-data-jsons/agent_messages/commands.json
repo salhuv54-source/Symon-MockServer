@@ -1,0 +1,359 @@
+{
+  "commandsMsg": [
+    {
+      "properties": {
+        "msg_hdr": {
+          "message_code_e": 480,
+          "date_time": null,
+          "message_number_u32": 1,
+          "source_process_id_e": 0,
+          "destination_process_id_e": 0
+        },
+        "systems_commands": {
+          "node_id": 10000002,
+          "system_commands": [
+            {
+              "group_id_e": 1,
+              "command_id_u32": 10,
+              "command_name_u8": "internal BIT",
+              "command_status_e": 1,
+              "station_name_u8": "",
+              "command_timeout_u32": 30,
+              "additional_params": {
+                "num_of_parameters_u32": 1,
+                "parameters": [
+                  {
+                    "parameter_type_e": 4,
+                    "name_u8": "",
+                    "text_u8": "",
+                    "value_f": 0,
+                    "description_u8": ""
+                  }
+                ]
+              }
+            },
+            {
+              "group_id_e": 1,
+              "command_id_u32": 11,
+              "command_name_u8": "external BIT",
+              "station_name_u8": "",
+              "command_status_e": 2,
+              "command_timeout_u32": 30,
+              "additional_params": {
+                "num_of_parameters_u32": 1,
+                "parameters": [
+                  {
+                    "parameter_type_e": 4,
+                    "name_u8": "",
+                    "text_u8": "",
+                    "value_f": 0,
+                    "description_u8": ""
+                  }
+                ]
+              }
+            },
+            {
+              "group_id_e": 2,
+              "command_id_u32": 15,
+              "command_name_u8": "Calibration",
+              "station_name_u8": "",
+              "command_status_e": 1,
+              "command_timeout_u32": 30,
+              "additional_params": {
+                "num_of_parameters_u32": 1,
+                "parameters": [
+                  {
+                    "parameter_type_e": 4,
+                    "name_u8": "",
+                    "text_u8": "",
+                    "value_f": 0,
+                    "description_u8": ""
+                  }
+                ]
+              }
+            },
+            {
+              "group_id_e": 6,
+              "command_id_u32": 1,
+              "command_name_u8": "power on",
+              "command_status_e": 1,
+              "station_name_u8": "",
+              "command_timeout_u32": 30,
+              "additional_params": {
+                "num_of_parameters_u32": 0,
+                "parameters": []
+              }
+            },
+            {
+              "group_id_e": 6,
+              "command_id_u32": 3,
+              "command_name_u8": "error",
+              "command_status_e": 1,
+              "station_name_u8": "",
+              "command_timeout_u32": 30,
+              "additional_params": {
+                "num_of_parameters_u32": 0,
+                "parameters": []
+              }
+            },
+            {
+              "group_id_e": 6,
+              "command_id_u32": 10,
+              "command_name_u8": "enable",
+              "command_status_e": 1,
+              "station_name_u8": "",
+              "command_timeout_u32": 30,
+              "additional_params": {
+                "num_of_parameters_u32": 0,
+                "parameters": []
+              }
+            },
+            {
+              "group_id_e": 6,
+              "command_id_u32": 11,
+              "command_name_u8": "disable",
+              "command_status_e": 1,
+              "station_name_u8": "",
+              "command_timeout_u32": 30,
+              "additional_params": {
+                "num_of_parameters_u32": 0,
+                "parameters": []
+              }
+            },
+            {
+              "system_id": 10000002,
+              "group_id_e": 5,
+              "command_id_u32": 7,
+              "command_name_u8": "Inflight Alignment",
+              "command_status_e": 1,
+              "command_timeout_u32": 30,
+              "additional_params": {
+                "num_of_parameters_u32": 3,
+                "parameters": [
+                  {
+                    "parameter_type_e": 1,
+                    "name_u8": "Longitude",
+                    "text_u8": "E00000.00",
+                    "value_f": 0,
+                    "description_u8": "Current aircraft longitude [deg]"
+                  },
+                  {
+                    "parameter_type_e": 1,
+                    "name_u8": "Latitude",
+                    "text_u8": "N0000.00",
+                    "value_f": 0,
+                    "description_u8": "Current aircraft latitude [deg]"
+                  },
+                  {
+                    "parameter_type_e": 1,
+                    "name_u8": "Altitude",
+                    "text_u8": "00000",
+                    "value_f": 0,
+                    "description_u8": "Current aircraft altitude [feet]"
+                  }
+                ]
+              }
+            },
+            {
+              "system_id": 10000002,
+              "group_id_e": 4,
+              "command_id_u32": 9,
+              "command_name_u8": "Change PFM",
+              "command_status_e": 1,
+              "command_timeout_u32": 30,
+              "additional_params": {
+                "num_of_parameters_u32": 1,
+                "parameters": [
+                  {
+                    "parameter_type_e": 3,
+                    "name_u8": "PFM path",
+                    "text_u8": "parameter text",
+                    "value_f": 4,
+                    "description_u8": "parameter description"
+                  },
+                  {
+                    "parameter_type_e": 0,
+                    "name_u8": "",
+                    "text_u8": "",
+                    "value_f": 0,
+                    "description_u8": ""
+                  },
+                  {
+                    "parameter_type_e": 0,
+                    "name_u8": "",
+                    "text_u8": "",
+                    "value_f": 0,
+                    "description_u8": ""
+                  },
+                  {
+                    "parameter_type_e": 0,
+                    "name_u8": "",
+                    "text_u8": "",
+                    "value_f": 0,
+                    "description_u8": ""
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "properties": {
+        "msg_hdr": {
+          "message_code_e": 480,
+          "date_time": null,
+          "message_number_u32": 1,
+          "source_process_id_e": 0,
+          "destination_process_id_e": 0
+        },
+        "systems_commands": {
+          "node_id": 10000041,
+          "system_commands": [
+            {
+              "group_id_e": 1,
+              "command_id_u32": 1,
+              "command_name_u8": "internal BIT",
+              "command_status_e": 1,
+              "station_name_u8": "",
+              "command_timeout_u32": 30,
+              "additional_params": {
+                "num_of_parameters_u32": 0,
+                "parameters": [
+                  {
+                    "parameter_type_e": 4,
+                    "name_u8": "",
+                    "text_u8": "",
+                    "value_f": 0,
+                    "description_u8": ""
+                  }
+                ]
+              }
+            },
+            {
+              "group_id_e": 1,
+              "command_id_u32": 2,
+              "command_name_u8": "external BIT",
+              "command_status_e": 1,
+              "station_name_u8": "",
+              "command_timeout_u32": 30,
+              "additional_params": {
+                "num_of_parameters_u32": 0,
+                "parameters": [
+                  {
+                    "parameter_type_e": 4,
+                    "name_u8": "",
+                    "text_u8": "",
+                    "value_f": 0,
+                    "description_u8": ""
+                  }
+                ]
+              }
+            },
+            {
+              "group_id_e": 7,
+              "command_id_u32": 3,
+              "command_name_u8": "switch",
+              "command_status_e": 2,
+              "station_name_u8": "",
+              "command_timeout_u32": 30,
+              "additional_params": {
+                "num_of_parameters_u32": 0,
+                "parameters": []
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "properties": {
+        "msg_hdr": {
+          "message_code_e": 480,
+          "date_time": null,
+          "message_number_u32": 1,
+          "source_process_id_e": 0,
+          "destination_process_id_e": 0
+        },
+        "systems_commands": {
+          "node_id": 10000084,
+          "system_commands": [
+            {
+              "group_id_e": 1,
+              "command_id_u32": 2,
+              "command_name_u8": "external BIT",
+              "command_status_e": 1,
+              "station_name_u8": "",
+              "command_timeout_u32": 30,
+              "additional_params": {
+                "num_of_parameters_u32": 0,
+                "parameters": []
+              }
+            },
+            {
+              "group_id_e": 1,
+              "command_id_u32": 4,
+              "command_name_u8": "external BIT2",
+              "command_status_e": 1,
+              "station_name_u8": "",
+              "command_timeout_u32": 30,
+              "additional_params": {
+                "num_of_parameters_u32": 0,
+                "parameters": []
+              }
+            },
+            {
+              "group_id_e": 1,
+              "command_id_u32": 5,
+              "command_name_u8": "external BIT3",
+              "command_status_e": 1,
+              "station_name_u8": "",
+              "command_timeout_u32": 30,
+              "additional_params": {
+                "num_of_parameters_u32": 0,
+                "parameters": []
+              }
+            },
+            {
+              "group_id_e": 1,
+              "command_id_u32": 6,
+              "command_name_u8": "external BIT4",
+              "command_status_e": 1,
+              "station_name_u8": "",
+              "command_timeout_u32": 30,
+              "additional_params": {
+                "num_of_parameters_u32": 0,
+                "parameters": []
+              }
+            },
+            {
+              "group_id_e": 7,
+              "command_id_u32": 3,
+              "command_name_u8": "switch",
+              "command_status_e": 1,
+              "station_name_u8": "",
+              "command_timeout_u32": 30,
+              "additional_params": {
+                "num_of_parameters_u32": 0,
+                "parameters": []
+              }
+            },
+            {
+              "group_id_e": 1,
+              "command_id_u32": 1,
+              "command_name_u8": "internal BIT",
+              "command_status_e": 1,
+              "station_name_u8": "",
+              "command_timeout_u32": 30,
+              "additional_params": {
+                "num_of_parameters_u32": 0,
+                "parameters": []
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

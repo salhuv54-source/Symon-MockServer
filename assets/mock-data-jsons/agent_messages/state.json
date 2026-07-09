@@ -1,0 +1,97 @@
+[
+  {
+    "msg_name": "SYMON_SYSTEM_STATE_REPORT",
+    "properties": {
+      "msg_hdr": {
+        "message_length_u32": 500,
+        "message_code_e": 484,
+       "date_time": null,
+        "message_number_u32": 1,
+        "source_process_id_e": 0,
+        "destination_process_id_e": 0
+      },
+      "system_state_report": {
+        "system_id": 10000002,
+        "primary_state_e": 1,
+        "secondary_state_u8": "",
+       "update_time": null,
+        "pfm_data": {
+          "path_u8(256)": ""
+        },
+        "version_info_u8(64)": "1.1"
+      }
+    }
+  },
+  {
+    "msg_name": "SYMON_SYSTEM_STATE_REPORT",
+    "properties": {
+      "msg_hdr": {
+        "message_length_u32": 500,
+        "message_code_e": 484,
+       "date_time": null,
+        "message_number_u32": 1,
+        "source_process_id_e": 0,
+        "destination_process_id_e": 0
+      },
+      "system_state_report": {
+        "system_id": 10000041,
+        "primary_state_e": 1,
+        "secondary_state_u8": "",
+       "update_time": null,
+        "pfm_data": {
+          "path_u8(256)": ""
+        },
+        "version_info_u8(64)": "1.1"
+      }
+    }
+  },
+  {
+    "msg_name": "SYMON_SYSTEM_STATE_REPORT",
+    "properties": {
+      "msg_hdr": {
+        "message_length_u32": 500,
+        "message_code_e": 484,
+       "date_time": null,
+        "message_number_u32": 1,
+        "source_process_id_e": 0,
+        "destination_process_id_e": 0
+      },
+      "system_state_report": {
+        "system_id": 10000084,
+        "primary_state_e": 1,
+        "secondary_state_u8": "",
+       "update_time": null,
+        "pfm_data": {
+          "path_u8(256)": ""
+        },
+        "version_info_u8(64)": "1.1"
+      }
+    }
+  },
+  {
+    "msg_name": "SYMON_SYSTEM_STATE_REPORT",
+    "properties": {
+      "msg_hdr": {
+        "message_length_u32": 500,
+        "message_code_e": 484,
+       "date_time": null,
+        "message_number_u32": 1,
+        "source_process_id_e": 0,
+        "destination_process_id_e": 0
+      },
+      "system_state_report": {
+        "system_id": 10000109,
+        "primary_state_e": {
+          "Enumeration": "E_PRIMARY_STATE",
+          "Value": 2
+        },
+        "secondary_state_u8": "E_STATE_RDR_STANDBY",
+       "update_time": null,
+        "pfm_data": {
+          "path_u8(256)": ""
+        },
+        "version_info_u8(64)": "1.1"
+      }
+    }
+  }
+]

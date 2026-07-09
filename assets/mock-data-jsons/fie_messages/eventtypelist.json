@@ -1,0 +1,21 @@
+{
+  "msg_name":"EventTypesListMessage",
+  "msg_id":16111,
+  "msg_library_name":"FIE_MESSAGES",
+  "properties": {
+    "msgHdr": {
+      "messageCode": 16111,
+      "messageSize": 2604
+    },
+    "numMsg": 1,
+    "isLast": 1,
+    "eventCount": 24,
+    "events": [
+      {
+        "hwMapIndex": 10000002,
+        "eventId": 1,
+        "description": "event mock  description 0", "name":"description"
+      }
+    ]
+  }
+  }

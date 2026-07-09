@@ -1,0 +1,15 @@
+<UserAttributes>
+    <AttributesList>
+        <Attribute Name="Hidden" Usage="74"/>
+        <Attribute Name="DisplayAsSystem" Usage="4"/>
+    </AttributesList>
+    <NodeTypeAttributes/>
+    <NodeInstanceAttributes>
+        <NodeInstance Name="Mock power node" HMI="1" Father="2" TTI="">
+            <Attribute Name="PowerSupplier" Value="Yes"/>
+        </NodeInstance>
+        <NodeInstance NTTI="" FullPath="" Index="1" NTI="NTI133" HMI="2">
+            <Attribute Name="Hidden" Value="Yes"/>
+        </NodeInstance>
+    </NodeInstanceAttributes>
+</UserAttributes>

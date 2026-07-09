@@ -28,7 +28,8 @@ RUN npm ci --omit=dev
 COPY --from=builder /usr/src/app/dist ./dist
 
 # Expose the port your Node app listens on (change 3000 if your app uses a different port)
-EXPOSE 3000
+EXPOSE 8081
+EXPOSE 5152
 
 # Run the compiled application
 CMD ["node", "dist/index.js"]

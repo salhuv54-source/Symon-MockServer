@@ -1,6 +1,5 @@
 import { Router, Request, Response } from 'express';
 import { MainRoutes, SubRoutes } from '../types';
-import appStore from '../app-store';
 
 export default function systemInfoRoutes(router: Router): void {
 

@@ -5,11 +5,13 @@ import uploadService from './src/upload-service';
 import socketService from './src/socket-service';
 import { createRouteService } from './src/route-service';
 import { SocketEventName } from './src/types';
+import swaggerUi from 'swagger-ui-express';
+import swaggerJsdoc from 'swagger-jsdoc';
 
 class MockSymonServer {
     private app: express.Application;
     private httpServer: http.Server;
-
+    private Port = 3016;
     constructor() {
         this.app = express();
         this.httpServer = http.createServer(this.app);
@@ -21,6 +23,40 @@ class MockSymonServer {
 
         // Parse JSON bodies
         this.app.use(express.json());
+
+        
+        // Start the WebSocket server
+        socketService.start(this.httpServer);
+
+        // // Swagger definition
+        // const swaggerOptions: swaggerJsdoc.Options = {
+        // definition: {
+        //     openapi: '3.0.0',
+        //     info: {
+        //     title: 'My Symon-Mock-Server API',
+        //     version: '1.0.0',
+        //     description: 'A simple Symon Mock Server API documented with Swagger',
+        //     },
+        //     servers: [
+        //     {
+        //         url: `http://localhost:${this.Port}`,
+        //         description: 'Symon server',
+        //     },
+        //     ],
+        // },
+        // // Path to the API docs (where you write your route annotations)
+        // apis: ['./src/routes/*.ts', './src/index.ts'], 
+        // };
+
+        // const swaggerDocs = swaggerJsdoc(swaggerOptions);
+        // // Serve Swagger UI
+        // this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+        // this.app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
+        
+        this.app.listen(this.Port, () => {
+            console.log(`Server running on http://localhost:${this.Port}`);
+            console.log(`Swagger docs available at http://localhost:${this.Port}/api-docs`);
+        });
 
         // Mount all REST API routes from MainRoutes enum
         this.app.use(createRouteService());
@@ -140,15 +176,10 @@ class MockSymonServer {
         });
 
         // Start the HTTP server (serves both REST API and WebSocket)
-        const httpPort = parseInt(process.env.HTTP_PORT || '5152', 10);
-        const socketPort = parseInt(process.env.SOCKET_PORT || '8081', 10);
-
-        this.httpServer.listen(httpPort, () => {
-            console.log(`[MockSymonServer] HTTP server listening on http://localhost:${httpPort}`);
+        this.httpServer.listen(this.Port, () => {
+            console.log(`[MockSymonServer] HTTP server listening on http://localhost:${this.Port}`);
         });
 
-        // Start the WebSocket server
-        socketService.start(socketPort);
 
         console.log('[MockSymonServer] Initialization complete.');
     }

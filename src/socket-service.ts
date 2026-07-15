@@ -1,66 +1,73 @@
-import { WebSocketServer, WebSocket } from 'ws';
+import { Server as SocketIOServer, Socket } from 'socket.io';
+import http from 'http';
 import { SocketEventName } from './types';
 
-type MessageHandler = (client: WebSocket, data: any) => void;
+// Socket.IO provides the native "Socket" type representing a connected client
+type MessageHandler = (client: Socket, data: any) => void;
 
 /**
- * WebSocket service that opens a socket server and listens for client connections.
- * Handles incoming messages and dispatches them to registered handlers.
+ * Socket.IO service that integrates with an HTTP server to listen for client connections.
+ * Handles incoming events and dispatches them to registered listeners.
  */
 class SocketService {
-  private wss: WebSocketServer | null = null;
-  private clients: Set<WebSocket> = new Set();
+  private io: SocketIOServer | null = null;
+  // Socket.IO keeps track of connected sockets inside namespaces internally,
+  // but keeping a Set helps track active clients easily to match your original structure.
+  private clients: Set<Socket> = new Set();
   private handlers: Map<string, MessageHandler> = new Map();
 
   /**
-   * Start the WebSocket server on the given port.
+   * Start the Socket.IO server.
+   * Pass an existing HTTP/Express server to run on the SAME port (highly recommended),
+   * or a port number to run on its own port.
    */
-  start(port: number = 8080): void {
-    this.wss = new WebSocketServer({ port });
+  start(serverOrPort: http.Server | number = 3000): void {
+    if (typeof serverOrPort === 'number') {
+      // Starts as a standalone Socket.IO server on its own port
+      this.io = new SocketIOServer(serverOrPort, {
+        cors: { origin: "*" }
+      });
+      console.log(`[SocketService] Socket.IO server started standalone on ws://localhost:${serverOrPort}`);
+    } else {
+      // Attaches to your shared Express HTTP Server (runs on the exact same port!)
+      this.io = new SocketIOServer(serverOrPort, {
+        cors: { origin: "*" }
+      });
+      console.log(`[SocketService] Socket.IO server attached to HTTP Server successfully.`);
+    }
 
-    console.log(`[SocketService] WebSocket server started on ws://localhost:${port}`);
-
-    this.wss.on('connection', (ws: WebSocket) => {
-      this.clients.add(ws);
+    this.io.on('connection', (socket: Socket) => {
+      this.clients.add(socket);
       console.log(`[SocketService] Client connected. Total clients: ${this.clients.size}`);
+      
+      this.onClientConnection(socket);
 
       // Send a welcome message to the newly connected client
-      ws.send(JSON.stringify({
-        event: SocketEventName.serverHealth,
-        data: { status: 'connected', timestamp: new Date().toISOString() }
-      }));
+      socket.emit(SocketEventName.serverHealth, {
+        status: 'connected',
+        timestamp: new Date().toISOString()
+      });
 
-      ws.on('message', (raw: Buffer) => {
-        try {
-          const message = JSON.parse(raw.toString());
-          const { event, data } = message;
-
-          if (event) {
-            const handler = this.handlers.get(event);
-            if (handler) {
-              handler(ws, data);
-            } else {
-              console.log(`[SocketService] No handler registered for event: "${event}"`);
-            }
+      // Bind all registered custom handlers to this new connection
+      this.handlers.forEach((handler, eventName) => {
+        socket.on(eventName, (data: any) => {
+          try {
+            handler(socket, data);
+          } catch (err) {
+            console.error(`[SocketService] Error inside handler for "${eventName}":`, (err as Error).message);
           }
-        } catch (err) {
-          console.error('[SocketService] Failed to parse message:', (err as Error).message);
-        }
+        });
       });
 
-      ws.on('close', () => {
-        this.clients.delete(ws);
-        console.log(`[SocketService] Client disconnected. Total clients: ${this.clients.size}`);
+      socket.on('disconnect', (reason) => {
+        this.clients.delete(socket);
+        console.log(`[SocketService] Client disconnected (${reason}). Total clients: ${this.clients.size}`);
       });
 
-      ws.on('error', (err: Error) => {
+      socket.on('error', (err: Error) => {
         console.error('[SocketService] Client error:', err.message);
-        this.clients.delete(ws);
+        this.clients.delete(socket);
       });
-    });
-
-    this.wss.on('error', (err: Error) => {
-      console.error('[SocketService] Server error:', err.message);
     });
   }
 
@@ -70,29 +77,33 @@ class SocketService {
   on(eventName: string, handler: MessageHandler): void {
     this.handlers.set(eventName, handler);
     console.log(`[SocketService] Handler registered for event: "${eventName}"`);
+    
+    // If server is already running, dynamically attach it to existing active clients
+    if (this.io) {
+      this.clients.forEach((socket) => {
+        socket.on(eventName, (data) => handler(socket, data));
+      });
+    }
   }
 
   /**
    * Broadcast a message to all connected clients.
    */
   broadcast(event: string, data: any): void {
-    const message = JSON.stringify({ event, data });
-    let sent = 0;
-    this.clients.forEach((client) => {
-      if (client.readyState === WebSocket.OPEN) {
-        client.send(message);
-        sent++;
-      }
-    });
-    console.log(`[SocketService] Broadcast "${event}" to ${sent} client(s)`);
+    if (this.io) {
+      this.io.emit(event, data);
+      console.log(`[SocketService] Broadcast "${event}" to all clients`);
+    } else {
+      console.warn('[SocketService] Cannot broadcast. Server is not started.');
+    }
   }
 
   /**
    * Send a message to a specific client.
    */
-  sendTo(client: WebSocket, event: string, data: any): void {
-    if (client.readyState === WebSocket.OPEN) {
-      client.send(JSON.stringify({ event, data }));
+  sendTo(client: Socket, event: string, data: any): void {
+    if (client.connected) {
+      client.emit(event, data);
     }
   }
 
@@ -103,18 +114,41 @@ class SocketService {
     return this.clients.size;
   }
 
+  onClientConnection(client: Socket): void {
+    // Fie-Data
+    client.emit(SocketEventName.treeChange, { message: 'Sending here treeChange!' });
+    client.emit(SocketEventName.serviceability, { message: 'Sending here serviceability!' });
+    client.emit(SocketEventName.clientVersion, { message: 'Sending here clientVersion!' });
+    
+    // Agent-Data
+    client.emit(SocketEventName.systemStateChange, { message: 'Sending here systemStateChange!' });
+    client.emit(SocketEventName.systemInfo, { message: 'Sending here systemInfo!' });
+    
+    // Keep-Alive
+    client.emit(SocketEventName.keepAlive, { message: 'Sending here keepAlive!' });
+    
+    // Communication-Status
+    client.emit(SocketEventName.communicationStatus, { message: 'Sending here communicationStatus!' });
+    
+    // Server-generated-data
+    client.emit(SocketEventName.serverHealth, { message: 'Sending here serverHealth!' });
+    client.emit(SocketEventName.startUpInBitSensors, { message: 'Sending here startUpInBitSensors!' });
+    client.emit(SocketEventName.mapsSelectionNames, { message: 'Sending here mapsSelectionNames!' });
+    client.emit(SocketEventName.systemsUnreadAlertsCount, { message: 'Sending here systemsUnreadAlertsCount!' });
+    
+    // server-config
+    client.emit(SocketEventName.serverConfigToClient, { message: 'Sending here serverConfigToClient!' });
+  }
+
   /**
-   * Stop the WebSocket server and disconnect all clients.
+   * Stop the Socket.IO server and disconnect all clients.
    */
   stop(): void {
-    if (this.wss) {
-      this.clients.forEach((client) => {
-        client.close();
-      });
+    if (this.io) {
+      this.io.close();
       this.clients.clear();
-      this.wss.close();
-      this.wss = null;
-      console.log('[SocketService] WebSocket server stopped.');
+      this.io = null;
+      console.log('[SocketService] Socket.IO server stopped.');
     }
   }
 }

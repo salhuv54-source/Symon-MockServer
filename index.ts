@@ -24,42 +24,101 @@ class MockSymonServer {
         // Parse JSON bodies
         this.app.use(express.json());
 
-        
-        // Start the WebSocket server
+
+        // Start the Socket.IO server
         socketService.start(this.httpServer);
 
-        // // Swagger definition
-        // const swaggerOptions: swaggerJsdoc.Options = {
-        // definition: {
-        //     openapi: '3.0.0',
-        //     info: {
-        //     title: 'My Symon-Mock-Server API',
-        //     version: '1.0.0',
-        //     description: 'A simple Symon Mock Server API documented with Swagger',
-        //     },
-        //     servers: [
-        //     {
-        //         url: `http://localhost:${this.Port}`,
-        //         description: 'Symon server',
-        //     },
-        //     ],
-        // },
-        // // Path to the API docs (where you write your route annotations)
-        // apis: ['./src/routes/*.ts', './src/index.ts'], 
-        // };
+        // Mount all REST API routes from MainRoutes enum
+        const apiRouter = createRouteService();
+        this.app.use(apiRouter);
 
-        // const swaggerDocs = swaggerJsdoc(swaggerOptions);
-        // // Serve Swagger UI
-        // this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-        // this.app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
-        
-        this.app.listen(this.Port, () => {
-            console.log(`Server running on http://localhost:${this.Port}`);
-            console.log(`Swagger docs available at http://localhost:${this.Port}/api-docs`);
+        // Swagger definition
+        const swaggerOptions: swaggerJsdoc.Options = {
+            definition: {
+                openapi: '3.0.0',
+                info: {
+                    title: 'My Symon-Mock-Server API',
+                    version: '1.0.0',
+                    description: 'A simple Symon Mock Server API documented with Swagger',
+                },
+                servers: [
+                    {
+                        url: `http://localhost:${this.Port}`,
+                        description: 'Symon server',
+                    },
+                ],
+            },
+            apis: ['./src/routes/*.ts', './index.ts'],
+        };
+
+        const swaggerDocs = swaggerJsdoc(swaggerOptions) as any;
+
+        // Auto-scan all registered routes from the API router to build paths dynamically!
+        if (!swaggerDocs.paths) {
+            swaggerDocs.paths = {};
+        }
+
+        apiRouter.stack.forEach((handler: any) => {
+            if (handler.route) {
+                const path = handler.route.path;
+                const methods = Object.keys(handler.route.methods);
+                methods.forEach((method) => {
+                    // Convert Express parameter style (e.g., :serviceName) to Swagger style ({serviceName})
+                    const swaggerPath = path.replace(/:([a-zA-Z0-9_]+)/g, '{$1}');
+                    if (!swaggerDocs.paths[swaggerPath]) {
+                        swaggerDocs.paths[swaggerPath] = {};
+                    }
+
+                    const parameters: any[] = [];
+                    const paramMatches = path.match(/:[a-zA-Z0-9_]+/g);
+                    if (paramMatches) {
+                        paramMatches.forEach((m: string) => {
+                            parameters.push({
+                                name: m.substring(1),
+                                in: 'path',
+                                required: true,
+                                schema: { type: 'string' }
+                            });
+                        });
+                    }
+
+                    // Group routes by prefix tag
+                    const segments = path.split('/');
+                    const tag = segments[2] || segments[1] || 'default';
+
+                    // Prepare an optional json body template for POST/PUT requests
+                    let requestBody: any = undefined;
+                    if (method === 'post' || method === 'put') {
+                        requestBody = {
+                            required: true,
+                            content: {
+                                'application/json': {
+                                    schema: {
+                                        type: 'object',
+                                        additionalProperties: true
+                                    }
+                                }
+                            }
+                        };
+                    }
+
+                    swaggerDocs.paths[swaggerPath][method] = {
+                        summary: `${method.toUpperCase()} ${path}`,
+                        tags: [tag.charAt(0).toUpperCase() + tag.slice(1)],
+                        parameters: parameters.length > 0 ? parameters : undefined,
+                        requestBody,
+                        responses: {
+                            200: {
+                                description: 'Successful response'
+                            }
+                        }
+                    };
+                });
+            }
         });
 
-        // Mount all REST API routes from MainRoutes enum
-        this.app.use(createRouteService());
+        // Serve Swagger UI
+        this.app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
         // List available models in assets/model/
         const availableModels = uploadService.listAvailableModels();
@@ -175,9 +234,10 @@ class MockSymonServer {
             console.log(`[MockSymonServer] Received updateNodeVisibility:`, JSON.stringify(data));
         });
 
-        // Start the HTTP server (serves both REST API and WebSocket)
+        // Start the HTTP server (serves both REST API and Socket.IO)
         this.httpServer.listen(this.Port, () => {
             console.log(`[MockSymonServer] HTTP server listening on http://localhost:${this.Port}`);
+            console.log(`[MockSymonServer] Swagger docs available at http://localhost:${this.Port}/swagger`);
         });
 
 

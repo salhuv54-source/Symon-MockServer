@@ -2,6 +2,7 @@ import { Server as SocketIOServer, Socket } from 'socket.io';
 import http from 'http';
 import { SensorsCollection, Sensor, SocketEventName } from './types';
 import { GenerateSensorsTree, toArray } from './sensor-generator';
+import { GenerateSensorsStatus } from './status-generator';
 
 // Socket.IO provides the native "Socket" type representing a connected client
 type MessageHandler = (client: Socket, data: any) => void;
@@ -118,7 +119,7 @@ class SocketService {
   onClientConnection(client: Socket): void {
     // Fie-Data
     client.emit(SocketEventName.treeChange, toArray(GenerateSensorsTree()));
-    client.emit(SocketEventName.serviceability, { message: 'Sending here serviceability!' });
+    client.emit(SocketEventName.serviceability, GenerateSensorsStatus());
     client.emit(SocketEventName.clientVersion, { message: 'Sending here clientVersion!' });
 
     // Agent-Data

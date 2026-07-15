@@ -1,6 +1,7 @@
 import { Server as SocketIOServer, Socket } from 'socket.io';
 import http from 'http';
-import { SocketEventName } from './types';
+import { SensorsCollection, Sensor, SocketEventName } from './types';
+import { GenerateSensorsTree, toArray } from './sensor-generator';
 
 // Socket.IO provides the native "Socket" type representing a connected client
 type MessageHandler = (client: Socket, data: any) => void;
@@ -39,7 +40,7 @@ class SocketService {
     this.io.on('connection', (socket: Socket) => {
       this.clients.add(socket);
       console.log(`[SocketService] Client connected. Total clients: ${this.clients.size}`);
-      
+
       this.onClientConnection(socket);
 
       // Send a welcome message to the newly connected client
@@ -77,7 +78,7 @@ class SocketService {
   on(eventName: string, handler: MessageHandler): void {
     this.handlers.set(eventName, handler);
     console.log(`[SocketService] Handler registered for event: "${eventName}"`);
-    
+
     // If server is already running, dynamically attach it to existing active clients
     if (this.io) {
       this.clients.forEach((socket) => {
@@ -116,26 +117,26 @@ class SocketService {
 
   onClientConnection(client: Socket): void {
     // Fie-Data
-    client.emit(SocketEventName.treeChange, { message: 'Sending here treeChange!' });
+    client.emit(SocketEventName.treeChange, toArray(GenerateSensorsTree()));
     client.emit(SocketEventName.serviceability, { message: 'Sending here serviceability!' });
     client.emit(SocketEventName.clientVersion, { message: 'Sending here clientVersion!' });
-    
+
     // Agent-Data
     client.emit(SocketEventName.systemStateChange, { message: 'Sending here systemStateChange!' });
     client.emit(SocketEventName.systemInfo, { message: 'Sending here systemInfo!' });
-    
+
     // Keep-Alive
     client.emit(SocketEventName.keepAlive, { message: 'Sending here keepAlive!' });
-    
+
     // Communication-Status
     client.emit(SocketEventName.communicationStatus, { message: 'Sending here communicationStatus!' });
-    
+
     // Server-generated-data
     client.emit(SocketEventName.serverHealth, { message: 'Sending here serverHealth!' });
     client.emit(SocketEventName.startUpInBitSensors, { message: 'Sending here startUpInBitSensors!' });
     client.emit(SocketEventName.mapsSelectionNames, { message: 'Sending here mapsSelectionNames!' });
     client.emit(SocketEventName.systemsUnreadAlertsCount, { message: 'Sending here systemsUnreadAlertsCount!' });
-    
+
     // server-config
     client.emit(SocketEventName.serverConfigToClient, { message: 'Sending here serverConfigToClient!' });
   }

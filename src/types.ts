@@ -122,7 +122,7 @@ export enum SocketEventName {
   commandOptions = 'commandOptions',
   sensorInBit = 'sensorInBit',
   systemInfo = 'systemInfo',
-  keepAlive = 'keepAlive',  
+  keepAlive = 'keepAlive',
   communicationStatus = 'communicationStatus',
   graphInfo = 'graphInfo',
   treeMapOfflineServiceability = 'treeMapOfflineServiceability',
@@ -183,4 +183,61 @@ export enum SubRoutes {
   UPDATE_FAVORITE = '/updateFavorite',
   SYMON_DATA_MAPPER = '/symon-data-mapper',
   PRODUCTS = '/products',
+}
+
+enum NotConfigurableDataType {
+  ATTRIBUTES = "ATTRIBUTES",
+  COMMAND_OPTIONS = "COMMAND_OPTIONS",
+  EVENT = "EVENT",
+  EVENT_TYPE_LIST = "EVENT_TYPE_LIST",
+  FAULT = "FAULT",
+  FAULT_TYPE_LIST = "FAULT_TYPE_LIST",
+  SENSOR_TREE = "SENSOR_TREE",
+  SERVICEABILITY = "SERVICEABILITY",
+  SYSTEM_INFO = "SYSTEM_INFO",
+  SYSTEM_STATE = "SYSTEM_STATE",
+  SYMON_VERSION_ABOUT = "SYMON_VERSION_ABOUT",
+  HEALTH = "HEALTH",
+  MAPS_SELECTION_NAMES = "MAPS_SELECTION_NAMES",
+  KEEP_ALIVE = "KEEP_ALIVE",
+  MODEL_HIDDEN_NODES = "MODEL_HIDDEN_NODES"
+}
+
+enum ConfigurableDataType {
+  ALERT = "ALERT",
+  BIT_REPORT = "BIT_REPORT",
+  BIT_COMMAND_RESULT = "BIT_COMMAND_RESULT",
+  USER_COMMAND = "USER_COMMAND",
+  STATION_NAMES = "STATION_NAMES",
+  BIT_REPORT_INFO_FILE = "BIT_REPORT_INFO_FILE"
+}
+
+export const DataType = {
+  ...NotConfigurableDataType,
+  ...ConfigurableDataType
+}
+
+export type DataType =
+  | NotConfigurableDataType
+  | ConfigurableDataType;
+
+export interface SensorsCollection {
+  [id: number]: Sensor;
+}
+export interface Sensor {
+  id: number;
+  name: string;
+  parentsIds: number[];
+  childrenIds: number[];
+  isHidden: boolean;
+  isDisplayAsSystem: boolean;
+  powerParentsIds: number[];
+  powerChildrenIds: number[];
+  isPowerSensor: boolean;
+  isPowerSupplier: boolean;
+  level: number;
+  nodeType?: string;
+  nodeIndexPath?: string;
+  order: number;
+  icon?: string;
 }

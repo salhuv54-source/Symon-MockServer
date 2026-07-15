@@ -11,7 +11,7 @@ import swaggerJsdoc from 'swagger-jsdoc';
 class MockSymonServer {
     private app: express.Application;
     private httpServer: http.Server;
-    private Port = 3016;
+    private Port = 8081;
     constructor() {
         this.app = express();
         this.httpServer = http.createServer(this.app);
@@ -24,14 +24,53 @@ class MockSymonServer {
         // Parse JSON bodies
         this.app.use(express.json());
 
-
-        // Start the Socket.IO server
-        socketService.start(this.httpServer);
+        // Initialize Socket.IO
+        this.initSocket();
 
         // Mount all REST API routes from MainRoutes enum
         const apiRouter = createRouteService();
         this.app.use(apiRouter);
 
+        // Initialize Swagger API documentation
+        this.initSwagger(apiRouter);
+
+        // List available models in assets/model/
+        const availableModels = uploadService.listAvailableModels();
+        console.log(`[MockSymonServer] Available models: ${availableModels.join(', ') || '(none)'}`);
+
+        // Automatically load the first available model on startup
+        if (availableModels.length > 0) {
+            const modelName = availableModels[0];
+            try {
+                const storedName = await uploadService.uploadModel(modelName);
+                const modelData = appStore.getModel(storedName);
+                if (modelData) {
+                    console.log(`[MockSymonServer] Model loaded. System: ${modelData.system.name}`);
+                    console.log(`[MockSymonServer]   Node types: ${modelData.nodeTypes.length}`);
+                    console.log(`[MockSymonServer]   Events: ${modelData.events.length}`);
+                    console.log(`[MockSymonServer]   Faults: ${modelData.faults.length}`);
+                    console.log(`[MockSymonServer]   Instances: ${modelData.instances.length}`);
+                }
+            } catch (err) {
+                console.error(`[MockSymonServer] Failed to load model "${modelName}":`, (err as Error).message);
+            }
+        } else {
+            console.log('[MockSymonServer] No model files found in assets/model/. Place .fsx files there to load them.');
+        }
+
+        // Start the HTTP server (serves both REST API and Socket.IO)
+        this.httpServer.listen(this.Port, () => {
+            console.log(`[MockSymonServer] HTTP server listening on http://localhost:${this.Port}`);
+            console.log(`[MockSymonServer] Swagger docs available at http://localhost:${this.Port}/swagger`);
+        });
+
+        console.log('[MockSymonServer] Initialization complete.');
+    }
+
+    /**
+     * Initialize and configure Swagger UI and OpenAPI documentation dynamically.
+     */
+    private initSwagger(apiRouter: express.Router): void {
         // Swagger definition
         const swaggerOptions: swaggerJsdoc.Options = {
             definition: {
@@ -119,33 +158,16 @@ class MockSymonServer {
 
         // Serve Swagger UI
         this.app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+    }
 
-        // List available models in assets/model/
-        const availableModels = uploadService.listAvailableModels();
-        console.log(`[MockSymonServer] Available models: ${availableModels.join(', ') || '(none)'}`);
-
-        // Automatically load the first available model on startup
-        if (availableModels.length > 0) {
-            const modelName = availableModels[0];
-            try {
-                const storedName = await uploadService.uploadModel(modelName);
-                const modelData = appStore.getModel(storedName);
-                if (modelData) {
-                    console.log(`[MockSymonServer] Model loaded. System: ${modelData.system.name}`);
-                    console.log(`[MockSymonServer]   Node types: ${modelData.nodeTypes.length}`);
-                    console.log(`[MockSymonServer]   Events: ${modelData.events.length}`);
-                    console.log(`[MockSymonServer]   Faults: ${modelData.faults.length}`);
-                    console.log(`[MockSymonServer]   Instances: ${modelData.instances.length}`);
-                }
-            } catch (err) {
-                console.error(`[MockSymonServer] Failed to load model "${modelName}":`, (err as Error).message);
-            }
-        } else {
-            console.log('[MockSymonServer] No model files found in assets/model/. Place .fsx files there to load them.');
-        }
+    /**
+     * Start the Socket.IO server and register all event message handlers.
+     */
+    private initSocket(): void {
+        // Start the Socket.IO server
+        socketService.start(this.httpServer);
 
         // Register explicit handlers for each SocketEventName
-        // Each event has its own handler so different logic can be implemented per event
         socketService.on(SocketEventName.eventsChange, (client, data) => {
             console.log(`[MockSymonServer] Received eventsChange:`, JSON.stringify(data));
         });
@@ -233,15 +255,6 @@ class MockSymonServer {
         socketService.on(SocketEventName.updateNodeVisibility, (client, data) => {
             console.log(`[MockSymonServer] Received updateNodeVisibility:`, JSON.stringify(data));
         });
-
-        // Start the HTTP server (serves both REST API and Socket.IO)
-        this.httpServer.listen(this.Port, () => {
-            console.log(`[MockSymonServer] HTTP server listening on http://localhost:${this.Port}`);
-            console.log(`[MockSymonServer] Swagger docs available at http://localhost:${this.Port}/swagger`);
-        });
-
-
-        console.log('[MockSymonServer] Initialization complete.');
     }
 
     async shutdown(): Promise<void> {

@@ -1,4 +1,4 @@
-import { ModelData } from './types';
+import { DataType, ModelData } from './types';
 
 /**
  * In-memory store that holds all loaded model data in the application.

@@ -1,0 +1,172 @@
+{
+  "faultMessages": [
+    {
+      "msgHdr": {
+        "messageCode": 1605,
+        "messageSize": 64
+      },
+      "node": {
+        "node_id": 10000019,
+        "pss_e": 0,
+        "fss_e": 1,
+        "last_state_change_time": null
+      },
+      "faultCount": 3,
+      "faults": [
+        {
+          "hwMapIndex": 10000019,
+          "faultId": 1,
+          "probability": 1,
+          "faultStatus": 2,
+          "faultChangeTime": null,
+          "UniqueId": 100000191,
+          "AlternativeToUniqueId": -1
+        },
+        {
+          "hwMapIndex": 10000019,
+          "faultId": 4,
+          "probability": 1,
+          "faultStatus": 3,
+          "update_time": null,
+          "UniqueId": 100000194,
+          "AlternativeToUniqueId": 100000191
+        },
+        {
+          "hwMapIndex": 10000019,
+          "faultId": 5,
+          "probability": 1,
+          "faultStatus": 3,
+          "faultChangeTime": null,
+          "UniqueId": 100000195,
+          "AlternativeToUniqueId": 100000191
+        }
+      ]
+    },
+    {
+      "msgHdr": {
+        "messageCode": 1605,
+        "messageSize": 64
+      },
+      "node": {
+        "node_id": 10000038,
+        "pss_e": 0,
+        "fss_e": 2,
+        "last_state_change_time": null
+      },
+      "faultCount": 3,
+      "faults": [
+        {
+          "hwMapIndex": 10000038,
+          "faultId": 1,
+          "probability": 1,
+          "faultStatus": 3,
+          "faultChangeTime": null,
+          "UniqueId": 100000381,
+          "AlternativeToUniqueId": -1
+        },
+        {
+          "hwMapIndex": 10000038,
+          "faultId": 4,
+          "probability": 1,
+          "faultStatus": 3,
+          "update_time": null,
+          "UniqueId": 100000384,
+          "AlternativeToUniqueId": 100000384
+        },
+        {
+          "hwMapIndex": 10000038,
+          "faultId": 5,
+          "probability": 1,
+          "faultStatus": 3,
+          "faultChangeTime": null,
+          "UniqueId": 100000385,
+          "AlternativeToUniqueId": 100000384
+        }
+      ]
+    },
+    {
+      "msgHdr": {
+        "messageCode": 1605,
+        "messageSize": 64
+      },
+      "node": {
+        "node_id": 10000020,
+        "pss_e": 0,
+        "fss_e": 0,
+        "last_state_change_time": null
+      },
+      "faultCount": 3,
+      "faults": [
+        {
+          "hwMapIndex": 10000020,
+          "faultId": 1,
+          "probability": 1,
+          "faultStatus": 2,
+          "faultChangeTime": null,
+          "UniqueId": 100000201,
+          "AlternativeToUniqueId": -1
+        },
+        {
+          "hwMapIndex": 10000020,
+          "faultId": 5,
+          "probability": 1,
+          "faultStatus": 3,
+          "faultChangeTime": null,
+          "UniqueId": 100000205,
+          "AlternativeToUniqueId": 100000201
+        },
+        {
+          "hwMapIndex": 10000020,
+          "faultId": 3,
+          "probability": 1,
+          "faultStatus": 3,
+          "faultChangeTime": null,
+          "UniqueId": 100000203,
+          "AlternativeToUniqueId": 100000203
+        }
+      ]
+    },
+    {
+      "msgHdr": {
+        "messageCode": 1605,
+        "messageSize": 64
+      },
+      "node": {
+        "node_id": 10000039,
+        "pss_e": 0,
+        "fss_e": 1,
+        "last_state_change_time": null
+      },
+      "faultCount": 3,
+      "faults": [
+        {
+          "hwMapIndex": 10000039,
+          "faultId": 1,
+          "probability": 3,
+          "faultStatus": 3,
+          "faultChangeTime": null,
+          "UniqueId": 100000391,
+          "AlternativeToUniqueId": -1
+        },
+        {
+          "hwMapIndex": 10000039,
+          "faultId": 4,
+          "probability": 1,
+          "faultStatus": 3,
+          "faultChangeTime": null,
+          "UniqueId": 100000394,
+          "AlternativeToUniqueId": 100000394
+        },
+        {
+          "hwMapIndex": 10000039,
+          "faultId": 5,
+          "probability": 1,
+          "faultStatus": 3,
+          "faultChangeTime": null,
+          "UniqueId": 100000395,
+          "AlternativeToUniqueId": 100000394
+        }
+      ]
+    }
+  ]
+}

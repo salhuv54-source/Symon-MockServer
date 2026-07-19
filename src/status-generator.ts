@@ -8,10 +8,19 @@ import {
 
 /**
  * Generates an array of randomized SensorStatus objects.
- * We generate statuses for IDs 1 up to a specified maximum.
+ * We generate statuses for a list of node IDs or a range from 1 to maxNodeId.
  */
-export function GenerateSensorsStatus(maxNodeId: number = 25): SensorStatus[] {
+export function GenerateSensorsStatus(nodeIdsOrMax: number | number[] = 25): SensorStatus[] {
   const statuses: SensorStatus[] = [];
+  const nodeIds: number[] = [];
+
+  if (Array.isArray(nodeIdsOrMax)) {
+    nodeIds.push(...nodeIdsOrMax);
+  } else {
+    for (let id = 1; id <= nodeIdsOrMax; id++) {
+      nodeIds.push(id);
+    }
+  }
 
   const serviceabilities = [
     E_SERVICEABILITY.E_SERVICEABILITY_OK,
@@ -40,7 +49,7 @@ export function GenerateSensorsStatus(maxNodeId: number = 25): SensorStatus[] {
     }
   };
 
-  for (let id = 1; id <= maxNodeId; id++) {
+  for (const id of nodeIds) {
     statuses.push({
       node_id: id,
       uniqueId: `uuid-${id}-${Math.floor(100000 + Math.random() * 900000)}`,

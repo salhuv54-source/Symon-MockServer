@@ -3,6 +3,9 @@ import http from 'http';
 import { SensorsCollection, Sensor, SocketEventName } from './types';
 import { GenerateSensorsTree, toArray } from './sensor-generator';
 import { GenerateSensorsStatus } from './status-generator';
+import { EventInjector } from './event-injector';
+import { StatusInjector } from './status-injector';
+import { FaultsInjector } from './faults-injector';
 
 // Socket.IO provides the native "Socket" type representing a connected client
 type MessageHandler = (client: Socket, data: any) => void;
@@ -17,6 +20,18 @@ class SocketService {
   // but keeping a Set helps track active clients easily to match your original structure.
   private clients: Set<Socket> = new Set();
   private handlers: Map<string, MessageHandler> = new Map();
+  private eventInjector = new EventInjector(
+    (event, data) => this.broadcast(event, data),
+    () => this.getClientCount() > 0
+  );
+  private statusInjector = new StatusInjector(
+    (event, data) => this.broadcast(event, data),
+    () => this.getClientCount() > 0
+  );
+  private faultsInjector = new FaultsInjector(
+    (event, data) => this.broadcast(event, data),
+    () => this.getClientCount() > 0
+  );
 
   /**
    * Start the Socket.IO server.
@@ -71,6 +86,10 @@ class SocketService {
         this.clients.delete(socket);
       });
     });
+
+    this.eventInjector.start();
+    this.statusInjector.start();
+    this.faultsInjector.start();
   }
 
   /**
@@ -118,8 +137,11 @@ class SocketService {
 
   onClientConnection(client: Socket): void {
     // Fie-Data
-    client.emit(SocketEventName.treeChange, toArray(GenerateSensorsTree()));
-    client.emit(SocketEventName.serviceability, GenerateSensorsStatus());
+    const sensorsTree = GenerateSensorsTree();
+    client.emit(SocketEventName.treeChange, toArray(sensorsTree));
+
+    const nodeIds = Object.keys(sensorsTree).map((idStr) => parseInt(idStr, 10));
+    client.emit(SocketEventName.serviceability, GenerateSensorsStatus(nodeIds));
     client.emit(SocketEventName.clientVersion, { message: 'Sending here clientVersion!' });
 
     // Agent-Data
@@ -146,6 +168,9 @@ class SocketService {
    * Stop the Socket.IO server and disconnect all clients.
    */
   stop(): void {
+    this.eventInjector.stop();
+    this.statusInjector.stop();
+    this.faultsInjector.stop();
     if (this.io) {
       this.io.close();
       this.clients.clear();

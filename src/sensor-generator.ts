@@ -1,4 +1,5 @@
-import { SensorsCollection, Sensor } from './types';
+import { SensorsCollection, Sensor, ModelInstance, ModelNode, ModelData } from './types';
+import appStore from './app-store';
 
 // Helper function to safely convert values/collections to arrays
 export function toArray<T>(value: any): T[] {
@@ -11,9 +12,130 @@ export function toArray<T>(value: any): T[] {
 }
 
 /**
+ * Finds the NodeType NTT attribute recursively by NTI.
+ */
+function findNttByNti(nodeTypes: ModelNode[], nti: string): string {
+  for (const nt of nodeTypes) {
+    if (nt.nti === nti) return nt.ntt;
+    if (nt.children) {
+      const found = findNttByNti(nt.children, nti);
+      if (found) return found;
+    }
+  }
+  return '';
+}
+
+/**
+ * Determines a suitable icon for a node based on its level and name.
+ */
+function getIconForNode(level: number, name: string): string {
+  if (level === 0) return 'dns';
+  if (level === 1) return 'settings';
+  const lowerName = name.toLowerCase();
+  if (lowerName.includes('temp') || lowerName.includes('thermostat')) return 'thermostat';
+  if (lowerName.includes('volt') || lowerName.includes('current') || lowerName.includes('power') || lowerName.includes('ps')) return 'bolt';
+  return 'lens';
+}
+
+/**
+ * Recursively converts ModelInstance tree to Sensor nodes.
+ */
+function buildFromInstances(
+  instances: ModelInstance[],
+  model: ModelData,
+  parentId: number | null,
+  level: number,
+  parentIndexPath: string,
+  sensors: SensorsCollection
+): void {
+  instances.forEach((inst, index) => {
+    const id = parseInt(inst.hmi, 10);
+    if (isNaN(id)) return;
+
+    const childrenIds = (inst.children || []).map(child => parseInt(child.hmi, 10)).filter(cid => !isNaN(cid));
+    const nodeIndexPath = parentIndexPath ? `${parentIndexPath}/${id}` : `/${id}`;
+
+    // Look up node type NTT from nodeTypes
+    const ntt = findNttByNti(model.nodeTypes, inst.nti);
+
+    // Check if this instance is a supplier
+    const isPowerSupplier = model.supplierInstances.some(s => s.hmi === inst.hmi) || level === 0;
+
+    // Is it a power sensor?
+    const isPowerSensor = level > 0;
+
+    // Icons:
+    const icon = getIconForNode(level, inst.name);
+
+    // Parents and children
+    const parentsIds = parentId !== null ? [parentId] : [];
+
+    // power parents/children default to matching hierarchical parents/children
+    const powerParentsIds = [...parentsIds];
+    const powerChildrenIds = [...childrenIds];
+
+    sensors[id] = {
+      id,
+      name: inst.name,
+      parentsIds,
+      childrenIds,
+      isHidden: false,
+      isDisplayAsSystem: level <= 1 || ntt === "System" || ntt === "Sub System",
+      powerParentsIds,
+      powerChildrenIds,
+      isPowerSensor,
+      isPowerSupplier,
+      level,
+      nodeType: ntt || (level === 0 ? "System" : level === 1 ? "Subsystem" : "Sensor"),
+      nodeIndexPath,
+      order: index + 1,
+      icon
+    };
+
+    if (inst.children && inst.children.length > 0) {
+      buildFromInstances(inst.children, model, id, level + 1, nodeIndexPath, sensors);
+    }
+  });
+}
+
+/**
  * Dynamically constructs a randomized, fully populated, and hierarchically linked collection of Sensors.
+ * If an active model is loaded in the appStore, the tree is dynamically built based on the loaded model.
  */
 export function GenerateSensorsTree(): SensorsCollection {
+  const activeModel = appStore.getActiveModel();
+
+  if (activeModel && activeModel.instances && activeModel.instances.length > 0) {
+    console.log(`[SensorGenerator] Generating sensor tree dynamically from active model: "${activeModel.system.name}"`);
+    const sensors: SensorsCollection = {};
+
+    // 1. Build the tree hierarchically from instances
+    buildFromInstances(activeModel.instances, activeModel, null, 0, '', sensors);
+
+    // 2. Add explicit power routing from SupplierInstances
+    if (activeModel.supplierInstances) {
+      activeModel.supplierInstances.forEach(s => {
+        const supplierId = parseInt(s.hmi, 10);
+        const consumerId = parseInt(s.father, 10);
+        if (!isNaN(supplierId) && !isNaN(consumerId)) {
+          const supplierNode = sensors[supplierId];
+          const consumerNode = sensors[consumerId];
+          if (supplierNode && consumerNode) {
+            if (!supplierNode.powerChildrenIds.includes(consumerId)) {
+              supplierNode.powerChildrenIds.push(consumerId);
+            }
+            if (!consumerNode.powerParentsIds.includes(supplierId)) {
+              consumerNode.powerParentsIds.push(supplierId);
+            }
+          }
+        }
+      });
+    }
+
+    return sensors;
+  }
+
+  console.log('[SensorGenerator] No active model found. Falling back to default mock randomized tree.');
   const sensors: SensorsCollection = {};
 
   const rootNames = ["Symon Main System", "Symon Core Controller", "Symon Gateway"];

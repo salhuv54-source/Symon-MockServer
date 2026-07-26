@@ -4,9 +4,10 @@ import appStore from './src/app-store';
 import uploadService from './src/upload-service';
 import socketService from './src/socket-service';
 import { createRouteService } from './src/route-service';
-import { SocketEventName } from './src/types';
+import { DataType, SocketEventName } from './src/types';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
+import { DataStatusBuild, DataStatusType } from './src/interfaces/DataStatusBuild.interface';
 
 class MockSymonServer {
     private app: express.Application;
@@ -168,10 +169,10 @@ class MockSymonServer {
         socketService.start(this.httpServer);
 
         // Register explicit handlers for each SocketEventName
-        socketService.on(SocketEventName.eventschange, (client, data) => {
+        socketService.on(SocketEventName.eventsChange, (client, data) => {
             console.log(`[MockSymonServer] Received eventschange:`, JSON.stringify(data));
         });
-        socketService.on(SocketEventName.faultChange, (client, data) => {
+        socketService.on(SocketEventName.faultsChange, (client, data) => {
             console.log(`[MockSymonServer] Received faultChange:`, JSON.stringify(data));
         });
         socketService.on(SocketEventName.alertsChange, (client, data) => {
@@ -266,6 +267,41 @@ class MockSymonServer {
         console.log('[MockSymonServer] Goodbye.');
         process.exit(0);
     }
+}
+
+export function BuildDataToSendToClient(): DataStatusBuild[] {
+    const allDataTypes = [
+        {
+            dataType: "SERVER_CONNECTION",
+            getStatus: DataStatusType.CONNECTED_TO_SERVER,
+            order: 0
+        },
+        {
+            dataType: "RABBIT_CONNECTION",
+            getStatus: DataStatusType.CONNECTED_TO_RABBIT,
+            order: 1
+        },
+        {
+            dataType: "DB_CONNECTION",
+            getStatus: DataStatusType.CONNECTED_TO_DB,
+            order: 2
+        },
+        {
+            dataType: DataType.ATTRIBUTES,
+            message: 'Attributesfile missing',
+            order: 3,
+        },
+        {
+            dataType: DataType.SENSOR_TREE,
+            order: 4
+        },
+        {
+            dataType: DataType.FAULT_TYPE_LIST,
+            order: 5
+        }
+    ];
+
+    return allDataTypes;
 }
 
 // Create server instance

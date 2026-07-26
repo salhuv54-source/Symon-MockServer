@@ -7,6 +7,7 @@ import { EventInjector } from './event-injector';
 import { StatusInjector } from './status-injector';
 import { FaultsInjector } from './faults-injector';
 import { GenerateKeepAlivePayload } from './keep-alive-generator';
+import { BuildDataToSendToClient } from '..';
 
 // Socket.IO provides the native "Socket" type representing a connected client
 type MessageHandler = (client: Socket, data: any) => void;
@@ -157,7 +158,7 @@ class SocketService {
     client.emit(SocketEventName.communicationStatus, { message: 'Sending here communicationStatus!' });
 
     // Server-generated-data
-    client.emit(SocketEventName.serverHealth, { message: 'Sending here serverHealth!' });
+    client.emit(SocketEventName.serverHealth, { message: BuildDataToSendToClient() });
     client.emit(SocketEventName.startUpInBitSensors, { message: 'Sending here startUpInBitSensors!' });
     client.emit(SocketEventName.mapsSelectionNames, { message: 'Sending here mapsSelectionNames!' });
     client.emit(SocketEventName.systemsUnreadAlertsCount, { message: 'Sending here systemsUnreadAlertsCount!' });

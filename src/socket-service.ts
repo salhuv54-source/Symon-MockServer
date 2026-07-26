@@ -1,11 +1,12 @@
 import { Server as SocketIOServer, Socket } from 'socket.io';
 import http from 'http';
-import { SensorsCollection, Sensor, SocketEventName } from './types';
+import { SocketEventName } from './types';
 import { GenerateSensorsTree, toArray } from './sensor-generator';
 import { GenerateSensorsStatus } from './status-generator';
 import { EventInjector } from './event-injector';
 import { StatusInjector } from './status-injector';
 import { FaultsInjector } from './faults-injector';
+import { GenerateKeepAlivePayload } from './keep-alive-generator';
 
 // Socket.IO provides the native "Socket" type representing a connected client
 type MessageHandler = (client: Socket, data: any) => void;
@@ -149,7 +150,8 @@ class SocketService {
     client.emit(SocketEventName.systemInfo, { message: 'Sending here systemInfo!' });
 
     // Keep-Alive
-    client.emit(SocketEventName.keepAlive, { message: 'Sending here keepAlive!' });
+    const keepAlivePayload = GenerateKeepAlivePayload();
+    client.emit(SocketEventName.keepAlive, keepAlivePayload);
 
     // Communication-Status
     client.emit(SocketEventName.communicationStatus, { message: 'Sending here communicationStatus!' });

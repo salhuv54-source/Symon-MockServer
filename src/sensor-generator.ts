@@ -1,4 +1,5 @@
-import { SensorsCollection, Sensor, ModelInstance, ModelNode, ModelData } from './types';
+import { ModelInstance, ModelNode, ModelData } from './types';
+import { SensorsCollection, Sensor } from './interfaces/sensor.interface';
 import appStore from './app-store';
 
 // Helper function to safely convert values/collections to arrays

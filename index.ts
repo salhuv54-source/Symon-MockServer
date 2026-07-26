@@ -168,11 +168,11 @@ class MockSymonServer {
         socketService.start(this.httpServer);
 
         // Register explicit handlers for each SocketEventName
-        socketService.on(SocketEventName.eventsChange, (client, data) => {
-            console.log(`[MockSymonServer] Received eventsChange:`, JSON.stringify(data));
+        socketService.on(SocketEventName.eventschange, (client, data) => {
+            console.log(`[MockSymonServer] Received eventschange:`, JSON.stringify(data));
         });
-        socketService.on(SocketEventName.faultsChange, (client, data) => {
-            console.log(`[MockSymonServer] Received faultsChange:`, JSON.stringify(data));
+        socketService.on(SocketEventName.faultChange, (client, data) => {
+            console.log(`[MockSymonServer] Received faultChange:`, JSON.stringify(data));
         });
         socketService.on(SocketEventName.alertsChange, (client, data) => {
             console.log(`[MockSymonServer] Received alertsChange:`, JSON.stringify(data));

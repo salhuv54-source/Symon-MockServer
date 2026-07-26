@@ -1,7 +1,9 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import appStore from './app-store';
-import { ModelInstance, SocketEventName } from './types';
+import { ModelInstance, SocketEventName, E_SERVICEABILITY, BitReportDocTypes, BitOperationType } from './types';
+import { SingleFault, E_SIGN } from './interfaces/fault.interface';
+import { E_PRIMARY_STATE } from './interfaces/system-state.interface';
 
 /**
  * FaultsInjector handles recurring generation and broadcast of mock faults (occurredFaults)
@@ -53,133 +55,205 @@ export class FaultsInjector {
 
     try {
       const activeModel = appStore.getActiveModel();
-      let faultMessages: any[] = [];
+      let faultPayload: SingleFault[] = [];
 
       if (activeModel && activeModel.faults && activeModel.faults.length > 0 && activeModel.instances && activeModel.instances.length > 0) {
-        // Flatten model instances
-        const collectAllInstances = (instances: ModelInstance[]): ModelInstance[] => {
-          const result: ModelInstance[] = [];
-          function traverse(list: ModelInstance[]) {
+        // Enriched interface to capture hierarchical path properties
+        interface EnrichedInstance {
+          inst: ModelInstance;
+          fullPath: string;
+          indexPath: string;
+        }
+
+        // Flatten the model instance tree while building full hierarchical names and ID indexes
+        const collectAllInstances = (instances: ModelInstance[]): EnrichedInstance[] => {
+          const result: EnrichedInstance[] = [];
+          function traverse(list: ModelInstance[], parentFullPath: string, parentIndexPath: string) {
             for (const inst of list) {
-              result.push(inst);
+              const currentFullPath = parentFullPath ? `${parentFullPath}/${inst.name}` : `/${inst.name}`;
+              const currentIndexPath = parentIndexPath ? `${parentIndexPath}/${inst.hmi}` : `/${inst.hmi}`;
+              result.push({
+                inst,
+                fullPath: currentFullPath,
+                indexPath: currentIndexPath
+              });
               if (inst.children && inst.children.length > 0) {
-                traverse(inst.children);
+                traverse(inst.children, currentFullPath, currentIndexPath);
               }
             }
           }
-          traverse(instances);
+          traverse(instances, '', '');
           return result;
         };
 
         const flatInstances = collectAllInstances(activeModel.instances);
 
-        // Find instances that have connected faults through distribution rules
-        flatInstances.forEach(inst => {
-          // Find events for this instance's node type
-          const eventsForInst = activeModel.events.filter(evt => evt.nti === inst.nti);
-
-          // Find faults mapped via distribution rules
-          const matchedFaultsMap = new Map<string, any>();
-          eventsForInst.forEach(evt => {
-            const rules = activeModel.distributionRules.filter(
-              r => r.eventID === evt.id && r.eventNTI === evt.nti
-            );
-            rules.forEach(rule => {
-              const fault = activeModel.faults.find(
-                f => f.id === rule.faultID && f.nti === rule.faultNTI
-              );
-              if (fault) {
-                matchedFaultsMap.set(fault.id, fault);
-              }
-            });
-          });
-
-          const matchingFaults = Array.from(matchedFaultsMap.values());
-
-          if (matchingFaults.length > 0) {
-            // Randomly decide if this instance reports a fault message at this interval (e.g., 50% chance)
-            if (Math.random() < 0.5) {
-              const hmiNum = parseInt(inst.hmi, 10);
-              
-              // Map matching faults to structures
-              let primaryUniqueId = -1;
-              const mappedFaults = matchingFaults.map((fault, index) => {
-                const faultIdNum = parseInt(fault.id, 10);
-                const uniqueId = parseInt(`${hmiNum}${faultIdNum}`, 10);
-                
-                if (index === 0) {
-                  primaryUniqueId = uniqueId;
-                }
-
-                const alternativeId = index === 0 ? -1 : primaryUniqueId;
-                const faultStatus = Math.random() < 0.5 ? 2 : 3; // E_SIGN
-
-                return {
-                  hwMapIndex: hmiNum,
-                  faultId: faultIdNum,
-                  probability: parseFloat((Math.random() * 0.8 + 0.1).toFixed(2)),
-                  faultStatus: faultStatus,
-                  faultChangeTime: Date.now(),
-                  UniqueId: uniqueId,
-                  AlternativeToUniqueId: alternativeId
-                };
-              });
-
-              // Create fault message for this node
-              faultMessages.push({
-                msgHdr: {
-                  messageCode: 1605,
-                  messageSize: 64
-                },
-                node: {
-                  node_id: hmiNum,
-                  pss_e: Math.floor(Math.random() * 5), // E_SERVICEABILITY (0 to 4)
-                  fss_e: Math.floor(Math.random() * 5), // E_SERVICEABILITY (0 to 4)
-                  last_state_change_time: Date.now()
-                },
-                faultCount: mappedFaults.length,
-                faults: mappedFaults
-              });
+        // Find matches where fault.nti === instance.nti
+        const matches: Array<{ fault: any; enriched: EnrichedInstance }> = [];
+        activeModel.faults.forEach(fault => {
+          flatInstances.forEach(enriched => {
+            if (fault.nti === enriched.inst.nti) {
+              matches.push({ fault, enriched });
             }
-          }
+          });
         });
 
-        if (faultMessages.length > 0) {
-          console.log(`[FaultsInjector] Generated and injected ${faultMessages.length} dynamic fault messages from active model.`);
+        if (matches.length > 0) {
+          // Select a random subset of matches (e.g., 1 to 3 faults)
+          const numFaultsToSelect = Math.min(matches.length, Math.floor(Math.random() * 3) + 1);
+
+          // Shuffle the matches array and select the first N elements
+          const shuffled = [...matches].sort(() => 0.5 - Math.random());
+          const selectedMatches = shuffled.slice(0, numFaultsToSelect);
+
+          let primaryUniqueId = -1;
+
+          faultPayload = selectedMatches.map(({ fault, enriched }, index) => {
+            const inst = enriched.inst;
+            const reportingSystem = parseInt(activeModel.system.id, 10) || 1;
+            const faultId = parseInt(fault.id, 10) || 0;
+            const hwMapIndex = parseInt(inst.hmi, 10);
+
+            const uniqueIdNum = parseInt(`${hwMapIndex}${faultId}`, 10) || (hwMapIndex + faultId);
+            if (index === 0) {
+              primaryUniqueId = uniqueIdNum;
+            }
+            const alternativeId = index === 0 ? -1 : primaryUniqueId;
+
+            // Randomize and map status from E_SIGN
+            const statusValues = [
+              E_SIGN.E_SIGN_OK,
+              E_SIGN.E_SIGN_UNKNOWN,
+              E_SIGN.E_SIGN_PRIMARY,
+              E_SIGN.E_SIGN_ALTERNATIVE,
+              E_SIGN.E_SIGN_NOT_APPLICABLE,
+              E_SIGN.E_SIGN_INVALID
+            ];
+            const status = statusValues[Math.floor(Math.random() * statusValues.length)];
+
+            // Randomize probability dynamically
+            const probability = parseFloat((Math.random() * 0.8 + 0.1).toFixed(2));
+
+            // Randomize state from E_PRIMARY_STATE
+            const stateValues = [
+              E_PRIMARY_STATE.E_PRIMARY_STATE_INIT,
+              E_PRIMARY_STATE.E_PRIMARY_STATE_STANDBY,
+              E_PRIMARY_STATE.E_PRIMARY_STATE_MAINTENANCE,
+              E_PRIMARY_STATE.E_PRIMARY_STATE_OPERATE,
+              E_PRIMARY_STATE.E_PRIMARY_STATE_SHUTDOWN,
+              E_PRIMARY_STATE.E_PRIMARY_STATE_OFF,
+              E_PRIMARY_STATE.E_PRIMARY_STATE_ERROR
+            ];
+            const state = stateValues[Math.floor(Math.random() * stateValues.length)];
+
+            // Randomize serviceability from E_SERVICEABILITY
+            const serviceabilityValues = [
+              E_SERVICEABILITY.E_SERVICEABILITY_OK,
+              E_SERVICEABILITY.E_SERVICEABILITY_DEGRADED,
+              E_SERVICEABILITY.E_SERVICEABILITY_FAIL,
+              E_SERVICEABILITY.E_SERVICEABILITY_UNKNOWN,
+              E_SERVICEABILITY.E_SERVICEABILITY_INVALID,
+              E_SERVICEABILITY.E_SERVICEABILITY_NOT_APPLICABLE,
+              E_SERVICEABILITY.E_SERVICEABILITY_NOT_CONFIG,
+              E_SERVICEABILITY.E_SERVICEABILITY_PSS_XOR_FSS
+            ];
+            const serviceability = serviceabilityValues[Math.floor(Math.random() * serviceabilityValues.length)];
+
+            // Randomize docType and bitOperationType
+            const docTypeValues = [
+              BitReportDocTypes.REPORT_DEC_TYPE,
+              BitReportDocTypes.FAULT_DEC_TYPE,
+              BitReportDocTypes.SERVICEABILITY_DOC_TYPE
+            ];
+            const docType = docTypeValues[Math.floor(Math.random() * docTypeValues.length)];
+
+            const bitOpTypeValues = [
+              BitOperationType.BIT,
+              BitOperationType.CALIBRATION
+            ];
+            const bitOperationType = bitOpTypeValues[Math.floor(Math.random() * bitOpTypeValues.length)];
+
+            return {
+              sensorId: hwMapIndex,
+              faultId: faultId,
+              probability: probability,
+              status: status,
+              date: Date.now(),
+              uniqueIdWithoutDate: `uuid-fault-${hwMapIndex}-${faultId}`,
+              uniqueId: `uuid-fault-${hwMapIndex}-${Date.now()}-${index}`,
+              AlternativeToUniqueId: alternativeId,
+              nodeFullPath: enriched.fullPath,
+              nodeIndexPath: enriched.indexPath,
+              faultName: fault.name,
+              fieUniqueId: uniqueIdNum,
+              description: fault.desc,
+              systemId: reportingSystem,
+              rootSystemId: reportingSystem,
+              systemName: activeModel.system.name,
+              serviceability: serviceability,
+              severity: fault.severity,
+              state: state,
+              docType: docType,
+              bitOperationType: bitOperationType,
+              reportId: `rep-${Math.floor(Math.random() * 10000)}`,
+              source: `Model_Fault_${faultId}`
+            } as SingleFault;
+          });
+
+          console.log(`[FaultsInjector] Generated and injected ${faultPayload.length} dynamic faults from active model "${activeModel.system.name}" to clients.`);
         }
       }
 
       // Fallback: Read occurredFaults.json if no model matches were found or activeModel is missing
-      if (faultMessages.length === 0) {
+      if (faultPayload.length === 0) {
         const fallbackPath = path.resolve(__dirname, '..', 'assets', 'mock-data-jsons', 'fie_messages', 'occurredFaults.json');
         if (fs.existsSync(fallbackPath)) {
           const rawContent = fs.readFileSync(fallbackPath, 'utf-8');
           const parsed = JSON.parse(rawContent);
           if (parsed && Array.isArray(parsed.faultMessages)) {
-            faultMessages = parsed.faultMessages.map((msg: any) => {
-              if (msg.node) {
-                msg.node.last_state_change_time = Date.now();
-                // Randomize pss_e and fss_e to respect E_SERVICEABILITY
-                msg.node.pss_e = Math.floor(Math.random() * 5);
-                msg.node.fss_e = Math.floor(Math.random() * 5);
-              }
+            const list: SingleFault[] = [];
+            parsed.faultMessages.forEach((msg: any) => {
+              const node_id = msg.node?.node_id || 1;
               if (Array.isArray(msg.faults)) {
-                msg.faults = msg.faults.map((f: any) => {
-                  f.faultChangeTime = Date.now();
-                  f.faultStatus = Math.random() < 0.5 ? 2 : 3; // E_SIGN
-                  return f;
+                msg.faults.forEach((f: any, idx: number) => {
+                  const hwMapIndex = f.hw_map_index || node_id;
+                  const faultId = f.faultId || 1;
+                  list.push({
+                    sensorId: hwMapIndex,
+                    faultId: faultId,
+                    probability: f.probability || 0.5,
+                    status: f.faultStatus === 2 ? E_SIGN.E_SIGN_PRIMARY : E_SIGN.E_SIGN_ALTERNATIVE,
+                    date: Date.now(),
+                    uniqueIdWithoutDate: `uuid-fault-fallback-${hwMapIndex}-${faultId}`,
+                    uniqueId: `uuid-fault-fallback-${hwMapIndex}-${Date.now()}-${idx}`,
+                    AlternativeToUniqueId: f.AlternativeToUniqueId || -1,
+                    nodeFullPath: `/FallbackNode/Sensor_${hwMapIndex}`,
+                    nodeIndexPath: `/${hwMapIndex}`,
+                    faultName: `FALLBACK_FAULT_${faultId}`,
+                    fieUniqueId: f.UniqueId || (hwMapIndex + faultId),
+                    description: `Fallback fault description for ID ${faultId}`,
+                    systemId: 1,
+                    rootSystemId: 1,
+                    systemName: "FallbackSystem",
+                    serviceability: msg.node?.pss_e || E_SERVICEABILITY.E_SERVICEABILITY_OK,
+                    severity: "NG",
+                    state: E_PRIMARY_STATE.E_PRIMARY_STATE_OPERATE,
+                    docType: BitReportDocTypes.FAULT_DEC_TYPE,
+                    bitOperationType: BitOperationType.BIT,
+                    reportId: `rep-fallback-${hwMapIndex}`,
+                    source: "Fallback_File"
+                  } as SingleFault);
                 });
               }
-              return msg;
             });
-            console.log(`[FaultsInjector] Injected ${faultMessages.length} fault messages from occurredFaults.json (fallback) to clients.`);
+            faultPayload = list;
+            console.log(`[FaultsInjector] Injected ${faultPayload.length} flat faults from occurredFaults.json (fallback) to clients.`);
           }
         }
       }
 
-      if (faultMessages.length > 0) {
-        // Send under the main key "faultMessages" as expected by occuredFaults.json structure
-        this.broadcastFn(SocketEventName.faultsChange, { faultMessages });
+      if (faultPayload.length > 0) {
+        this.broadcastFn(SocketEventName.faultsChange, faultPayload);
       }
     } catch (err) {
       console.error('[FaultsInjector] Error during faults injection:', (err as Error).message);

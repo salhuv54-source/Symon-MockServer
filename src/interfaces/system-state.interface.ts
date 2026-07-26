@@ -1,4 +1,4 @@
-import { E_SERVICEABILITY, E_SERVICEABILITY_Timeout } from "../types";
+import { E_SERVICEABILITY, E_SERVICEABILITY_Timeout } from "./sensor.interface";
 
 export enum E_PRIMARY_STATE {
     E_PRIMARY_STATE_INVALID = 0,

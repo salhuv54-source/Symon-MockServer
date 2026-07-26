@@ -1,4 +1,5 @@
-import { BitOperationType, BitReportDocTypes, E_SERVICEABILITY } from "../types";
+import { BitOperationType, BitReportDocTypes } from "../types";
+import { E_SERVICEABILITY } from "./sensor.interface";
 import { E_PRIMARY_STATE } from "./system-state.interface";
 
 export interface SingleFault {

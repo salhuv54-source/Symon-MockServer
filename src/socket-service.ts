@@ -9,6 +9,8 @@ import { FaultsInjector } from './faults-injector';
 import { GenerateKeepAlivePayload } from './keep-alive-generator';
 import { BuildDataToSendToClient } from '..';
 
+import treeService from './tree.service';
+
 // Socket.IO provides the native "Socket" type representing a connected client
 type MessageHandler = (client: Socket, data: any) => void;
 
@@ -34,6 +36,7 @@ class SocketService {
     (event, data) => this.broadcast(event, data),
     () => this.getClientCount() > 0
   );
+  private injectorStartTimeout: NodeJS.Timeout | null = null;
 
   /**
    * Start the Socket.IO server.
@@ -61,12 +64,6 @@ class SocketService {
 
       this.onClientConnection(socket);
 
-      // Send a welcome message to the newly connected client
-      socket.emit(SocketEventName.serverHealth, {
-        status: 'connected',
-        timestamp: new Date().toISOString()
-      });
-
       // Bind all registered custom handlers to this new connection
       this.handlers.forEach((handler, eventName) => {
         socket.on(eventName, (data: any) => {
@@ -88,10 +85,30 @@ class SocketService {
         this.clients.delete(socket);
       });
     });
+  }
 
+  /**
+   * Starts all recurring data injectors (events, status, faults).
+   */
+  startInjectors(): void {
+    console.log('[SocketService] Starting all injectors...');
     this.eventInjector.start();
     this.statusInjector.start();
     this.faultsInjector.start();
+  }
+
+  /**
+   * Starts all recurring data injectors after a specified delay in milliseconds.
+   */
+  startInjectorsWithDelay(delayMs: number = 10000): void {
+    if (this.injectorStartTimeout) {
+      clearTimeout(this.injectorStartTimeout);
+    }
+    console.log(`[SocketService] Scheduling injectors to start in ${delayMs / 1000} seconds...`);
+    this.injectorStartTimeout = setTimeout(() => {
+      this.startInjectors();
+      this.injectorStartTimeout = null;
+    }, delayMs);
   }
 
   /**
@@ -139,10 +156,10 @@ class SocketService {
 
   onClientConnection(client: Socket): void {
     // Fie-Data
-    const sensorsTree = GenerateSensorsTree();
-    client.emit(SocketEventName.treeChange, toArray(sensorsTree));
+    const sensorsTreeArray = treeService.buildTree();
+    client.emit(SocketEventName.treeChange, sensorsTreeArray);
 
-    const nodeIds = Object.keys(sensorsTree).map((idStr) => parseInt(idStr, 10));
+    const nodeIds = sensorsTreeArray.map((sensor) => sensor.id);
     client.emit(SocketEventName.serviceability, GenerateSensorsStatus(nodeIds));
     client.emit(SocketEventName.clientVersion, { message: 'Sending here clientVersion!' });
 
@@ -171,6 +188,10 @@ class SocketService {
    * Stop the Socket.IO server and disconnect all clients.
    */
   stop(): void {
+    if (this.injectorStartTimeout) {
+      clearTimeout(this.injectorStartTimeout);
+      this.injectorStartTimeout = null;
+    }
     this.eventInjector.stop();
     this.statusInjector.stop();
     this.faultsInjector.stop();

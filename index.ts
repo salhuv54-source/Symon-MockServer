@@ -7,7 +7,7 @@ import { createRouteService } from './src/route-service';
 import { DataType, SocketEventName } from './src/types';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
-import { DataStatusBuild, DataStatusType } from './src/interfaces/DataStatusBuild.interface';
+import { DataStatusBuild, DataStatusType, ServerDataStatusToClient } from './src/interfaces/DataStatusBuild.interface';
 
 class MockSymonServer {
     private app: express.Application;
@@ -63,6 +63,9 @@ class MockSymonServer {
         this.httpServer.listen(this.Port, () => {
             console.log(`[MockSymonServer] HTTP server listening on http://localhost:${this.Port}`);
             console.log(`[MockSymonServer] Swagger docs available at http://localhost:${this.Port}/swagger`);
+
+            // Start all injectors 10 seconds after initialization completes
+            socketService.startInjectorsWithDelay(10000);
         });
 
         console.log('[MockSymonServer] Initialization complete.');
@@ -269,39 +272,81 @@ class MockSymonServer {
     }
 }
 
-export function BuildDataToSendToClient(): DataStatusBuild[] {
+export function BuildDataToSendToClient(): ServerDataStatusToClient[] {
+    const newArr: ServerDataStatusToClient[] = [];
     const allDataTypes = [
         {
             dataType: "SERVER_CONNECTION",
-            getStatus: DataStatusType.CONNECTED_TO_SERVER,
+            getStatus: () => DataStatusType.CONNECTED_TO_SERVER,
             order: 0
         },
         {
             dataType: "RABBIT_CONNECTION",
-            getStatus: DataStatusType.CONNECTED_TO_RABBIT,
+            getStatus: () => DataStatusType.CONNECTED_TO_RABBIT,
             order: 1
         },
         {
             dataType: "DB_CONNECTION",
-            getStatus: DataStatusType.CONNECTED_TO_DB,
+            getStatus: () => DataStatusType.CONNECTED_TO_DB,
             order: 2
         },
         {
             dataType: DataType.ATTRIBUTES,
             message: 'Attributesfile missing',
             order: 3,
+            getStatus: () => DataStatusType.DATA_RECEIVED
         },
         {
             dataType: DataType.SENSOR_TREE,
-            order: 4
+            order: 4,
+            getStatus: () => DataStatusType.DATA_RECEIVED
         },
         {
             dataType: DataType.FAULT_TYPE_LIST,
-            order: 5
+            order: 5,
+            getStatus: () => DataStatusType.DATA_RECEIVED
         }
     ];
 
-    return allDataTypes;
+    allDataTypes.forEach((data: DataStatusBuild) => {
+        const isDataReceived = data.dataType === "SERVER_CONNECTION";
+        const dataToCache = setServerDataHealth(
+            data,
+            isDataReceived
+        );
+        newArr.push(dataToCache);
+    });
+    return newArr;
+}
+export function setServerDataHealth(
+    data: DataStatusBuild,
+    isDataReceived: boolean
+): ServerDataStatusToClient {
+    return {
+        isDataReceived,
+        dataType: data.dataType,
+        order: data.order,
+        message: data.getMessage
+            ? data.getMessage(data.dataType, isDataReceived)
+            : defaultGetMessage(data.message, isDataReceived),
+        status: data.getStatus
+            ? data.getStatus(isDataReceived)
+            : defaultGetStatus(isDataReceived),
+    };
+}
+export function defaultGetMessage(message?: string, isDataArrived?: boolean): string {
+    return isDataArrived ? "" : message || "";
+}
+export function defaultGetStatus(isDataArrived: boolean): string {
+    return isDataArrived
+        ? DataStatusType.DATA_RECEIVED
+        : DataStatusType.DATA_NOT_RECEIVED;
+}
+export function GetFaultTypeList() {
+    return appStore.getModel("System1")?.faults;
+}
+export function GetEventTypeList() {
+    return appStore.getModel("System1")?.events;
 }
 
 // Create server instance

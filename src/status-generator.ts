@@ -1,10 +1,12 @@
 import { 
-  SensorStatus, 
-  E_SERVICEABILITY, 
-  E_SERVICEABILITY_Timeout, 
   BitReportDocTypes, 
   BitOperationType 
 } from './types';
+import { 
+  SensorStatus, 
+  E_SERVICEABILITY, 
+  E_SERVICEABILITY_Timeout 
+} from './interfaces/sensor.interface';
 
 /**
  * Generates an array of randomized SensorStatus objects.

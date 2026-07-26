@@ -38,6 +38,8 @@ function getIconForNode(level: number, name: string): string {
   return 'lens';
 }
 
+import treeService, { UserAttributeRecord } from './tree.service';
+
 /**
  * Recursively converts ModelInstance tree to Sensor nodes.
  */
@@ -47,7 +49,8 @@ function buildFromInstances(
   parentId: number | null,
   level: number,
   parentIndexPath: string,
-  sensors: SensorsCollection
+  sensors: SensorsCollection,
+  userAttrsMap: Map<number, UserAttributeRecord>
 ): void {
   instances.forEach((inst, index) => {
     const id = parseInt(inst.hmi, 10);
@@ -60,10 +63,21 @@ function buildFromInstances(
     const ntt = findNttByNti(model.nodeTypes, inst.nti);
 
     // Check if this instance is a supplier
-    const isPowerSupplier = model.supplierInstances.some(s => s.hmi === inst.hmi) || level === 0;
+    let isPowerSupplier = model.supplierInstances.some(s => s.hmi === inst.hmi) || level === 0;
 
     // Is it a power sensor?
     const isPowerSensor = level > 0;
+
+    let isHidden = false;
+    let isDisplayAsSystem = level <= 1 || ntt === "System" || ntt === "Sub System";
+
+    // User attributes override from UAttr.xml
+    const userAttr = userAttrsMap.get(id);
+    if (userAttr) {
+      if (userAttr.hidden !== undefined) isHidden = userAttr.hidden;
+      if (userAttr.powerSupplier !== undefined) isPowerSupplier = userAttr.powerSupplier;
+      if (userAttr.displayAsSystem !== undefined) isDisplayAsSystem = userAttr.displayAsSystem;
+    }
 
     // Icons:
     const icon = getIconForNode(level, inst.name);
@@ -80,8 +94,8 @@ function buildFromInstances(
       name: inst.name,
       parentsIds,
       childrenIds,
-      isHidden: false,
-      isDisplayAsSystem: level <= 1 || ntt === "System" || ntt === "Sub System",
+      isHidden,
+      isDisplayAsSystem,
       powerParentsIds,
       powerChildrenIds,
       isPowerSensor,
@@ -94,7 +108,7 @@ function buildFromInstances(
     };
 
     if (inst.children && inst.children.length > 0) {
-      buildFromInstances(inst.children, model, id, level + 1, nodeIndexPath, sensors);
+      buildFromInstances(inst.children, model, id, level + 1, nodeIndexPath, sensors, userAttrsMap);
     }
   });
 }
@@ -109,9 +123,10 @@ export function GenerateSensorsTree(): SensorsCollection {
   if (activeModel && activeModel.instances && activeModel.instances.length > 0) {
     console.log(`[SensorGenerator] Generating sensor tree dynamically from active model: "${activeModel.system.name}"`);
     const sensors: SensorsCollection = {};
+    const userAttrsMap = treeService.parseUserAttributes();
 
     // 1. Build the tree hierarchically from instances
-    buildFromInstances(activeModel.instances, activeModel, null, 0, '', sensors);
+    buildFromInstances(activeModel.instances, activeModel, null, 0, '', sensors, userAttrsMap);
 
     // 2. Add explicit power routing from SupplierInstances
     if (activeModel.supplierInstances) {

@@ -1,5 +1,5 @@
 export interface DataStatusBuild extends ServerDataStatusBase {
-    getStatus?: string;
+    getStatus?: (isDataRecieved?: boolean) => string;
     getIsDataArrived?: (data: string) => boolean;
     getMessage?: (messgae?: string, isDataRecieved?: boolean) => string;
 }
@@ -22,5 +22,7 @@ export interface ServerDataStatusToClientCollection {
 export enum DataStatusType {
     CONNECTED_TO_SERVER = "Connected to server",
     CONNECTED_TO_RABBIT = "Connected to rabbit",
-    CONNECTED_TO_DB = "Connected to"
+    CONNECTED_TO_DB = "Connected to",
+    DATA_RECEIVED = "Data recieved",
+    DATA_NOT_RECEIVED = "Data not recieved"
 }

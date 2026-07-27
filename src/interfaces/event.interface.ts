@@ -55,3 +55,8 @@ export enum E_FIE_PROCESS {
 export interface EventCollection {
     [eventId_uniq: string]: EventMsg
 }
+
+export interface EventsChangePayload {
+    data: EventMsg[];
+    isOnline: boolean;
+}

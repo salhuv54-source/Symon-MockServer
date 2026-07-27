@@ -3,7 +3,7 @@ import * as path from 'path';
 import appStore from './app-store';
 import { ModelInstance, SocketEventName, BitReportDocTypes, BitOperationType } from './types';
 import { E_SERVICEABILITY } from './interfaces/sensor.interface';
-import { SingleFault, E_SIGN } from './interfaces/fault.interface';
+import { SingleFault, E_SIGN, FaultsChangePayload } from './interfaces/fault.interface';
 import { E_PRIMARY_STATE } from './interfaces/system-state.interface';
 
 /**
@@ -49,7 +49,7 @@ export class FaultsInjector {
   /**
    * Injects mock faults based on active model connections or file fallback.
    */
-  private injectFaults(): void {
+  public injectFaults(isOnline: boolean = true): void {
     if (!this.hasClientsFn()) {
       return;
     }
@@ -254,7 +254,11 @@ export class FaultsInjector {
       }
 
       if (faultPayload.length > 0) {
-        this.broadcastFn(SocketEventName.faultsChange, faultPayload);
+        const payload: FaultsChangePayload = {
+          data: faultPayload,
+          isOnline
+        };
+        this.broadcastFn(SocketEventName.faultsChange, payload);
       }
     } catch (err) {
       console.error('[FaultsInjector] Error during faults injection:', (err as Error).message);

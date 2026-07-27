@@ -37,6 +37,11 @@ export interface FaultCollection {
     [faultUniqID: string]: SingleFault;
 }
 
+export interface FaultsChangePayload {
+    data: SingleFault[];
+    isOnline: boolean;
+}
+
 export enum E_SIGN {
     E_SIGN_OK,
     E_SIGN_UNKNOWN,

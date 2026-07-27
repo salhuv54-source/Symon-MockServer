@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import appStore from './app-store';
 import { ModelInstance, SocketEventName } from './types';
-import { EventMsg, E_EVENT_CLASS, E_FIE_PROCESS } from './interfaces/event.interface';
+import { EventMsg, E_EVENT_CLASS, E_FIE_PROCESS, EventsChangePayload } from './interfaces/event.interface';
 import { E_SIGN } from './interfaces/fault.interface';
 import { E_PRIMARY_STATE } from './interfaces/system-state.interface';
 
@@ -49,7 +49,7 @@ export class EventInjector {
   /**
    * Injects mock events based on active model data or file fallback.
    */
-  private injectEvents(): void {
+  public injectEvents(isOnline: boolean = true): void {
     if (!this.hasClientsFn()) {
       // Don't inject events if no clients are connected
       return;
@@ -219,7 +219,11 @@ export class EventInjector {
       }
 
       if (eventPayload.length > 0) {
-        this.broadcastFn(SocketEventName.eventsChange, eventPayload);
+        const payload: EventsChangePayload = {
+          data: eventPayload,
+          isOnline
+        };
+        this.broadcastFn(SocketEventName.eventsChange, payload);
       }
     } catch (err) {
       console.error('[EventInjector] Error during event injection:', (err as Error).message);

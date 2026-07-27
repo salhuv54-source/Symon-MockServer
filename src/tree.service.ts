@@ -405,6 +405,9 @@ export class TreeService {
       const socketService = require('./socket-service').default;
       if (socketService && typeof socketService.broadcast === 'function') {
         socketService.broadcast(SocketEventName.treeChange, tree);
+        const { GenerateSystemStateCollection } = require('./system-state-generator');
+        const systemStateCollection = GenerateSystemStateCollection(tree);
+        socketService.broadcast(SocketEventName.systemStateChange, systemStateCollection);
       }
     } catch (err) {
       console.error('[TreeService] Failed to broadcast treeChange event:', (err as Error).message);

@@ -1,0 +1,56 @@
+<UserAttributes>
+	<AttributesList>
+		<Attribute Name="PowerSupplier" Usage="4" />
+		<Attribute Name="OperatingTemperature" Usage="2" />
+		<Attribute Name="FirmwareVersion" Usage="2" />
+		<Attribute Name="CriticalityLevel" Usage="2" />
+		<Attribute Name="Manufacturer" Usage="2" />
+		<Attribute Name="BaudRate" Usage="2" />
+		<Attribute Name="RedundancyMode" Usage="2" />
+		<Attribute Name="CalibrationDate" Usage="2" />
+		<Attribute Name="Hidden" Usage="1" />
+	</AttributesList>
+	<NodeTypeAttributes />
+	<NodeInstanceAttributes>
+		<NodeInstance NTII="NTI3_#1" FullPath="LargeSystem.RadarSubSystem.TransmitterLRU.PowerAmpSRU" Index="1" NTI="NTI3" HMI="20000004">
+			<Attribute Name="OperatingTemperature" Value="62.4 C" />
+			<Attribute Name="CriticalityLevel" Value="High" />
+			<Attribute Name="Manufacturer" Value="Elta Systems" />
+		</NodeInstance>
+		<NodeInstance NTII="NTI3_#2" FullPath="LargeSystem.RadarSubSystem.TransmitterLRU.PowerAmpSRU" Index="2" NTI="NTI3" HMI="20000005">
+			<Attribute Name="OperatingTemperature" Value="58.1 C" />
+			<Attribute Name="CriticalityLevel" Value="High" />
+			<Attribute Name="Manufacturer" Value="Elta Systems" />
+		</NodeInstance>
+		<NodeInstance NTII="NTI4_#1" FullPath="LargeSystem.RadarSubSystem.TransmitterLRU.CoolingSRU" Index="1" NTI="NTI4" HMI="20000006">
+			<Attribute Name="OperatingTemperature" Value="24.0 C" />
+			<Attribute Name="Manufacturer" Value="Elta Systems" />
+		</NodeInstance>
+		<NodeInstance NTII="NTI6_#1" FullPath="LargeSystem.RadarSubSystem.ReceiverLRU.SignalProcSRU" Index="1" NTI="NTI6" HMI="20000008">
+			<Attribute Name="FirmwareVersion" Value="v4.12.0" />
+			<Attribute Name="Manufacturer" Value="Elta Systems" />
+		</NodeInstance>
+		<NodeInstance NTII="NTI10_#1" FullPath="LargeSystem.CommSubSystem.RadioLRU.ModemSRU" Index="1" NTI="NTI10" HMI="20000013">
+			<Attribute Name="BaudRate" Value="115200" />
+			<Attribute Name="RedundancyMode" Value="Active" />
+		</NodeInstance>
+		<NodeInstance NTII="NTI10_#2" FullPath="LargeSystem.CommSubSystem.RadioLRU.ModemSRU" Index="2" NTI="NTI10" HMI="20000014">
+			<Attribute Name="BaudRate" Value="115200" />
+			<Attribute Name="RedundancyMode" Value="Standby" />
+		</NodeInstance>
+		<NodeInstance NTII="NTI17_#1" FullPath="LargeSystem.NavSubSystem.InertialNavLRU.GyroscopeSRU" Index="1" NTI="NTI17" HMI="20000021">
+			<Attribute Name="CalibrationDate" Value="2026-05-15" />
+			<Attribute Name="CriticalityLevel" Value="Critical" />
+		</NodeInstance>
+		<NodeInstance NTII="NTI24_#1" FullPath="LargeSystem.PowerSubSystem.MainPowerUnitLRU.PowerSupplySRU" Index="1" NTI="NTI24" HMI="20000029">
+			<Attribute Name="PowerSupplier" Value="Main AC Converter" />
+			<Attribute Name="OperatingTemperature" Value="38.5 C" />
+		</NodeInstance>
+		<NodeInstance NTII="NTI24_#2" FullPath="LargeSystem.PowerSubSystem.MainPowerUnitLRU.PowerSupplySRU" Index="2" NTI="NTI24" HMI="20000030">
+			<Attribute Name="PowerSupplier" Value="Backup Battery" />
+		</NodeInstance>
+		<NodeInstance NTII="NTI25_#1" FullPath="LargeSystem.PowerSubSystem.MainPowerUnitLRU.VoltageRegulatorSRU" Index="1" NTI="NTI25" HMI="20000033">
+			<Attribute Name="Hidden" Value="False" />
+		</NodeInstance>
+	</NodeInstanceAttributes>
+</UserAttributes>

@@ -1,0 +1,36 @@
+<FFConversion SchemaVer="3.0" DataVer="1.03" SoftwareVersion="2.1.9" ModelName="LargeSystem" ConvertTime="1783525790916">
+	<Subsystems>
+		<Subsystem Name="RadarSubSystem" Id="1" NTI="1">
+			<LRU Name="TransmitterLRU" Id="2" Repetitions="1" NTI="2">
+				<SRU NTI="3" Name="PowerAmpSRU" Id="3" Repetitions="2">
+					<Events>
+						<Event Name="BIT_E_RADAR_OVERHEAT" Id="0" Oneshot="1" Severity="4" Urgency="1" Description="Radar Transmitter Power Amp Overheat" />
+					</Events>
+					<Faults>
+						<Fault Name="BIT_F_TRANSMITTER_FAULT" Id="0" Severity="4" Urgency="1" Description="Radar Power Amp Hardware Failure" />
+					</Faults>
+					<Instances>
+						<Instance LRUOffset="0" SRUOffset="0" SerialNumber="1" HMI="20000004" Invisible="False" />
+						<Instance LRUOffset="0" SRUOffset="1" SerialNumber="2" HMI="20000005" Invisible="False" />
+					</Instances>
+				</SRU>
+			</LRU>
+		</Subsystem>
+		<Subsystem Name="CommSubSystem" Id="8" NTI="8">
+			<LRU Name="RadioLRU" Id="9" Repetitions="1" NTI="9">
+				<SRU NTI="10" Name="ModemSRU" Id="10" Repetitions="2">
+					<Events>
+						<Event Name="BIT_E_COMM_LINK_LOSS" Id="1" Oneshot="1" Severity="4" Urgency="1" Description="Communication Modem Link Loss" />
+					</Events>
+					<Faults>
+						<Fault Name="BIT_F_MODEM_FAULT" Id="2" Severity="4" Urgency="1" Description="Comm Radio Modem Board Fault" />
+					</Faults>
+					<Instances>
+						<Instance LRUOffset="0" SRUOffset="0" SerialNumber="1" HMI="20000013" Invisible="False" />
+						<Instance LRUOffset="0" SRUOffset="1" SerialNumber="2" HMI="20000014" Invisible="False" />
+					</Instances>
+				</SRU>
+			</LRU>
+		</Subsystem>
+	</Subsystems>
+</FFConversion>

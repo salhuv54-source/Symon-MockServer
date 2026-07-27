@@ -16,7 +16,7 @@ const MODELS_DIR = path.resolve(__dirname, '..', 'assets', 'model');
 class UploadService {
   /**
    * Load a model by its file name (without extension or with .fsx extension).
-   * Looks in assets/mock-data-jsons/model/<fileName>.fsx
+   * Looks in assets/model/<fileName>.fsx
    *
    * @param fileName - The name of the model file (e.g., "System1_Export" or "System1_Export.fsx")
    * @returns The model name under which it was stored

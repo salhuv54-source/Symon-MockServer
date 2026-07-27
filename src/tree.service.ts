@@ -113,16 +113,22 @@ export class TreeService {
    * Resolves the attribute file path corresponding to the active model or default assets.
    */
   public getAttributesFilePath(modelFileName?: string): string | null {
+    const activeModel = appStore.getActiveModel();
+    const systemName = activeModel?.system?.name;
+
     const candidates = [
-      path.resolve(__dirname, '..', 'assets', 'mock-data-jsons', 'model', 'System1_UAttr.xml'),
       path.resolve(__dirname, '..', 'assets', 'model', 'System1_UAttr.xml'),
-      path.resolve(__dirname, '..', 'assets', 'mock-data-jsons', 'fie_messages', 'attributes.xml'),
     ];
+
+    if (systemName) {
+      candidates.unshift(
+        path.resolve(__dirname, '..', 'assets', 'model', `${systemName}_UAttr.xml`)
+      );
+    }
 
     if (modelFileName) {
       const baseName = modelFileName.replace(/\.(fsx|xml)$/, '');
       candidates.unshift(
-        path.resolve(__dirname, '..', 'assets', 'mock-data-jsons', 'model', `${baseName}_UAttr.xml`),
         path.resolve(__dirname, '..', 'assets', 'model', `${baseName}_UAttr.xml`)
       );
     }

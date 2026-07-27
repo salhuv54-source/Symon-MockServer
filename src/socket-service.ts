@@ -8,6 +8,7 @@ import { StatusInjector } from './status-injector';
 import { FaultsInjector } from './faults-injector';
 import { GenerateKeepAlivePayload } from './keep-alive-generator';
 import { GenerateSystemStateCollection } from './system-state-generator';
+import { GenerateSystemInfoList } from './system-info-generator';
 import { BuildDataToSendToClient } from '..';
 
 import treeService from './tree.service';
@@ -167,7 +168,7 @@ class SocketService {
     // Agent-Data
     const systemStateCollection = GenerateSystemStateCollection(sensorsTreeArray);
     client.emit(SocketEventName.systemStateChange, systemStateCollection);
-    client.emit(SocketEventName.systemInfo, { message: 'Sending here systemInfo!' });
+    client.emit(SocketEventName.systemInfo, GenerateSystemInfoList());
 
     // Keep-Alive
     const keepAlivePayload = GenerateKeepAlivePayload();

@@ -1,5 +1,7 @@
 // Types for the model data parsed from FSX files
 
+import { Router } from "express";
+
 export interface ModelSystem {
   name: string;
   id: string;

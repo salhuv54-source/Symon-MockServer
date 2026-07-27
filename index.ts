@@ -8,6 +8,7 @@ import { DataType, SocketEventName } from './src/types';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
 import { DataStatusBuild, DataStatusType, ServerDataStatusToClient, ServerDataStatusToClientCollection } from './src/interfaces/DataStatusBuild.interface';
+import { getEventsAndFaultsForSystem } from './src/system-log.service';
 
 class MockSymonServer {
     private app: express.Application;
@@ -245,6 +246,30 @@ class MockSymonServer {
         });
         socketService.on(SocketEventName.systemLogTimeFilterChange, (client, data) => {
             console.log(`[MockSymonServer] Received systemLogTimeFilterChange:`, JSON.stringify(data));
+            const selectedSystemId = data?.SelectedSystemId ?? data?.selectedSystemId ?? data?.systemId ?? data?.nodeId;
+            const { events, faults } = getEventsAndFaultsForSystem(selectedSystemId);
+
+            console.log(`[MockSymonServer] Emitting log data for SelectedSystemId "${selectedSystemId}": ${events.length} events, ${faults.length} faults`);
+
+            // Emit connected events to the requesting client on eventsChange
+            socketService.sendTo(client, SocketEventName.eventsChange, {
+                data: events,
+                isOnline: false
+            });
+
+            // Emit connected faults to the requesting client on faultsChange
+            socketService.sendTo(client, SocketEventName.faultsChange, {
+                data: faults,
+                isOnline: false
+            });
+
+            // Also emit response on systemLogTimeFilterChange
+            socketService.sendTo(client, SocketEventName.systemLogTimeFilterChange, {
+                SelectedSystemId: selectedSystemId,
+                events,
+                faults,
+                isOnline: false
+            });
         });
         socketService.on(SocketEventName.treeMapFilterChange, (client, data) => {
             console.log(`[MockSymonServer] Received treeMapFilterChange:`, JSON.stringify(data));

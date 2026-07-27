@@ -14,8 +14,8 @@ export interface UserAttributeRecord {
 }
 
 export class TreeService {
-  private defaultModelPath = path.resolve(__dirname, '..', 'assets', 'mock-data-jsons', 'model', 'System1_Export.fsx');
-  private defaultAttrPath = path.resolve(__dirname, '..', 'assets', 'mock-data-jsons', 'model', 'System1_UAttr.xml');
+  private defaultModelPath = path.resolve(__dirname, '..', 'assets', 'model', 'System1_Export.fsx');
+  private defaultAttrPath = path.resolve(__dirname, '..', 'assets', 'model', 'System1_UAttr.xml');
 
   /**
    * Helper function to safely convert values/collections to arrays

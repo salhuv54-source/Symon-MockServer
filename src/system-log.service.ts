@@ -1,11 +1,12 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import appStore from './app-store';
+import treeService from './tree.service';
 import { ModelInstance, BitReportDocTypes, BitOperationType } from './types';
 import { EventMsg, E_EVENT_CLASS, E_FIE_PROCESS } from './interfaces/event.interface';
 import { SingleFault, E_SIGN } from './interfaces/fault.interface';
 import { E_PRIMARY_STATE } from './interfaces/system-state.interface';
-import { E_SERVICEABILITY } from './interfaces/sensor.interface';
+import { E_SERVICEABILITY, Sensor } from './interfaces/sensor.interface';
 
 interface EnrichedInstance {
   inst: ModelInstance;
@@ -242,7 +243,36 @@ export function getAllModelFaults(): SingleFault[] {
 }
 
 /**
- * Returns the events and faults connected to a specific SelectedSystemId.
+ * Traverses the sensor tree to collect the target ID and all descendant node IDs (children, grandchildren, etc.).
+ */
+function getAllDescendantIds(targetId: number): Set<number> {
+  const ids = new Set<number>([targetId]);
+  try {
+    const tree = treeService.buildTree();
+    const sensorMap = new Map<number, Sensor>(tree.map(s => [s.id, s]));
+
+    function collect(id: number) {
+      const sensor = sensorMap.get(id);
+      if (sensor && sensor.childrenIds && sensor.childrenIds.length > 0) {
+        for (const childId of sensor.childrenIds) {
+          if (!ids.has(childId)) {
+            ids.add(childId);
+            collect(childId);
+          }
+        }
+      }
+    }
+
+    collect(targetId);
+  } catch (err) {
+    console.error('[SystemLogService] Error collecting descendant IDs:', (err as Error).message);
+  }
+  return ids;
+}
+
+/**
+ * Returns the events and faults connected to a specific SelectedSystemId,
+ * including all events and faults of its children and descendant nodes.
  */
 export function getEventsAndFaultsForSystem(selectedSystemIdInput: any): { events: EventMsg[]; faults: SingleFault[] } {
   let selectedId: number | null = null;
@@ -263,18 +293,24 @@ export function getEventsAndFaultsForSystem(selectedSystemIdInput: any): { event
     return { events: allEvents, faults: allFaults };
   }
 
+  const targetIds = getAllDescendantIds(selectedId);
+
   const matchesSelectedId = (item: { sensorId?: number; systemId?: number; nodeIndexPath?: string }): boolean => {
-    if (item.sensorId === selectedId) return true;
-    if (item.systemId === selectedId) return true;
+    if (item.sensorId !== undefined && targetIds.has(item.sensorId)) return true;
+    if (item.systemId !== undefined && targetIds.has(item.systemId)) return true;
+
     if (item.nodeIndexPath) {
       const parts = item.nodeIndexPath.split('/').map(p => parseInt(p, 10)).filter(n => !isNaN(n));
-      if (parts.includes(selectedId!)) return true;
+      if (parts.some(p => targetIds.has(p))) return true;
     }
+
     return false;
   };
 
   const filteredEvents = allEvents.filter(matchesSelectedId);
   const filteredFaults = allFaults.filter(matchesSelectedId);
+
+  console.log(`[SystemLogService] Filtered logs for node ${selectedId} (including ${targetIds.size - 1} children/descendant nodes): ${filteredEvents.length} events, ${filteredFaults.length} faults`);
 
   return { events: filteredEvents, faults: filteredFaults };
 }

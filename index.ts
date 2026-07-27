@@ -7,12 +7,12 @@ import { createRouteService } from './src/route-service';
 import { DataType, SocketEventName } from './src/types';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
-import { DataStatusBuild, DataStatusType, ServerDataStatusToClient } from './src/interfaces/DataStatusBuild.interface';
+import { DataStatusBuild, DataStatusType, ServerDataStatusToClient, ServerDataStatusToClientCollection } from './src/interfaces/DataStatusBuild.interface';
 
 class MockSymonServer {
     private app: express.Application;
     private httpServer: http.Server;
-    private Port = 8081;
+    private Port = 9001;
     constructor() {
         this.app = express();
         this.httpServer = http.createServer(this.app);
@@ -21,19 +21,6 @@ class MockSymonServer {
 
     async init(): Promise<void> {
         console.log('[MockSymonServer] Initializing...');
-
-        // Parse JSON bodies
-        this.app.use(express.json());
-
-        // Initialize Socket.IO
-        this.initSocket();
-
-        // Mount all REST API routes from MainRoutes enum
-        const apiRouter = createRouteService();
-        this.app.use(apiRouter);
-
-        // Initialize Swagger API documentation
-        this.initSwagger(apiRouter);
 
         // List available models in assets/model/
         const availableModels = uploadService.listAvailableModels();
@@ -67,6 +54,18 @@ class MockSymonServer {
             // Start all injectors 10 seconds after initialization completes
             socketService.startInjectorsWithDelay(10000);
         });
+        // Parse JSON bodies
+        this.app.use(express.json());
+
+        // Initialize Socket.IO
+        this.initSocket();
+
+        // Mount all REST API routes from MainRoutes enum
+        const apiRouter = createRouteService();
+        this.app.use(apiRouter);
+
+        // Initialize Swagger API documentation
+        this.initSwagger(apiRouter);
 
         console.log('[MockSymonServer] Initialization complete.');
     }
@@ -272,8 +271,8 @@ class MockSymonServer {
     }
 }
 
-export function BuildDataToSendToClient(): ServerDataStatusToClient[] {
-    const newArr: ServerDataStatusToClient[] = [];
+export function BuildDataToSendToClient(): ServerDataStatusToClientCollection {
+    const newArr: ServerDataStatusToClientCollection = {};
     const allDataTypes = [
         {
             dataType: "SERVER_CONNECTION",
@@ -292,7 +291,7 @@ export function BuildDataToSendToClient(): ServerDataStatusToClient[] {
         },
         {
             dataType: DataType.ATTRIBUTES,
-            message: 'Attributesfile missing',
+            message: 'Attributes file missing',
             order: 3,
             getStatus: () => DataStatusType.DATA_RECEIVED
         },
@@ -309,12 +308,13 @@ export function BuildDataToSendToClient(): ServerDataStatusToClient[] {
     ];
 
     allDataTypes.forEach((data: DataStatusBuild) => {
-        const isDataReceived = data.dataType === "SERVER_CONNECTION";
+        const isDataReceived = true;
         const dataToCache = setServerDataHealth(
             data,
             isDataReceived
         );
-        newArr.push(dataToCache);
+        if (data.dataType)
+            newArr[data.dataType] = dataToCache;
     });
     return newArr;
 }

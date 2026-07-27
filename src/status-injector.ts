@@ -57,7 +57,7 @@ export class StatusInjector {
       if (nodeIds.length > 0) {
         const statusPayload = GenerateSensorsStatus(nodeIds);
         this.broadcastFn(SocketEventName.serviceability, statusPayload);
-        console.log(`[StatusInjector] Injected status updates for ${statusPayload.length} nodes.`);
+        console.log(`[StatusInjector] Injected status updates for ${statusPayload} nodes.`);
       }
     } catch (err) {
       console.error('[StatusInjector] Error during status injection:', (err as Error).message);

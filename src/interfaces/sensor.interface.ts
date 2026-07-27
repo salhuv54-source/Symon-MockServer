@@ -3,6 +3,9 @@ import { BitOperationType, BitReportDocTypes } from "../types";
 export interface SensorsCollection {
     [id: number]: Sensor;
 }
+export interface SensorStatusCollection {
+    [id: number]: SensorStatus;
+}
 
 export interface Sensor {
     id: number;

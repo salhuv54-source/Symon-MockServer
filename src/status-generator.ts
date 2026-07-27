@@ -1,19 +1,20 @@
-import { 
-  BitReportDocTypes, 
-  BitOperationType 
+import {
+  BitReportDocTypes,
+  BitOperationType
 } from './types';
-import { 
-  SensorStatus, 
-  E_SERVICEABILITY, 
-  E_SERVICEABILITY_Timeout 
+import {
+  SensorStatus,
+  E_SERVICEABILITY,
+  E_SERVICEABILITY_Timeout,
+  SensorStatusCollection
 } from './interfaces/sensor.interface';
 
 /**
  * Generates an array of randomized SensorStatus objects.
  * We generate statuses for a list of node IDs or a range from 1 to maxNodeId.
  */
-export function GenerateSensorsStatus(nodeIdsOrMax: number | number[] = 25): SensorStatus[] {
-  const statuses: SensorStatus[] = [];
+export function GenerateSensorsStatus(nodeIdsOrMax: number | number[] = 25): SensorStatusCollection {
+  const statuses: SensorStatusCollection = {};
   const nodeIds: number[] = [];
 
   if (Array.isArray(nodeIdsOrMax)) {
@@ -52,7 +53,7 @@ export function GenerateSensorsStatus(nodeIdsOrMax: number | number[] = 25): Sen
   };
 
   for (const id of nodeIds) {
-    statuses.push({
+    statuses[id] = {
       node_id: id,
       uniqueId: `uuid-${id}-${Math.floor(100000 + Math.random() * 900000)}`,
       pss_e: pickRealisticServiceability(),
@@ -62,7 +63,7 @@ export function GenerateSensorsStatus(nodeIdsOrMax: number | number[] = 25): Sen
       bitOperationType: Math.random() < 0.5 ? BitOperationType.BIT : BitOperationType.CALIBRATION,
       reportId: `rep-${Math.floor(1000 + Math.random() * 9000)}`,
       isDeleted: false
-    });
+    };
   }
 
   return statuses;

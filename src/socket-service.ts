@@ -175,7 +175,7 @@ class SocketService {
     client.emit(SocketEventName.communicationStatus, { message: 'Sending here communicationStatus!' });
 
     // Server-generated-data
-    client.emit(SocketEventName.serverHealth, { message: BuildDataToSendToClient() });
+    client.emit(SocketEventName.serverHealth, BuildDataToSendToClient());
     client.emit(SocketEventName.startUpInBitSensors, { message: 'Sending here startUpInBitSensors!' });
     client.emit(SocketEventName.mapsSelectionNames, { message: 'Sending here mapsSelectionNames!' });
     client.emit(SocketEventName.systemsUnreadAlertsCount, { message: 'Sending here systemsUnreadAlertsCount!' });

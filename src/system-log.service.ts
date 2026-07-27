@@ -41,6 +41,10 @@ export function getAllModelEvents(): EventMsg[] {
     const flatInstances = collectAllInstances(activeModel.instances);
     const matches: Array<{ evt: any; enriched: EnrichedInstance }> = [];
 
+    const rootSystemId = (activeModel.instances && activeModel.instances.length > 0)
+      ? (parseInt(activeModel.instances[0].hmi, 10) || parseInt(activeModel.system.id, 10) || 1)
+      : (parseInt(activeModel.system.id, 10) || 1);
+
     activeModel.events.forEach(evt => {
       flatInstances.forEach(enriched => {
         if (evt.nti === enriched.inst.nti) {
@@ -82,8 +86,8 @@ export function getAllModelEvents(): EventMsg[] {
         eventName: evt.name,
         description: evt.desc,
         severity: evt.severity,
-        systemId: reportingSystem,
-        rootSystemId: reportingSystem,
+        systemId: hwMapIndex,
+        rootSystemId: rootSystemId,
         systemName: activeModel.system.name,
         nodeFullPath: enriched.fullPath,
         nodeIndexPath: enriched.indexPath,
@@ -119,7 +123,7 @@ export function getAllModelEvents(): EventMsg[] {
             nodeIndexPath: `/${hwMapIndex}`,
             eventName: `FALLBACK_EVENT_${eventId}`,
             description: `Fallback event description for ID ${eventId}`,
-            systemId: 1,
+            systemId: hwMapIndex,
             rootSystemId: 1,
             systemName: "FallbackSystem",
             severity: "NG",
@@ -143,6 +147,10 @@ export function getAllModelFaults(): SingleFault[] {
     const flatInstances = collectAllInstances(activeModel.instances);
     const matches: Array<{ fault: any; enriched: EnrichedInstance }> = [];
 
+    const rootSystemId = (activeModel.instances && activeModel.instances.length > 0)
+      ? (parseInt(activeModel.instances[0].hmi, 10) || parseInt(activeModel.system.id, 10) || 1)
+      : (parseInt(activeModel.system.id, 10) || 1);
+
     activeModel.faults.forEach(fault => {
       flatInstances.forEach(enriched => {
         if (fault.nti === enriched.inst.nti) {
@@ -153,7 +161,6 @@ export function getAllModelFaults(): SingleFault[] {
 
     matches.forEach(({ fault, enriched }, index) => {
       const inst = enriched.inst;
-      const reportingSystem = parseInt(activeModel.system.id, 10) || 1;
       const faultId = parseInt(fault.id, 10) || 0;
       const hwMapIndex = parseInt(inst.hmi, 10);
       const uniqueIdNum = parseInt(`${hwMapIndex}${faultId}`, 10) || (hwMapIndex + faultId);
@@ -172,8 +179,8 @@ export function getAllModelFaults(): SingleFault[] {
         faultName: fault.name,
         fieUniqueId: uniqueIdNum,
         description: fault.desc,
-        systemId: reportingSystem,
-        rootSystemId: reportingSystem,
+        systemId: hwMapIndex,
+        rootSystemId: rootSystemId,
         systemName: activeModel.system.name,
         serviceability: E_SERVICEABILITY.E_SERVICEABILITY_OK,
         severity: fault.severity,
@@ -213,7 +220,7 @@ export function getAllModelFaults(): SingleFault[] {
                 faultName: `FALLBACK_FAULT_${faultId}`,
                 fieUniqueId: f.UniqueId || (hwMapIndex + faultId),
                 description: `Fallback fault description for ID ${faultId}`,
-                systemId: 1,
+                systemId: hwMapIndex,
                 rootSystemId: 1,
                 systemName: "FallbackSystem",
                 serviceability: msg.node?.pss_e || E_SERVICEABILITY.E_SERVICEABILITY_OK,

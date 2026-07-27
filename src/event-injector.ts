@@ -100,6 +100,10 @@ export class EventInjector {
           });
         });
 
+        const rootSystemId = (activeModel.instances && activeModel.instances.length > 0)
+          ? (parseInt(activeModel.instances[0].hmi, 10) || parseInt(activeModel.system.id, 10) || 1)
+          : (parseInt(activeModel.system.id, 10) || 1);
+
         if (matches.length > 0) {
           // Select a random subset of matches (e.g., 1 to 3 events)
           const numEventsToSelect = Math.min(matches.length, Math.floor(Math.random() * 3) + 1);
@@ -164,8 +168,8 @@ export class EventInjector {
               eventName: evt.name,
               description: evt.desc,
               severity: evt.severity,
-              systemId: reportingSystem,
-              rootSystemId: reportingSystem,
+              systemId: hwMapIndex,
+              rootSystemId: rootSystemId,
               systemName: activeModel.system.name,
               nodeFullPath: enriched.fullPath,
               nodeIndexPath: enriched.indexPath,
@@ -204,7 +208,7 @@ export class EventInjector {
                 nodeIndexPath: `/${hwMapIndex}`,
                 eventName: `FALLBACK_EVENT_${eventId}`,
                 description: `Fallback event description for ID ${eventId}`,
-                systemId: 1,
+                systemId: hwMapIndex,
                 rootSystemId: 1,
                 systemName: "FallbackSystem",
                 severity: "NG",

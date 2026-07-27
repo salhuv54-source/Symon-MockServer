@@ -6,6 +6,7 @@ import { GenerateSensorsStatus } from './status-generator';
 import { EventInjector } from './event-injector';
 import { StatusInjector } from './status-injector';
 import { FaultsInjector } from './faults-injector';
+import { SystemInfoInjector } from './system-info-injector';
 import { GenerateKeepAlivePayload } from './keep-alive-generator';
 import { GenerateSystemStateCollection } from './system-state-generator';
 import { GenerateSystemInfoList } from './system-info-generator';
@@ -35,6 +36,10 @@ class SocketService {
     () => this.getClientCount() > 0
   );
   private faultsInjector = new FaultsInjector(
+    (event, data) => this.broadcast(event, data),
+    () => this.getClientCount() > 0
+  );
+  private systemInfoInjector = new SystemInfoInjector(
     (event, data) => this.broadcast(event, data),
     () => this.getClientCount() > 0
   );
@@ -97,6 +102,7 @@ class SocketService {
     this.eventInjector.start();
     this.statusInjector.start();
     this.faultsInjector.start();
+    this.systemInfoInjector.start();
   }
 
   /**

@@ -99,6 +99,10 @@ export class FaultsInjector {
           });
         });
 
+        const rootSystemId = (activeModel.instances && activeModel.instances.length > 0)
+          ? (parseInt(activeModel.instances[0].hmi, 10) || parseInt(activeModel.system.id, 10) || 1)
+          : (parseInt(activeModel.system.id, 10) || 1);
+
         if (matches.length > 0) {
           // Select a random subset of matches (e.g., 1 to 3 faults)
           const numFaultsToSelect = Math.min(matches.length, Math.floor(Math.random() * 3) + 1);
@@ -107,19 +111,19 @@ export class FaultsInjector {
           const shuffled = [...matches].sort(() => 0.5 - Math.random());
           const selectedMatches = shuffled.slice(0, numFaultsToSelect);
 
-          let primaryUniqueId = -1;
+          // Build a primary unique ID to link alternative faults
+          let primaryUniqueId: number | null = null;
 
           faultPayload = selectedMatches.map(({ fault, enriched }, index) => {
             const inst = enriched.inst;
-            const reportingSystem = parseInt(activeModel.system.id, 10) || 1;
             const faultId = parseInt(fault.id, 10) || 0;
             const hwMapIndex = parseInt(inst.hmi, 10);
-
             const uniqueIdNum = parseInt(`${hwMapIndex}${faultId}`, 10) || (hwMapIndex + faultId);
+
             if (index === 0) {
               primaryUniqueId = uniqueIdNum;
             }
-            const alternativeId = index === 0 ? -1 : primaryUniqueId;
+            const alternativeId = index === 0 ? -1 : (primaryUniqueId || -1);
 
             // Randomize and map status from E_SIGN
             const statusValues = [
@@ -188,8 +192,8 @@ export class FaultsInjector {
               faultName: fault.name,
               fieUniqueId: uniqueIdNum,
               description: fault.desc,
-              systemId: reportingSystem,
-              rootSystemId: reportingSystem,
+              systemId: hwMapIndex,
+              rootSystemId: rootSystemId,
               systemName: activeModel.system.name,
               serviceability: serviceability,
               severity: fault.severity,
@@ -233,7 +237,7 @@ export class FaultsInjector {
                     faultName: `FALLBACK_FAULT_${faultId}`,
                     fieUniqueId: f.UniqueId || (hwMapIndex + faultId),
                     description: `Fallback fault description for ID ${faultId}`,
-                    systemId: 1,
+                    systemId: hwMapIndex,
                     rootSystemId: 1,
                     systemName: "FallbackSystem",
                     serviceability: msg.node?.pss_e || E_SERVICEABILITY.E_SERVICEABILITY_OK,

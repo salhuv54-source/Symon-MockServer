@@ -5,30 +5,66 @@ import { MainRoutes, SubRoutes } from '../types';
 
 const MAPS_DIR = path.resolve(__dirname, '..', '..', 'assets', 'maps-and-polygons');
 
+function getRequestParam(key: string): string {
+  if (!key) return '';
+  return key.replace(":", "");
+}
+
 /**
- * Safely loads a map JSON file from the MAPS_DIR directory.
- * Returns the parsed JSON data, or null if not found or invalid.
+ * Resolves the absolute file path for a map or image file from the MAPS_DIR directory.
+ * Searches for the exact filename, as well as common image and JSON extensions.
  */
-function loadMapJson(filename: string): any {
+function getMapFilePath(filename: string): string | null {
   try {
+    let mapsDir = MAPS_DIR;
+    if (!fs.existsSync(mapsDir)) {
+      mapsDir = path.resolve(process.cwd(), 'assets', 'maps-and-polygons');
+    }
     const safeFilename = path.basename(filename);
     const possibleNames = [
       safeFilename,
-      safeFilename.endsWith('.json') ? safeFilename : `${safeFilename}.json`
+      `${safeFilename}.png`,
+      `${safeFilename}.jpg`,
+      `${safeFilename}.jpeg`,
+      `${safeFilename}.svg`,
+      `${safeFilename}.json`
     ];
 
     for (const name of possibleNames) {
-      const filePath = path.join(MAPS_DIR, name);
-      if (fs.existsSync(filePath)) {
-        const fileContent = fs.readFileSync(filePath, 'utf-8');
-        return JSON.parse(fileContent);
+      const filePath = path.join(mapsDir, name);
+      if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
+        return filePath;
       }
     }
-    console.warn(`[RouteService] Map file not found in ${MAPS_DIR} for query: ${filename}`);
+    console.warn(`[RouteService] Map file not found in ${mapsDir} for query: ${filename}`);
   } catch (error) {
-    console.error(`[RouteService] Error reading/parsing map JSON file for ${filename}:`, error);
+    console.error(`[RouteService] Error resolving map file path for ${filename}:`, error);
   }
   return null;
+}
+
+/**
+ * Handles sending the map file using Express res.sendFile.
+ */
+function handleSendMapFile(req: Request, res: Response, paramKey: string = 'filename'): void {
+  const rawParam = req.params[paramKey] as string;
+  const filename = getRequestParam(rawParam);
+  console.log(`[RouteService] GET ${req.originalUrl || req.url} received for filename: "${filename}"`);
+
+  const filePath = getMapFilePath(filename);
+  if (!filePath) {
+    res.status(404).json({ error: `Map file '${filename}' not found` });
+    return;
+  }
+
+  res.sendFile(filePath, (err) => {
+    if (err) {
+      console.error(`[RouteService] Error sending file ${filePath}:`, err);
+      if (!res.headersSent) {
+        res.status(500).json({ error: `Error serving map file '${filename}'` });
+      }
+    }
+  });
 }
 
 export default function mapsRoutes(router: Router): void {
@@ -36,13 +72,7 @@ export default function mapsRoutes(router: Router): void {
   router.get(
     `${MainRoutes.SERVER_MAPS}${SubRoutes.BIT}/:filename`,
     (req: Request, res: Response) => {
-      const filename = req.params.filename as string;
-      console.log(`[RouteService] GET ${MainRoutes.SERVER_MAPS}${SubRoutes.BIT}/${filename} received`);
-      const data = loadMapJson(filename);
-      if (data === null) {
-        return res.status(400).json({ error: `Map file '${filename}' not found` });
-      }
-      res.json({ filename, data });
+      handleSendMapFile(req, res);
     }
   );
 
@@ -50,13 +80,7 @@ export default function mapsRoutes(router: Router): void {
   router.get(
     `${MainRoutes.SERVER_MAPS}${SubRoutes.TREE}/:filename`,
     (req: Request, res: Response) => {
-      const filename = req.params.filename as string;
-      console.log(`[RouteService] GET ${MainRoutes.SERVER_MAPS}${SubRoutes.TREE}/${filename} received`);
-      const data = loadMapJson(filename);
-      if (data === null) {
-        return res.status(400).json({ error: `Map file '${filename}' not found` });
-      }
-      res.json({ filename, data });
+      handleSendMapFile(req, res);
     }
   );
 
@@ -64,13 +88,7 @@ export default function mapsRoutes(router: Router): void {
   router.get(
     `${MainRoutes.SERVER_MAPS}${SubRoutes.SYSTEM_INFO}/:filename`,
     (req: Request, res: Response) => {
-      const filename = req.params.filename as string;
-      console.log(`[RouteService] GET ${MainRoutes.SERVER_MAPS}${SubRoutes.SYSTEM_INFO}/${filename} received`);
-      const data = loadMapJson(filename);
-      if (data === null) {
-        return res.status(400).json({ error: `Map file '${filename}' not found` });
-      }
-      res.json({ filename, data });
+      handleSendMapFile(req, res);
     }
   );
 
@@ -78,13 +96,15 @@ export default function mapsRoutes(router: Router): void {
   router.get(
     `${MainRoutes.SERVER_MAPS}${SubRoutes.DYNAMIC_DIAGRAM}/:filename`,
     (req: Request, res: Response) => {
-      const filename = req.params.filename as string;
-      console.log(`[RouteService] GET ${MainRoutes.SERVER_MAPS}${SubRoutes.DYNAMIC_DIAGRAM}/${filename} received`);
-      const data = loadMapJson(filename);
-      if (data === null) {
-        return res.status(400).json({ error: `Map file '${filename}' not found` });
-      }
-      res.json({ filename, data });
+      handleSendMapFile(req, res);
+    }
+  );
+
+  // GET /api/maps/:filename
+  router.get(
+    `${MainRoutes.SERVER_MAPS}/:filename`,
+    (req: Request, res: Response) => {
+      handleSendMapFile(req, res);
     }
   );
 }

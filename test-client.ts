@@ -2,7 +2,7 @@ import { io } from 'socket.io-client';
 import { SocketEventName } from './src/types';
 
 // Target port defined in index.ts is 8081
-const SERVER_URL = 'http://localhost:8081';
+const SERVER_URL = 'http://localhost:9001';
 
 console.log(`[TestClient] Connecting to Socket.IO server at ${SERVER_URL}...`);
 const socket = io(SERVER_URL);

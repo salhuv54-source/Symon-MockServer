@@ -1,5 +1,39 @@
 import { Router, Request, Response } from 'express';
+import * as path from 'path';
+import * as fs from 'fs';
 import { MainRoutes, SubRoutes } from '../types';
+
+const MAPS_DIR = path.resolve(__dirname, '..', '..', 'assets', 'maps-and-polygons');
+
+/**
+ * Safely loads a map/polygon JSON file from the maps-and-polygons directory.
+ * Returns the parsed JSON data, or null if not found or invalid.
+ */
+function loadPolygonJson(filename: string): any {
+  try {
+    let mapsDir = MAPS_DIR;
+    if (!fs.existsSync(mapsDir)) {
+      mapsDir = path.resolve(process.cwd(), 'assets', 'maps-and-polygons');
+    }
+    const safeFilename = path.basename(filename);
+    const possibleNames = [
+      safeFilename,
+      safeFilename.endsWith('.json') ? safeFilename : `${safeFilename}.json`
+    ];
+
+    for (const name of possibleNames) {
+      const filePath = path.join(mapsDir, name);
+      if (fs.existsSync(filePath)) {
+        const fileContent = fs.readFileSync(filePath, 'utf-8');
+        return JSON.parse(fileContent);
+      }
+    }
+    console.warn(`[RouteService] Polygon/Map file not found in ${mapsDir} for query: ${filename}`);
+  } catch (error) {
+    console.error(`[RouteService] Error reading/parsing polygon/map JSON file for ${filename}:`, error);
+  }
+  return null;
+}
 
 export default function polygonsRoutes(router: Router): void {
 
@@ -7,9 +41,12 @@ export default function polygonsRoutes(router: Router): void {
   router.get(
     `${MainRoutes.SERVER_POLYGONS}${SubRoutes.BIT}/:filename/:id/:isExpandBitResultInNewTab`,
     (req: Request, res: Response) => {
-      const { filename, id, isExpandBitResultInNewTab } = req.params;
+      const filename = req.params.filename as string;
+      const id = req.params.id as string;
+      const isExpandBitResultInNewTab = req.params.isExpandBitResultInNewTab as string;
       console.log(`[RouteService] GET ${MainRoutes.SERVER_POLYGONS}${SubRoutes.BIT}/${filename}/${id}/${isExpandBitResultInNewTab} received`);
-      res.json({ filename, id, isExpandBitResultInNewTab, data: {} });
+      const data = loadPolygonJson(filename) || {};
+      res.json({ filename, id, isExpandBitResultInNewTab, data });
     }
   );
 
@@ -17,9 +54,13 @@ export default function polygonsRoutes(router: Router): void {
   router.get(
     `${MainRoutes.SERVER_POLYGONS}${SubRoutes.TREE}/:filename`,
     (req: Request, res: Response) => {
-      const { filename } = req.params;
+      const filename = req.params.filename as string;
       console.log(`[RouteService] GET ${MainRoutes.SERVER_POLYGONS}${SubRoutes.TREE}/${filename} received`);
-      res.json({ filename, data: {} });
+      const data = loadPolygonJson(filename);
+      if (data === null) {
+        return res.status(400).json({ error: `Polygon file '${filename}' not found` });
+      }
+      res.json({ filename, data });
     }
   );
 
@@ -27,9 +68,10 @@ export default function polygonsRoutes(router: Router): void {
   router.get(
     `${MainRoutes.SERVER_POLYGONS}${SubRoutes.SYSTEM_INFO}/:filename`,
     (req: Request, res: Response) => {
-      const { filename } = req.params;
+      const filename = req.params.filename as string;
       console.log(`[RouteService] GET ${MainRoutes.SERVER_POLYGONS}${SubRoutes.SYSTEM_INFO}/${filename} received`);
-      res.json({ filename, data: {} });
+      const data = loadPolygonJson(filename) || {};
+      res.json({ filename, data });
     }
   );
 
@@ -37,9 +79,10 @@ export default function polygonsRoutes(router: Router): void {
   router.get(
     `${MainRoutes.SERVER_POLYGONS}${SubRoutes.DYNAMIC_DIAGRAM}/:nodeId`,
     (req: Request, res: Response) => {
-      const { nodeId } = req.params;
+      const nodeId = req.params.nodeId as string;
       console.log(`[RouteService] GET ${MainRoutes.SERVER_POLYGONS}${SubRoutes.DYNAMIC_DIAGRAM}/${nodeId} received`);
-      res.json({ nodeId, data: {} });
+      const data = loadPolygonJson(nodeId) || {};
+      res.json({ nodeId, data });
     }
   );
 }

@@ -9,6 +9,7 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
 import { DataStatusBuild, DataStatusType, ServerDataStatusToClient, ServerDataStatusToClientCollection } from './src/interfaces/DataStatusBuild.interface';
 import { getEventsAndFaultsForSystem } from './src/system-log.service';
+import { GenerateMapsSelectionCollection } from './src/maps-selection-generator';
 
 class MockSymonServer {
     private app: express.Application;
@@ -213,6 +214,7 @@ class MockSymonServer {
         });
         socketService.on(SocketEventName.mapsSelectionNames, (client, data) => {
             console.log(`[MockSymonServer] Received mapsSelectionNames:`, JSON.stringify(data));
+            socketService.sendTo(client, SocketEventName.mapsSelectionNames, GenerateMapsSelectionCollection());
         });
         socketService.on(SocketEventName.systemStateChange, (client, data) => {
             console.log(`[MockSymonServer] Received systemStateChange:`, JSON.stringify(data));

@@ -1,0 +1,1994 @@
+{
+  "diagramData": {
+    "sizeX": -106.0,
+    "sizeY": -16.0,
+    "width": 1158.0,
+    "height": 836.4066666666666,
+    "diagramBackground": "#333333",
+    "diagramImageName": "radar.png",
+    "diagramOrder": "3"
+  },
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "rotationAngle": 0.0,
+      "mapItemIndex": 1,
+      "content": "",
+      "toolTip": "",
+      "nodeId": 1,
+      "infoId": null,
+      "polygonId": "1",
+      "shapeWidth": 162.0,
+      "shapeHeight": 124.0,
+      "shapeImageName": null,
+      "shapeMode": "Bit",
+      "position": "22,20",
+      "diagramName": "Diagram3",
+      "linkedDiagram": null,
+      "radius": 0.0,
+      "fontSize": 22,
+      "fontFamily": "Arial",
+      "shapeGeneralBackground": "#FFFFFF",
+      "shapeDataBackground": "#CFCFCF",
+      "shapeBitBackground": "#FFFFFF",
+      "shapeOpacity": 1.0,
+      "shapeForgroundOpacity": 1.0,
+      "borderOpacity": 1.0,
+      "shapeBorderBrush": "#FFFFFF",
+      "shapeZIndex": 0,
+      "shapeStrokeThickness": 0,
+      "shapeStrokeDashStyle": "1 0",
+      "geometry": "M0.5,0.5L111.5,0.5 111.5,74.5 0.5,74.5z",
+      "coordinatesGeometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              22,
+              20
+            ],
+            [
+              22,
+              144
+            ],
+            [
+              184,
+              144
+            ],
+            [
+              184,
+              20
+            ],
+            [
+              22,
+              20
+            ]
+          ]
+        ]
+      },
+      "shapeTextBrush": "#000000",
+      "shapeActionFileSource": null,
+      "diagramItemType": "RectangleShape"
+    },
+    {
+      "rotationAngle": 0.0,
+      "mapItemIndex": 2,
+      "content": "",
+      "toolTip": "",
+      "nodeId": 2,
+      "infoId": null,
+      "polygonId": "2",
+      "shapeWidth": 162.0,
+      "shapeHeight": 124.0,
+      "shapeImageName": null,
+      "shapeMode": "Bit",
+      "position": "224,22.406666666666638",
+      "diagramName": "Diagram3",
+      "linkedDiagram": null,
+      "radius": 0.0,
+      "fontSize": 22,
+      "fontFamily": "Arial",
+      "shapeGeneralBackground": "#FFFFFF",
+      "shapeDataBackground": "#CFCFCF",
+      "shapeBitBackground": "#FFFFFF",
+      "shapeOpacity": 1.0,
+      "shapeForgroundOpacity": 1.0,
+      "borderOpacity": 1.0,
+      "shapeBorderBrush": "#FFFFFF",
+      "shapeZIndex": 0,
+      "shapeStrokeThickness": 0,
+      "shapeStrokeDashStyle": "1 0",
+      "geometry": "M0.5,0.5L111.5,0.5 111.5,74.5 0.5,74.5z",
+      "coordinatesGeometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              224,
+              22.406666666666638
+            ],
+            [
+              224,
+              146.40666666666664
+            ],
+            [
+              386,
+              146.40666666666664
+            ],
+            [
+              386,
+              22.406666666666638
+            ],
+            [
+              224,
+              22.406666666666638
+            ]
+          ]
+        ]
+      },
+      "shapeTextBrush": "#000000",
+      "shapeActionFileSource": null,
+      "diagramItemType": "RectangleShape"
+    },
+    {
+      "rotationAngle": 0.0,
+      "mapItemIndex": 3,
+      "content": "",
+      "toolTip": "",
+      "nodeId": 3,
+      "infoId": null,
+      "polygonId": "3",
+      "shapeWidth": 162.0,
+      "shapeHeight": 124.0,
+      "shapeImageName": null,
+      "shapeMode": "Bit",
+      "position": "22,182.40666666666664",
+      "diagramName": "Diagram3",
+      "linkedDiagram": null,
+      "radius": 0.0,
+      "fontSize": 22,
+      "fontFamily": "Arial",
+      "shapeGeneralBackground": "#FFFFFF",
+      "shapeDataBackground": "#CFCFCF",
+      "shapeBitBackground": "#FFFFFF",
+      "shapeOpacity": 1.0,
+      "shapeForgroundOpacity": 1.0,
+      "borderOpacity": 1.0,
+      "shapeBorderBrush": "#FFFFFF",
+      "shapeZIndex": 0,
+      "shapeStrokeThickness": 0,
+      "shapeStrokeDashStyle": "1 0",
+      "geometry": "M0.5,0.5L111.5,0.5 111.5,74.5 0.5,74.5z",
+      "coordinatesGeometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              22,
+              182.40666666666664
+            ],
+            [
+              22,
+              306.40666666666664
+            ],
+            [
+              184,
+              306.40666666666664
+            ],
+            [
+              184,
+              182.40666666666664
+            ],
+            [
+              22,
+              182.40666666666664
+            ]
+          ]
+        ]
+      },
+      "shapeTextBrush": "#000000",
+      "shapeActionFileSource": null,
+      "diagramItemType": "RectangleShape"
+    },
+    {
+      "rotationAngle": 0.0,
+      "mapItemIndex": 4,
+      "content": "",
+      "toolTip": "",
+      "nodeId": 4,
+      "infoId": null,
+      "polygonId": "4",
+      "shapeWidth": 162.0,
+      "shapeHeight": 124.0,
+      "shapeImageName": null,
+      "shapeMode": "Bit",
+      "position": "218,182.40666666666664",
+      "diagramName": "Diagram3",
+      "linkedDiagram": null,
+      "radius": 0.0,
+      "fontSize": 22,
+      "fontFamily": "Arial",
+      "shapeGeneralBackground": "#FFFFFF",
+      "shapeDataBackground": "#CFCFCF",
+      "shapeBitBackground": "#FFFFFF",
+      "shapeOpacity": 1.0,
+      "shapeForgroundOpacity": 1.0,
+      "borderOpacity": 1.0,
+      "shapeBorderBrush": "#FFFFFF",
+      "shapeZIndex": 0,
+      "shapeStrokeThickness": 0,
+      "shapeStrokeDashStyle": "1 0",
+      "geometry": "M0.5,0.5L111.5,0.5 111.5,74.5 0.5,74.5z",
+      "coordinatesGeometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              218,
+              182.40666666666664
+            ],
+            [
+              218,
+              306.40666666666664
+            ],
+            [
+              380,
+              306.40666666666664
+            ],
+            [
+              380,
+              182.40666666666664
+            ],
+            [
+              218,
+              182.40666666666664
+            ]
+          ]
+        ]
+      },
+      "shapeTextBrush": "#000000",
+      "shapeActionFileSource": null,
+      "diagramItemType": "RectangleShape"
+    },
+    {
+      "rotationAngle": 0.0,
+      "mapItemIndex": 5,
+      "content": "PowerSupplySRU #1",
+      "toolTip": "",
+      "nodeId": 20000029,
+      "infoId": null,
+      "polygonId": "20000029",
+      "shapeWidth": 162.0,
+      "shapeHeight": 124.0,
+      "shapeImageName": null,
+      "shapeMode": "Bit",
+      "position": "600,26.406666666666638",
+      "diagramName": "Diagram3",
+      "linkedDiagram": null,
+      "radius": 0.0,
+      "fontSize": 22,
+      "fontFamily": "Arial",
+      "shapeGeneralBackground": "#FFFFFF",
+      "shapeDataBackground": "#CFCFCF",
+      "shapeBitBackground": "#9e9e",
+      "shapeOpacity": 1.0,
+      "shapeForgroundOpacity": 1.0,
+      "borderOpacity": 1.0,
+      "shapeBorderBrush": "#FFFFFF",
+      "shapeZIndex": 0,
+      "shapeStrokeThickness": 0,
+      "shapeStrokeDashStyle": "1 0",
+      "geometry": "M0.5,0.5L111.5,0.5 111.5,74.5 0.5,74.5z",
+      "coordinatesGeometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              600,
+              26.406666666666638
+            ],
+            [
+              600,
+              150.40666666666664
+            ],
+            [
+              762,
+              150.40666666666664
+            ],
+            [
+              762,
+              26.406666666666638
+            ],
+            [
+              600,
+              26.406666666666638
+            ]
+          ]
+        ]
+      },
+      "shapeTextBrush": "#000000",
+      "shapeActionFileSource": null,
+      "diagramItemType": "RectangleShape"
+    },
+    {
+      "rotationAngle": 0.0,
+      "mapItemIndex": 6,
+      "content": "",
+      "toolTip": "",
+      "nodeId": 6,
+      "infoId": null,
+      "polygonId": "6",
+      "shapeWidth": 162.0,
+      "shapeHeight": 124.0,
+      "shapeImageName": null,
+      "shapeMode": "Bit",
+      "position": "218,532.4066666666666",
+      "diagramName": "Diagram3",
+      "linkedDiagram": null,
+      "radius": 0.0,
+      "fontSize": 22,
+      "fontFamily": "Arial",
+      "shapeGeneralBackground": "#FFFFFF",
+      "shapeDataBackground": "#CFCFCF",
+      "shapeBitBackground": "#FFFFFF",
+      "shapeOpacity": 1.0,
+      "shapeForgroundOpacity": 1.0,
+      "borderOpacity": 1.0,
+      "shapeBorderBrush": "#FFFFFF",
+      "shapeZIndex": 0,
+      "shapeStrokeThickness": 0,
+      "shapeStrokeDashStyle": "1 0",
+      "geometry": "M0.5,0.5L111.5,0.5 111.5,74.5 0.5,74.5z",
+      "coordinatesGeometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              218,
+              532.4066666666666
+            ],
+            [
+              218,
+              656.4066666666666
+            ],
+            [
+              380,
+              656.4066666666666
+            ],
+            [
+              380,
+              532.4066666666666
+            ],
+            [
+              218,
+              532.4066666666666
+            ]
+          ]
+        ]
+      },
+      "shapeTextBrush": "#000000",
+      "shapeActionFileSource": null,
+      "diagramItemType": "RectangleShape"
+    },
+    {
+      "rotationAngle": 0.0,
+      "mapItemIndex": 7,
+      "content": "ModemSRU #2",
+      "toolTip": "",
+      "nodeId": 20000014,
+      "infoId": null,
+      "polygonId": "20000014",
+      "shapeWidth": 162.0,
+      "shapeHeight": 124.0,
+      "shapeImageName": null,
+      "shapeMode": "Bit",
+      "position": "20,354.40666666666664",
+      "diagramName": "Diagram3",
+      "linkedDiagram": null,
+      "radius": 0.0,
+      "fontSize": 22,
+      "fontFamily": "Arial",
+      "shapeGeneralBackground": "#FFFFFF",
+      "shapeDataBackground": "#CFCFCF",
+      "shapeBitBackground": "#9e9e",
+      "shapeOpacity": 1.0,
+      "shapeForgroundOpacity": 1.0,
+      "borderOpacity": 1.0,
+      "shapeBorderBrush": "#FFFFFF",
+      "shapeZIndex": 0,
+      "shapeStrokeThickness": 0,
+      "shapeStrokeDashStyle": "1 0",
+      "geometry": "M0.5,0.5L111.5,0.5 111.5,74.5 0.5,74.5z",
+      "coordinatesGeometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              20,
+              354.40666666666664
+            ],
+            [
+              20,
+              478.40666666666664
+            ],
+            [
+              182,
+              478.40666666666664
+            ],
+            [
+              182,
+              354.40666666666664
+            ],
+            [
+              20,
+              354.40666666666664
+            ]
+          ]
+        ]
+      },
+      "shapeTextBrush": "#000000",
+      "shapeActionFileSource": null,
+      "diagramItemType": "RectangleShape"
+    },
+    {
+      "rotationAngle": 0.0,
+      "mapItemIndex": 8,
+      "content": "",
+      "toolTip": "",
+      "nodeId": 8,
+      "infoId": null,
+      "polygonId": "8",
+      "shapeWidth": 162.0,
+      "shapeHeight": 124.0,
+      "shapeImageName": null,
+      "shapeMode": "Bit",
+      "position": "216,358.40666666666664",
+      "diagramName": "Diagram3",
+      "linkedDiagram": null,
+      "radius": 0.0,
+      "fontSize": 22,
+      "fontFamily": "Arial",
+      "shapeGeneralBackground": "#FFFFFF",
+      "shapeDataBackground": "#CFCFCF",
+      "shapeBitBackground": "#FFFFFF",
+      "shapeOpacity": 1.0,
+      "shapeForgroundOpacity": 1.0,
+      "borderOpacity": 1.0,
+      "shapeBorderBrush": "#FFFFFF",
+      "shapeZIndex": 0,
+      "shapeStrokeThickness": 0,
+      "shapeStrokeDashStyle": "1 0",
+      "geometry": "M0.5,0.5L111.5,0.5 111.5,74.5 0.5,74.5z",
+      "coordinatesGeometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              216,
+              358.40666666666664
+            ],
+            [
+              216,
+              482.40666666666664
+            ],
+            [
+              378,
+              482.40666666666664
+            ],
+            [
+              378,
+              358.40666666666664
+            ],
+            [
+              216,
+              358.40666666666664
+            ]
+          ]
+        ]
+      },
+      "shapeTextBrush": "#000000",
+      "shapeActionFileSource": null,
+      "diagramItemType": "RectangleShape"
+    },
+    {
+      "rotationAngle": 0.0,
+      "mapItemIndex": 9,
+      "content": "PowerSupplySRU #2",
+      "toolTip": "",
+      "nodeId": 20000030,
+      "infoId": null,
+      "polygonId": "20000030",
+      "shapeWidth": 162.0,
+      "shapeHeight": 124.0,
+      "shapeImageName": null,
+      "shapeMode": "Bit",
+      "position": "590,192.40666666666664",
+      "diagramName": "Diagram3",
+      "linkedDiagram": null,
+      "radius": 0.0,
+      "fontSize": 22,
+      "fontFamily": "Arial",
+      "shapeGeneralBackground": "#FFFFFF",
+      "shapeDataBackground": "#CFCFCF",
+      "shapeBitBackground": "#9e9e",
+      "shapeOpacity": 1.0,
+      "shapeForgroundOpacity": 1.0,
+      "borderOpacity": 1.0,
+      "shapeBorderBrush": "#FFFFFF",
+      "shapeZIndex": 0,
+      "shapeStrokeThickness": 0,
+      "shapeStrokeDashStyle": "1 0",
+      "geometry": "M0.5,0.5L111.5,0.5 111.5,74.5 0.5,74.5z",
+      "coordinatesGeometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              590,
+              192.40666666666664
+            ],
+            [
+              590,
+              316.40666666666664
+            ],
+            [
+              752,
+              316.40666666666664
+            ],
+            [
+              752,
+              192.40666666666664
+            ],
+            [
+              590,
+              192.40666666666664
+            ]
+          ]
+        ]
+      },
+      "shapeTextBrush": "#000000",
+      "shapeActionFileSource": null,
+      "diagramItemType": "RectangleShape"
+    },
+    {
+      "rotationAngle": 0.0,
+      "mapItemIndex": 10,
+      "content": "",
+      "toolTip": "",
+      "nodeId": 10,
+      "infoId": null,
+      "polygonId": "10",
+      "shapeWidth": 162.0,
+      "shapeHeight": 124.0,
+      "shapeImageName": null,
+      "shapeMode": "Bit",
+      "position": "218,532.4066666666666",
+      "diagramName": "Diagram3",
+      "linkedDiagram": null,
+      "radius": 0.0,
+      "fontSize": 22,
+      "fontFamily": "Arial",
+      "shapeGeneralBackground": "#FFFFFF",
+      "shapeDataBackground": "#CFCFCF",
+      "shapeBitBackground": "#FFFFFF",
+      "shapeOpacity": 1.0,
+      "shapeForgroundOpacity": 1.0,
+      "borderOpacity": 1.0,
+      "shapeBorderBrush": "#FFFFFF",
+      "shapeZIndex": 0,
+      "shapeStrokeThickness": 0,
+      "shapeStrokeDashStyle": "1 0",
+      "geometry": "M0.5,0.5L111.5,0.5 111.5,74.5 0.5,74.5z",
+      "coordinatesGeometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              218,
+              532.4066666666666
+            ],
+            [
+              218,
+              656.4066666666666
+            ],
+            [
+              380,
+              656.4066666666666
+            ],
+            [
+              380,
+              532.4066666666666
+            ],
+            [
+              218,
+              532.4066666666666
+            ]
+          ]
+        ]
+      },
+      "shapeTextBrush": "#000000",
+      "shapeActionFileSource": null,
+      "diagramItemType": "RectangleShape"
+    },
+    {
+      "rotationAngle": 0.0,
+      "mapItemIndex": 11,
+      "content": "PowerSupplySRU #3",
+      "toolTip": "",
+      "nodeId": 20000031,
+      "infoId": null,
+      "polygonId": "20000031",
+      "shapeWidth": 162.0,
+      "shapeHeight": 124.0,
+      "shapeImageName": null,
+      "shapeMode": "Bit",
+      "position": "590,356.40666666666664",
+      "diagramName": "Diagram3",
+      "linkedDiagram": null,
+      "radius": 0.0,
+      "fontSize": 22,
+      "fontFamily": "Arial",
+      "shapeGeneralBackground": "#FFFFFF",
+      "shapeDataBackground": "#CFCFCF",
+      "shapeBitBackground": "#9e9e",
+      "shapeOpacity": 1.0,
+      "shapeForgroundOpacity": 1.0,
+      "borderOpacity": 1.0,
+      "shapeBorderBrush": "#FFFFFF",
+      "shapeZIndex": 0,
+      "shapeStrokeThickness": 0,
+      "shapeStrokeDashStyle": "1 0",
+      "geometry": "M0.5,0.5L111.5,0.5 111.5,74.5 0.5,74.5z",
+      "coordinatesGeometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              590,
+              356.40666666666664
+            ],
+            [
+              590,
+              480.40666666666664
+            ],
+            [
+              752,
+              480.40666666666664
+            ],
+            [
+              752,
+              356.40666666666664
+            ],
+            [
+              590,
+              356.40666666666664
+            ]
+          ]
+        ]
+      },
+      "shapeTextBrush": "#000000",
+      "shapeActionFileSource": null,
+      "diagramItemType": "RectangleShape"
+    },
+    {
+      "rotationAngle": 0.0,
+      "mapItemIndex": 12,
+      "content": "",
+      "toolTip": "",
+      "nodeId": 12,
+      "infoId": null,
+      "polygonId": "12",
+      "shapeWidth": 162.0,
+      "shapeHeight": 124.0,
+      "shapeImageName": null,
+      "shapeMode": "Bit",
+      "position": "596,522.4066666666666",
+      "diagramName": "Diagram3",
+      "linkedDiagram": null,
+      "radius": 0.0,
+      "fontSize": 22,
+      "fontFamily": "Arial",
+      "shapeGeneralBackground": "#FFFFFF",
+      "shapeDataBackground": "#CFCFCF",
+      "shapeBitBackground": "#FFFFFF",
+      "shapeOpacity": 1.0,
+      "shapeForgroundOpacity": 1.0,
+      "borderOpacity": 1.0,
+      "shapeBorderBrush": "#FFFFFF",
+      "shapeZIndex": 0,
+      "shapeStrokeThickness": 0,
+      "shapeStrokeDashStyle": "1 0",
+      "geometry": "M0.5,0.5L111.5,0.5 111.5,74.5 0.5,74.5z",
+      "coordinatesGeometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              596,
+              522.4066666666666
+            ],
+            [
+              596,
+              646.4066666666666
+            ],
+            [
+              758,
+              646.4066666666666
+            ],
+            [
+              758,
+              522.4066666666666
+            ],
+            [
+              596,
+              522.4066666666666
+            ]
+          ]
+        ]
+      },
+      "shapeTextBrush": "#000000",
+      "shapeActionFileSource": null,
+      "diagramItemType": "RectangleShape"
+    },
+    {
+      "rotationAngle": 0.0,
+      "mapItemIndex": 13,
+      "content": "",
+      "toolTip": "",
+      "nodeId": 13,
+      "infoId": null,
+      "polygonId": "13",
+      "shapeWidth": 162.0,
+      "shapeHeight": 124.0,
+      "shapeImageName": null,
+      "shapeMode": "Bit",
+      "position": "410,188.40666666666664",
+      "diagramName": "Diagram3",
+      "linkedDiagram": null,
+      "radius": 0.0,
+      "fontSize": 22,
+      "fontFamily": "Arial",
+      "shapeGeneralBackground": "#FFFFFF",
+      "shapeDataBackground": "#CFCFCF",
+      "shapeBitBackground": "#FFFFFF",
+      "shapeOpacity": 1.0,
+      "shapeForgroundOpacity": 1.0,
+      "borderOpacity": 1.0,
+      "shapeBorderBrush": "#FFFFFF",
+      "shapeZIndex": 0,
+      "shapeStrokeThickness": 0,
+      "shapeStrokeDashStyle": "1 0",
+      "geometry": "M0.5,0.5L111.5,0.5 111.5,74.5 0.5,74.5z",
+      "coordinatesGeometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              410,
+              188.40666666666664
+            ],
+            [
+              410,
+              312.40666666666664
+            ],
+            [
+              572,
+              312.40666666666664
+            ],
+            [
+              572,
+              188.40666666666664
+            ],
+            [
+              410,
+              188.40666666666664
+            ]
+          ]
+        ]
+      },
+      "shapeTextBrush": "#000000",
+      "shapeActionFileSource": null,
+      "diagramItemType": "RectangleShape"
+    },
+    {
+      "rotationAngle": 0.0,
+      "mapItemIndex": 14,
+      "content": "",
+      "toolTip": "",
+      "nodeId": 14,
+      "infoId": null,
+      "polygonId": "14",
+      "shapeWidth": 162.0,
+      "shapeHeight": 124.0,
+      "shapeImageName": null,
+      "shapeMode": "Bit",
+      "position": "406,524.4066666666666",
+      "diagramName": "Diagram3",
+      "linkedDiagram": null,
+      "radius": 0.0,
+      "fontSize": 22,
+      "fontFamily": "Arial",
+      "shapeGeneralBackground": "#FFFFFF",
+      "shapeDataBackground": "#CFCFCF",
+      "shapeBitBackground": "#FFFFFF",
+      "shapeOpacity": 1.0,
+      "shapeForgroundOpacity": 1.0,
+      "borderOpacity": 1.0,
+      "shapeBorderBrush": "#FFFFFF",
+      "shapeZIndex": 0,
+      "shapeStrokeThickness": 0,
+      "shapeStrokeDashStyle": "1 0",
+      "geometry": "M0.5,0.5L111.5,0.5 111.5,74.5 0.5,74.5z",
+      "coordinatesGeometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              406,
+              524.4066666666666
+            ],
+            [
+              406,
+              648.4066666666666
+            ],
+            [
+              568,
+              648.4066666666666
+            ],
+            [
+              568,
+              524.4066666666666
+            ],
+            [
+              406,
+              524.4066666666666
+            ]
+          ]
+        ]
+      },
+      "shapeTextBrush": "#000000",
+      "shapeActionFileSource": null,
+      "diagramItemType": "RectangleShape"
+    },
+    {
+      "rotationAngle": 0.0,
+      "mapItemIndex": 15,
+      "content": "",
+      "toolTip": "",
+      "nodeId": 15,
+      "infoId": null,
+      "polygonId": "15",
+      "shapeWidth": 162.0,
+      "shapeHeight": 124.0,
+      "shapeImageName": null,
+      "shapeMode": "Bit",
+      "position": "414,24.406666666666638",
+      "diagramName": "Diagram3",
+      "linkedDiagram": null,
+      "radius": 0.0,
+      "fontSize": 22,
+      "fontFamily": "Arial",
+      "shapeGeneralBackground": "#FFFFFF",
+      "shapeDataBackground": "#CFCFCF",
+      "shapeBitBackground": "#FFFFFF",
+      "shapeOpacity": 1.0,
+      "shapeForgroundOpacity": 1.0,
+      "borderOpacity": 1.0,
+      "shapeBorderBrush": "#FFFFFF",
+      "shapeZIndex": 0,
+      "shapeStrokeThickness": 0,
+      "shapeStrokeDashStyle": "1 0",
+      "geometry": "M0.5,0.5L111.5,0.5 111.5,74.5 0.5,74.5z",
+      "coordinatesGeometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              414,
+              24.406666666666638
+            ],
+            [
+              414,
+              148.40666666666664
+            ],
+            [
+              576,
+              148.40666666666664
+            ],
+            [
+              576,
+              24.406666666666638
+            ],
+            [
+              414,
+              24.406666666666638
+            ]
+          ]
+        ]
+      },
+      "shapeTextBrush": "#000000",
+      "shapeActionFileSource": null,
+      "diagramItemType": "RectangleShape"
+    },
+    {
+      "rotationAngle": 0.0,
+      "mapItemIndex": 16,
+      "content": "",
+      "toolTip": "",
+      "nodeId": 16,
+      "infoId": null,
+      "polygonId": "16",
+      "shapeWidth": 162.0,
+      "shapeHeight": 124.0,
+      "shapeImageName": null,
+      "shapeMode": "Bit",
+      "position": "410,354.40666666666664",
+      "diagramName": "Diagram3",
+      "linkedDiagram": null,
+      "radius": 0.0,
+      "fontSize": 22,
+      "fontFamily": "Arial",
+      "shapeGeneralBackground": "#FFFFFF",
+      "shapeDataBackground": "#CFCFCF",
+      "shapeBitBackground": "#FFFFFF",
+      "shapeOpacity": 1.0,
+      "shapeForgroundOpacity": 1.0,
+      "borderOpacity": 1.0,
+      "shapeBorderBrush": "#FFFFFF",
+      "shapeZIndex": 0,
+      "shapeStrokeThickness": 0,
+      "shapeStrokeDashStyle": "1 0",
+      "geometry": "M0.5,0.5L111.5,0.5 111.5,74.5 0.5,74.5z",
+      "coordinatesGeometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              410,
+              354.40666666666664
+            ],
+            [
+              410,
+              478.40666666666664
+            ],
+            [
+              572,
+              478.40666666666664
+            ],
+            [
+              572,
+              354.40666666666664
+            ],
+            [
+              410,
+              354.40666666666664
+            ]
+          ]
+        ]
+      },
+      "shapeTextBrush": "#000000",
+      "shapeActionFileSource": null,
+      "diagramItemType": "RectangleShape"
+    },
+    {
+      "rotationAngle": 0.0,
+      "mapItemIndex": 17,
+      "content": "",
+      "toolTip": "",
+      "nodeId": 17,
+      "infoId": null,
+      "polygonId": "17",
+      "shapeWidth": 162.0,
+      "shapeHeight": 124.0,
+      "shapeImageName": null,
+      "shapeMode": "Bit",
+      "position": "966,194.40666666666664",
+      "diagramName": "Diagram3",
+      "linkedDiagram": null,
+      "radius": 0.0,
+      "fontSize": 22,
+      "fontFamily": "Arial",
+      "shapeGeneralBackground": "#FFFFFF",
+      "shapeDataBackground": "#CFCFCF",
+      "shapeBitBackground": "#FFFFFF",
+      "shapeOpacity": 1.0,
+      "shapeForgroundOpacity": 1.0,
+      "borderOpacity": 1.0,
+      "shapeBorderBrush": "#FFFFFF",
+      "shapeZIndex": 0,
+      "shapeStrokeThickness": 0,
+      "shapeStrokeDashStyle": "1 0",
+      "geometry": "M0.5,0.5L111.5,0.5 111.5,74.5 0.5,74.5z",
+      "coordinatesGeometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              966,
+              194.40666666666664
+            ],
+            [
+              966,
+              318.40666666666664
+            ],
+            [
+              1128,
+              318.40666666666664
+            ],
+            [
+              1128,
+              194.40666666666664
+            ],
+            [
+              966,
+              194.40666666666664
+            ]
+          ]
+        ]
+      },
+      "shapeTextBrush": "#000000",
+      "shapeActionFileSource": null,
+      "diagramItemType": "RectangleShape"
+    },
+    {
+      "rotationAngle": 0.0,
+      "mapItemIndex": 18,
+      "content": "",
+      "toolTip": "",
+      "nodeId": 18,
+      "infoId": null,
+      "polygonId": "18",
+      "shapeWidth": 162.0,
+      "shapeHeight": 124.0,
+      "shapeImageName": null,
+      "shapeMode": "Bit",
+      "position": "976,674.4066666666666",
+      "diagramName": "Diagram3",
+      "linkedDiagram": null,
+      "radius": 0.0,
+      "fontSize": 22,
+      "fontFamily": "Arial",
+      "shapeGeneralBackground": "#FFFFFF",
+      "shapeDataBackground": "#CFCFCF",
+      "shapeBitBackground": "#FFFFFF",
+      "shapeOpacity": 1.0,
+      "shapeForgroundOpacity": 1.0,
+      "borderOpacity": 1.0,
+      "shapeBorderBrush": "#FFFFFF",
+      "shapeZIndex": 0,
+      "shapeStrokeThickness": 0,
+      "shapeStrokeDashStyle": "1 0",
+      "geometry": "M0.5,0.5L111.5,0.5 111.5,74.5 0.5,74.5z",
+      "coordinatesGeometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              976,
+              674.4066666666666
+            ],
+            [
+              976,
+              798.4066666666666
+            ],
+            [
+              1138,
+              798.4066666666666
+            ],
+            [
+              1138,
+              674.4066666666666
+            ],
+            [
+              976,
+              674.4066666666666
+            ]
+          ]
+        ]
+      },
+      "shapeTextBrush": "#000000",
+      "shapeActionFileSource": null,
+      "diagramItemType": "RectangleShape"
+    },
+    {
+      "rotationAngle": 0.0,
+      "mapItemIndex": 19,
+      "content": "",
+      "toolTip": "",
+      "nodeId": 19,
+      "infoId": null,
+      "polygonId": "19",
+      "shapeWidth": 162.0,
+      "shapeHeight": 124.0,
+      "shapeImageName": null,
+      "shapeMode": "Bit",
+      "position": "974,522.4066666666666",
+      "diagramName": "Diagram3",
+      "linkedDiagram": null,
+      "radius": 0.0,
+      "fontSize": 22,
+      "fontFamily": "Arial",
+      "shapeGeneralBackground": "#FFFFFF",
+      "shapeDataBackground": "#CFCFCF",
+      "shapeBitBackground": "#FFFFFF",
+      "shapeOpacity": 1.0,
+      "shapeForgroundOpacity": 1.0,
+      "borderOpacity": 1.0,
+      "shapeBorderBrush": "#FFFFFF",
+      "shapeZIndex": 0,
+      "shapeStrokeThickness": 0,
+      "shapeStrokeDashStyle": "1 0",
+      "geometry": "M0.5,0.5L111.5,0.5 111.5,74.5 0.5,74.5z",
+      "coordinatesGeometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              974,
+              522.4066666666666
+            ],
+            [
+              974,
+              646.4066666666666
+            ],
+            [
+              1136,
+              646.4066666666666
+            ],
+            [
+              1136,
+              522.4066666666666
+            ],
+            [
+              974,
+              522.4066666666666
+            ]
+          ]
+        ]
+      },
+      "shapeTextBrush": "#000000",
+      "shapeActionFileSource": null,
+      "diagramItemType": "RectangleShape"
+    },
+    {
+      "rotationAngle": 0.0,
+      "mapItemIndex": 20,
+      "content": "",
+      "toolTip": "",
+      "nodeId": 20,
+      "infoId": null,
+      "polygonId": "20",
+      "shapeWidth": 162.0,
+      "shapeHeight": 124.0,
+      "shapeImageName": null,
+      "shapeMode": "Bit",
+      "position": "224,532.4066666666666",
+      "diagramName": "Diagram3",
+      "linkedDiagram": null,
+      "radius": 0.0,
+      "fontSize": 22,
+      "fontFamily": "Arial",
+      "shapeGeneralBackground": "#FFFFFF",
+      "shapeDataBackground": "#CFCFCF",
+      "shapeBitBackground": "#FFFFFF",
+      "shapeOpacity": 1.0,
+      "shapeForgroundOpacity": 1.0,
+      "borderOpacity": 1.0,
+      "shapeBorderBrush": "#FFFFFF",
+      "shapeZIndex": 0,
+      "shapeStrokeThickness": 0,
+      "shapeStrokeDashStyle": "1 0",
+      "geometry": "M0.5,0.5L111.5,0.5 111.5,74.5 0.5,74.5z",
+      "coordinatesGeometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              224,
+              532.4066666666666
+            ],
+            [
+              224,
+              656.4066666666666
+            ],
+            [
+              386,
+              656.4066666666666
+            ],
+            [
+              386,
+              532.4066666666666
+            ],
+            [
+              224,
+              532.4066666666666
+            ]
+          ]
+        ]
+      },
+      "shapeTextBrush": "#000000",
+      "shapeActionFileSource": null,
+      "diagramItemType": "RectangleShape"
+    },
+    {
+      "rotationAngle": 0.0,
+      "mapItemIndex": 21,
+      "content": "",
+      "toolTip": "",
+      "nodeId": 21,
+      "infoId": null,
+      "polygonId": "21",
+      "shapeWidth": 162.0,
+      "shapeHeight": 124.0,
+      "shapeImageName": null,
+      "shapeMode": "Bit",
+      "position": "22,532.4066666666666",
+      "diagramName": "Diagram3",
+      "linkedDiagram": null,
+      "radius": 0.0,
+      "fontSize": 22,
+      "fontFamily": "Arial",
+      "shapeGeneralBackground": "#FFFFFF",
+      "shapeDataBackground": "#CFCFCF",
+      "shapeBitBackground": "#FFFFFF",
+      "shapeOpacity": 1.0,
+      "shapeForgroundOpacity": 1.0,
+      "borderOpacity": 1.0,
+      "shapeBorderBrush": "#FFFFFF",
+      "shapeZIndex": 0,
+      "shapeStrokeThickness": 0,
+      "shapeStrokeDashStyle": "1 0",
+      "geometry": "M0.5,0.5L111.5,0.5 111.5,74.5 0.5,74.5z",
+      "coordinatesGeometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              22,
+              532.4066666666666
+            ],
+            [
+              22,
+              656.4066666666666
+            ],
+            [
+              184,
+              656.4066666666666
+            ],
+            [
+              184,
+              532.4066666666666
+            ],
+            [
+              22,
+              532.4066666666666
+            ]
+          ]
+        ]
+      },
+      "shapeTextBrush": "#000000",
+      "shapeActionFileSource": null,
+      "diagramItemType": "RectangleShape"
+    },
+    {
+      "rotationAngle": 0.0,
+      "mapItemIndex": 22,
+      "content": "",
+      "toolTip": "",
+      "nodeId": 22,
+      "infoId": null,
+      "polygonId": "22",
+      "shapeWidth": 162.0,
+      "shapeHeight": 124.0,
+      "shapeImageName": null,
+      "shapeMode": "Bit",
+      "position": "976,352.40666666666664",
+      "diagramName": "Diagram3",
+      "linkedDiagram": null,
+      "radius": 0.0,
+      "fontSize": 22,
+      "fontFamily": "Arial",
+      "shapeGeneralBackground": "#FFFFFF",
+      "shapeDataBackground": "#CFCFCF",
+      "shapeBitBackground": "#FFFFFF",
+      "shapeOpacity": 1.0,
+      "shapeForgroundOpacity": 1.0,
+      "borderOpacity": 1.0,
+      "shapeBorderBrush": "#FFFFFF",
+      "shapeZIndex": 0,
+      "shapeStrokeThickness": 0,
+      "shapeStrokeDashStyle": "1 0",
+      "geometry": "M0.5,0.5L111.5,0.5 111.5,74.5 0.5,74.5z",
+      "coordinatesGeometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              976,
+              352.40666666666664
+            ],
+            [
+              976,
+              476.40666666666664
+            ],
+            [
+              1138,
+              476.40666666666664
+            ],
+            [
+              1138,
+              352.40666666666664
+            ],
+            [
+              976,
+              352.40666666666664
+            ]
+          ]
+        ]
+      },
+      "shapeTextBrush": "#000000",
+      "shapeActionFileSource": null,
+      "diagramItemType": "RectangleShape"
+    },
+    {
+      "rotationAngle": 0.0,
+      "mapItemIndex": 23,
+      "content": "ModemSRU #1",
+      "toolTip": "",
+      "nodeId": 20000013,
+      "infoId": null,
+      "polygonId": "20000013",
+      "shapeWidth": 162.0,
+      "shapeHeight": 124.0,
+      "shapeImageName": null,
+      "shapeMode": "Bit",
+      "position": "218,532.4066666666666",
+      "diagramName": "Diagram3",
+      "linkedDiagram": null,
+      "radius": 0.0,
+      "fontSize": 22,
+      "fontFamily": "Arial",
+      "shapeGeneralBackground": "#FFFFFF",
+      "shapeDataBackground": "#CFCFCF",
+      "shapeBitBackground": "#9e9e",
+      "shapeOpacity": 1.0,
+      "shapeForgroundOpacity": 1.0,
+      "borderOpacity": 1.0,
+      "shapeBorderBrush": "#FFFFFF",
+      "shapeZIndex": 0,
+      "shapeStrokeThickness": 0,
+      "shapeStrokeDashStyle": "1 0",
+      "geometry": "M0.5,0.5L111.5,0.5 111.5,74.5 0.5,74.5z",
+      "coordinatesGeometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              218,
+              532.4066666666666
+            ],
+            [
+              218,
+              656.4066666666666
+            ],
+            [
+              380,
+              656.4066666666666
+            ],
+            [
+              380,
+              532.4066666666666
+            ],
+            [
+              218,
+              532.4066666666666
+            ]
+          ]
+        ]
+      },
+      "shapeTextBrush": "#000000",
+      "shapeActionFileSource": null,
+      "diagramItemType": "RectangleShape"
+    },
+    {
+      "rotationAngle": 0.0,
+      "mapItemIndex": 24,
+      "content": "GyroscopeSRU #2",
+      "toolTip": "",
+      "nodeId": 20000022,
+      "infoId": null,
+      "polygonId": "20000022",
+      "shapeWidth": 162.0,
+      "shapeHeight": 124.0,
+      "shapeImageName": null,
+      "shapeMode": "Bit",
+      "position": "786,680.4066666666666",
+      "diagramName": "Diagram3",
+      "linkedDiagram": null,
+      "radius": 0.0,
+      "fontSize": 22,
+      "fontFamily": "Arial",
+      "shapeGeneralBackground": "#FFFFFF",
+      "shapeDataBackground": "#CFCFCF",
+      "shapeBitBackground": "#9e9e",
+      "shapeOpacity": 1.0,
+      "shapeForgroundOpacity": 1.0,
+      "borderOpacity": 1.0,
+      "shapeBorderBrush": "#FFFFFF",
+      "shapeZIndex": 0,
+      "shapeStrokeThickness": 0,
+      "shapeStrokeDashStyle": "1 0",
+      "geometry": "M0.5,0.5L111.5,0.5 111.5,74.5 0.5,74.5z",
+      "coordinatesGeometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              786,
+              680.4066666666666
+            ],
+            [
+              786,
+              804.4066666666666
+            ],
+            [
+              948,
+              804.4066666666666
+            ],
+            [
+              948,
+              680.4066666666666
+            ],
+            [
+              786,
+              680.4066666666666
+            ]
+          ]
+        ]
+      },
+      "shapeTextBrush": "#000000",
+      "shapeActionFileSource": null,
+      "diagramItemType": "RectangleShape"
+    },
+    {
+      "rotationAngle": 0.0,
+      "mapItemIndex": 25,
+      "content": "",
+      "toolTip": "",
+      "nodeId": 25,
+      "infoId": null,
+      "polygonId": "25",
+      "shapeWidth": 162.0,
+      "shapeHeight": 124.0,
+      "shapeImageName": null,
+      "shapeMode": "Bit",
+      "position": "778,196.40666666666664",
+      "diagramName": "Diagram3",
+      "linkedDiagram": null,
+      "radius": 0.0,
+      "fontSize": 22,
+      "fontFamily": "Arial",
+      "shapeGeneralBackground": "#FFFFFF",
+      "shapeDataBackground": "#CFCFCF",
+      "shapeBitBackground": "#FFFFFF",
+      "shapeOpacity": 1.0,
+      "shapeForgroundOpacity": 1.0,
+      "borderOpacity": 1.0,
+      "shapeBorderBrush": "#FFFFFF",
+      "shapeZIndex": 0,
+      "shapeStrokeThickness": 0,
+      "shapeStrokeDashStyle": "1 0",
+      "geometry": "M0.5,0.5L111.5,0.5 111.5,74.5 0.5,74.5z",
+      "coordinatesGeometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              778,
+              196.40666666666664
+            ],
+            [
+              778,
+              320.40666666666664
+            ],
+            [
+              940,
+              320.40666666666664
+            ],
+            [
+              940,
+              196.40666666666664
+            ],
+            [
+              778,
+              196.40666666666664
+            ]
+          ]
+        ]
+      },
+      "shapeTextBrush": "#000000",
+      "shapeActionFileSource": null,
+      "diagramItemType": "RectangleShape"
+    },
+    {
+      "rotationAngle": 0.0,
+      "mapItemIndex": 26,
+      "content": "PowerAmpSRU #2",
+      "toolTip": "",
+      "nodeId": 20000005,
+      "infoId": null,
+      "polygonId": "20000005",
+      "shapeWidth": 162.0,
+      "shapeHeight": 124.0,
+      "shapeImageName": null,
+      "shapeMode": "Bit",
+      "position": "788,354.40666666666664",
+      "diagramName": "Diagram3",
+      "linkedDiagram": null,
+      "radius": 0.0,
+      "fontSize": 22,
+      "fontFamily": "Arial",
+      "shapeGeneralBackground": "#FFFFFF",
+      "shapeDataBackground": "#CFCFCF",
+      "shapeBitBackground": "#9e9e",
+      "shapeOpacity": 1.0,
+      "shapeForgroundOpacity": 1.0,
+      "borderOpacity": 1.0,
+      "shapeBorderBrush": "#FFFFFF",
+      "shapeZIndex": 0,
+      "shapeStrokeThickness": 0,
+      "shapeStrokeDashStyle": "1 0",
+      "geometry": "M0.5,0.5L111.5,0.5 111.5,74.5 0.5,74.5z",
+      "coordinatesGeometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              788,
+              354.40666666666664
+            ],
+            [
+              788,
+              478.40666666666664
+            ],
+            [
+              950,
+              478.40666666666664
+            ],
+            [
+              950,
+              354.40666666666664
+            ],
+            [
+              788,
+              354.40666666666664
+            ]
+          ]
+        ]
+      },
+      "shapeTextBrush": "#000000",
+      "shapeActionFileSource": null,
+      "diagramItemType": "RectangleShape"
+    },
+    {
+      "rotationAngle": 0.0,
+      "mapItemIndex": 27,
+      "content": "",
+      "toolTip": "",
+      "nodeId": 27,
+      "infoId": null,
+      "polygonId": "27",
+      "shapeWidth": 162.0,
+      "shapeHeight": 124.0,
+      "shapeImageName": null,
+      "shapeMode": "Bit",
+      "position": "788,32.40666666666664",
+      "diagramName": "Diagram3",
+      "linkedDiagram": null,
+      "radius": 0.0,
+      "fontSize": 22,
+      "fontFamily": "Arial",
+      "shapeGeneralBackground": "#FFFFFF",
+      "shapeDataBackground": "#CFCFCF",
+      "shapeBitBackground": "#FFFFFF",
+      "shapeOpacity": 1.0,
+      "shapeForgroundOpacity": 1.0,
+      "borderOpacity": 1.0,
+      "shapeBorderBrush": "#FFFFFF",
+      "shapeZIndex": 0,
+      "shapeStrokeThickness": 0,
+      "shapeStrokeDashStyle": "1 0",
+      "geometry": "M0.5,0.5L111.5,0.5 111.5,74.5 0.5,74.5z",
+      "coordinatesGeometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              788,
+              32.40666666666664
+            ],
+            [
+              788,
+              156.40666666666664
+            ],
+            [
+              950,
+              156.40666666666664
+            ],
+            [
+              950,
+              32.40666666666664
+            ],
+            [
+              788,
+              32.40666666666664
+            ]
+          ]
+        ]
+      },
+      "shapeTextBrush": "#000000",
+      "shapeActionFileSource": null,
+      "diagramItemType": "RectangleShape"
+    },
+    {
+      "rotationAngle": 0.0,
+      "mapItemIndex": 28,
+      "content": "",
+      "toolTip": "",
+      "nodeId": 28,
+      "infoId": null,
+      "polygonId": "28",
+      "shapeWidth": 162.0,
+      "shapeHeight": 124.0,
+      "shapeImageName": null,
+      "shapeMode": "Bit",
+      "position": "972,34.40666666666664",
+      "diagramName": "Diagram3",
+      "linkedDiagram": null,
+      "radius": 0.0,
+      "fontSize": 22,
+      "fontFamily": "Arial",
+      "shapeGeneralBackground": "#FFFFFF",
+      "shapeDataBackground": "#CFCFCF",
+      "shapeBitBackground": "#FFFFFF",
+      "shapeOpacity": 1.0,
+      "shapeForgroundOpacity": 1.0,
+      "borderOpacity": 1.0,
+      "shapeBorderBrush": "#FFFFFF",
+      "shapeZIndex": 0,
+      "shapeStrokeThickness": 0,
+      "shapeStrokeDashStyle": "1 0",
+      "geometry": "M0.5,0.5L111.5,0.5 111.5,74.5 0.5,74.5z",
+      "coordinatesGeometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              972,
+              34.40666666666664
+            ],
+            [
+              972,
+              158.40666666666664
+            ],
+            [
+              1134,
+              158.40666666666664
+            ],
+            [
+              1134,
+              34.40666666666664
+            ],
+            [
+              972,
+              34.40666666666664
+            ]
+          ]
+        ]
+      },
+      "shapeTextBrush": "#000000",
+      "shapeActionFileSource": null,
+      "diagramItemType": "RectangleShape"
+    },
+    {
+      "rotationAngle": 0.0,
+      "mapItemIndex": 29,
+      "content": "",
+      "toolTip": "",
+      "nodeId": 29,
+      "infoId": null,
+      "polygonId": "29",
+      "shapeWidth": 162.0,
+      "shapeHeight": 124.0,
+      "shapeImageName": null,
+      "shapeMode": "Bit",
+      "position": "790,528.4066666666666",
+      "diagramName": "Diagram3",
+      "linkedDiagram": null,
+      "radius": 0.0,
+      "fontSize": 22,
+      "fontFamily": "Arial",
+      "shapeGeneralBackground": "#FFFFFF",
+      "shapeDataBackground": "#CFCFCF",
+      "shapeBitBackground": "#FFFFFF",
+      "shapeOpacity": 1.0,
+      "shapeForgroundOpacity": 1.0,
+      "borderOpacity": 1.0,
+      "shapeBorderBrush": "#FFFFFF",
+      "shapeZIndex": 0,
+      "shapeStrokeThickness": 0,
+      "shapeStrokeDashStyle": "1 0",
+      "geometry": "M0.5,0.5L111.5,0.5 111.5,74.5 0.5,74.5z",
+      "coordinatesGeometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              790,
+              528.4066666666666
+            ],
+            [
+              790,
+              652.4066666666666
+            ],
+            [
+              952,
+              652.4066666666666
+            ],
+            [
+              952,
+              528.4066666666666
+            ],
+            [
+              790,
+              528.4066666666666
+            ]
+          ]
+        ]
+      },
+      "shapeTextBrush": "#000000",
+      "shapeActionFileSource": null,
+      "diagramItemType": "RectangleShape"
+    },
+    {
+      "rotationAngle": 0.0,
+      "mapItemIndex": 30,
+      "content": "",
+      "toolTip": "",
+      "nodeId": 30,
+      "infoId": null,
+      "polygonId": "30",
+      "shapeWidth": 162.0,
+      "shapeHeight": 124.0,
+      "shapeImageName": null,
+      "shapeMode": "Bit",
+      "position": "20,688.4066666666666",
+      "diagramName": "Diagram3",
+      "linkedDiagram": null,
+      "radius": 0.0,
+      "fontSize": 22,
+      "fontFamily": "Arial",
+      "shapeGeneralBackground": "#FFFFFF",
+      "shapeDataBackground": "#CFCFCF",
+      "shapeBitBackground": "#FFFFFF",
+      "shapeOpacity": 1.0,
+      "shapeForgroundOpacity": 1.0,
+      "borderOpacity": 1.0,
+      "shapeBorderBrush": "#FFFFFF",
+      "shapeZIndex": 0,
+      "shapeStrokeThickness": 0,
+      "shapeStrokeDashStyle": "1 0",
+      "geometry": "M0.5,0.5L111.5,0.5 111.5,74.5 0.5,74.5z",
+      "coordinatesGeometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              20,
+              688.4066666666666
+            ],
+            [
+              20,
+              812.4066666666666
+            ],
+            [
+              182,
+              812.4066666666666
+            ],
+            [
+              182,
+              688.4066666666666
+            ],
+            [
+              20,
+              688.4066666666666
+            ]
+          ]
+        ]
+      },
+      "shapeTextBrush": "#000000",
+      "shapeActionFileSource": null,
+      "diagramItemType": "RectangleShape"
+    },
+    {
+      "rotationAngle": 0.0,
+      "mapItemIndex": 31,
+      "content": "",
+      "toolTip": "",
+      "nodeId": 31,
+      "infoId": null,
+      "polygonId": "31",
+      "shapeWidth": 162.0,
+      "shapeHeight": 124.0,
+      "shapeImageName": null,
+      "shapeMode": "Bit",
+      "position": "210,692.4066666666666",
+      "diagramName": "Diagram3",
+      "linkedDiagram": null,
+      "radius": 0.0,
+      "fontSize": 22,
+      "fontFamily": "Arial",
+      "shapeGeneralBackground": "#FFFFFF",
+      "shapeDataBackground": "#CFCFCF",
+      "shapeBitBackground": "#FFFFFF",
+      "shapeOpacity": 1.0,
+      "shapeForgroundOpacity": 1.0,
+      "borderOpacity": 1.0,
+      "shapeBorderBrush": "#FFFFFF",
+      "shapeZIndex": 0,
+      "shapeStrokeThickness": 0,
+      "shapeStrokeDashStyle": "1 0",
+      "geometry": "M0.5,0.5L111.5,0.5 111.5,74.5 0.5,74.5z",
+      "coordinatesGeometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              210,
+              692.4066666666666
+            ],
+            [
+              210,
+              816.4066666666666
+            ],
+            [
+              372,
+              816.4066666666666
+            ],
+            [
+              372,
+              692.4066666666666
+            ],
+            [
+              210,
+              692.4066666666666
+            ]
+          ]
+        ]
+      },
+      "shapeTextBrush": "#000000",
+      "shapeActionFileSource": null,
+      "diagramItemType": "RectangleShape"
+    },
+    {
+      "rotationAngle": 0.0,
+      "mapItemIndex": 32,
+      "content": "",
+      "toolTip": "",
+      "nodeId": 32,
+      "infoId": null,
+      "polygonId": "32",
+      "shapeWidth": 162.0,
+      "shapeHeight": 124.0,
+      "shapeImageName": null,
+      "shapeMode": "Bit",
+      "position": "408,686.4066666666666",
+      "diagramName": "Diagram3",
+      "linkedDiagram": null,
+      "radius": 0.0,
+      "fontSize": 22,
+      "fontFamily": "Arial",
+      "shapeGeneralBackground": "#FFFFFF",
+      "shapeDataBackground": "#CFCFCF",
+      "shapeBitBackground": "#FFFFFF",
+      "shapeOpacity": 1.0,
+      "shapeForgroundOpacity": 1.0,
+      "borderOpacity": 1.0,
+      "shapeBorderBrush": "#FFFFFF",
+      "shapeZIndex": 0,
+      "shapeStrokeThickness": 0,
+      "shapeStrokeDashStyle": "1 0",
+      "geometry": "M0.5,0.5L111.5,0.5 111.5,74.5 0.5,74.5z",
+      "coordinatesGeometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              408,
+              686.4066666666666
+            ],
+            [
+              408,
+              810.4066666666666
+            ],
+            [
+              570,
+              810.4066666666666
+            ],
+            [
+              570,
+              686.4066666666666
+            ],
+            [
+              408,
+              686.4066666666666
+            ]
+          ]
+        ]
+      },
+      "shapeTextBrush": "#000000",
+      "shapeActionFileSource": null,
+      "diagramItemType": "RectangleShape"
+    },
+    {
+      "rotationAngle": 0.0,
+      "mapItemIndex": 33,
+      "content": "",
+      "toolTip": "",
+      "nodeId": 33,
+      "infoId": null,
+      "polygonId": "33",
+      "shapeWidth": 162.0,
+      "shapeHeight": 124.0,
+      "shapeImageName": null,
+      "shapeMode": "Bit",
+      "position": "600,682.4066666666666",
+      "diagramName": "Diagram3",
+      "linkedDiagram": null,
+      "radius": 0.0,
+      "fontSize": 22,
+      "fontFamily": "Arial",
+      "shapeGeneralBackground": "#FFFFFF",
+      "shapeDataBackground": "#CFCFCF",
+      "shapeBitBackground": "#FFFFFF",
+      "shapeOpacity": 1.0,
+      "shapeForgroundOpacity": 1.0,
+      "borderOpacity": 1.0,
+      "shapeBorderBrush": "#FFFFFF",
+      "shapeZIndex": 0,
+      "shapeStrokeThickness": 0,
+      "shapeStrokeDashStyle": "1 0",
+      "geometry": "M0.5,0.5L111.5,0.5 111.5,74.5 0.5,74.5z",
+      "coordinatesGeometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              600,
+              682.4066666666666
+            ],
+            [
+              600,
+              806.4066666666666
+            ],
+            [
+              762,
+              806.4066666666666
+            ],
+            [
+              762,
+              682.4066666666666
+            ],
+            [
+              600,
+              682.4066666666666
+            ]
+          ]
+        ]
+      },
+      "shapeTextBrush": "#000000",
+      "shapeActionFileSource": null,
+      "diagramItemType": "RectangleShape"
+    }
+  ]
+}

@@ -1,0 +1,234 @@
+{
+  "diagramData": {
+    "sizeX": 0.0,
+    "sizeY": 0.0,
+    "width": 1068.0,
+    "height": 1236.0,
+    "diagramBackground": "#333333",
+    "diagramImageName": null,
+    "diagramOrder": "1"
+  },
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "rotationAngle": 0.0,
+      "mapItemIndex": 1,
+      "content": "",
+      "toolTip": "",
+      "nodeId": 0,
+      "infoId": "0",
+      "polygonId": "0_0",
+      "shapeWidth": 224.0,
+      "shapeHeight": 286.0,
+      "shapeImageName": null,
+      "shapeMode": "Data",
+      "position": "22,154",
+      "diagramName": "Antenna",
+      "linkedDiagram": null,
+      "radius": 0.0,
+      "fontSize": 22,
+      "fontFamily": "Arial",
+      "shapeGeneralBackground": "#FFFFFF",
+      "shapeDataBackground": "#CFCFCF",
+      "shapeBitBackground": "#FFFFFF",
+      "shapeOpacity": 1.0,
+      "shapeForgroundOpacity": 1.0,
+      "borderOpacity": 1.0,
+      "shapeBorderBrush": "#FFFFFF",
+      "shapeZIndex": 0,
+      "shapeStrokeThickness": 0,
+      "shapeStrokeDashStyle": "1 0",
+      "geometry": "M0,9C0,4.0294371,4.0294371,0,9,0L103,0C107.97057,0,112,4.0294371,112,9L112,66C112,70.970566,107.97057,75,103,75L9,75C4.0294371,75,0,70.970566,0,66z",
+      "coordinatesGeometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              22,
+              154
+            ],
+            [
+              22,
+              440
+            ],
+            [
+              246,
+              440
+            ],
+            [
+              246,
+              154
+            ],
+            [
+              22,
+              154
+            ]
+          ]
+        ]
+      },
+      "shapeTextBrush": "#000000",
+      "shapeActionFileSource": null,
+      "diagramItemType": "RoundedRectangleShape"
+    },
+    {
+      "rotationAngle": 0.0,
+      "mapItemIndex": 2,
+      "content": "CommSubSystem",
+      "toolTip": "",
+      "nodeId": 20000011,
+      "infoId": null,
+      "polygonId": "20000011",
+      "shapeWidth": 336.0,
+      "shapeHeight": 152.0,
+      "shapeImageName": null,
+      "shapeMode": "Bit",
+      "position": "402,20",
+      "diagramName": "Antenna",
+      "linkedDiagram": null,
+      "radius": 168.0,
+      "fontSize": 22,
+      "fontFamily": "Arial",
+      "shapeGeneralBackground": "#FFFFFF",
+      "shapeDataBackground": "#CFCFCF",
+      "shapeBitBackground": "#9e9e",
+      "shapeOpacity": 1.0,
+      "shapeForgroundOpacity": 1.0,
+      "borderOpacity": 1.0,
+      "shapeBorderBrush": "#FFFFFF",
+      "shapeZIndex": 0,
+      "shapeStrokeThickness": 0,
+      "shapeStrokeDashStyle": "1 0",
+      "geometry": "M111.5,37.5C111.5,57.91 86.67,74.5 56,74.5 25.33,74.5 0.5,57.91 0.5,37.5 0.5,17.09 25.33,0.5 56,0.5 86.67,0.5 111.5,17.09 111.5,37.5z",
+      "coordinatesGeometry": {
+        "type": "Point",
+        "coordinates": [
+          570,
+          96
+        ]
+      },
+      "shapeTextBrush": "#000000",
+      "shapeActionFileSource": null,
+      "diagramItemType": "EllipseShape"
+    },
+    {
+      "rotationAngle": 0.0,
+      "mapItemIndex": 3,
+      "content": "RadarSubSystem",
+      "toolTip": "",
+      "nodeId": 20000002,
+      "infoId": null,
+      "polygonId": "20000002",
+      "shapeWidth": 472.0,
+      "shapeHeight": 130.0,
+      "shapeImageName": null,
+      "shapeMode": "Bit",
+      "position": "576,284",
+      "diagramName": "Antenna",
+      "linkedDiagram": null,
+      "radius": 0.0,
+      "fontSize": 22,
+      "fontFamily": "Arial",
+      "shapeGeneralBackground": "#FFFFFF",
+      "shapeDataBackground": "#CFCFCF",
+      "shapeBitBackground": "#9e9e",
+      "shapeOpacity": 1.0,
+      "shapeForgroundOpacity": 1.0,
+      "borderOpacity": 1.0,
+      "shapeBorderBrush": "#FFFFFF",
+      "shapeZIndex": 0,
+      "shapeStrokeThickness": 0,
+      "shapeStrokeDashStyle": "1 0",
+      "geometry": "M0.5,0.5L111.5,0.5 111.5,74.5 0.5,74.5z",
+      "coordinatesGeometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              576,
+              284
+            ],
+            [
+              576,
+              414
+            ],
+            [
+              1048,
+              414
+            ],
+            [
+              1048,
+              284
+            ],
+            [
+              576,
+              284
+            ]
+          ]
+        ]
+      },
+      "shapeTextBrush": "#000000",
+      "shapeActionFileSource": null,
+      "diagramItemType": "RectangleShape"
+    },
+    {
+      "rotationAngle": 0.0,
+      "mapItemIndex": 4,
+      "content": "",
+      "toolTip": "",
+      "nodeId": 4,
+      "infoId": null,
+      "polygonId": "4",
+      "shapeWidth": 862.0,
+      "shapeHeight": 605.9999999999999,
+      "shapeImageName": null,
+      "shapeMode": "Bit",
+      "position": "20,610",
+      "diagramName": "Antenna",
+      "linkedDiagram": null,
+      "radius": 0.0,
+      "fontSize": 22,
+      "fontFamily": "Arial",
+      "shapeGeneralBackground": "#FFFFFF",
+      "shapeDataBackground": "#CFCFCF",
+      "shapeBitBackground": "#FFFFFF",
+      "shapeOpacity": 1.0,
+      "shapeForgroundOpacity": 1.0,
+      "borderOpacity": 1.0,
+      "shapeBorderBrush": "#FFFFFF",
+      "shapeZIndex": 0,
+      "shapeStrokeThickness": 0,
+      "shapeStrokeDashStyle": "1 0",
+      "geometry": "M0.5,0.5L111.5,0.5 111.5,74.5 0.5,74.5z",
+      "coordinatesGeometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              20,
+              610
+            ],
+            [
+              20,
+              1216
+            ],
+            [
+              882,
+              1216
+            ],
+            [
+              882,
+              610
+            ],
+            [
+              20,
+              610
+            ]
+          ]
+        ]
+      },
+      "shapeTextBrush": "#000000",
+      "shapeActionFileSource": null,
+      "diagramItemType": "RectangleShape"
+    }
+  ]
+}

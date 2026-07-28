@@ -10,6 +10,7 @@ import { SystemInfoInjector } from './system-info-injector';
 import { GenerateKeepAlivePayload } from './keep-alive-generator';
 import { GenerateSystemStateCollection } from './system-state-generator';
 import { GenerateSystemInfoList } from './system-info-generator';
+import { GenerateMapsSelectionCollection } from './maps-selection-generator';
 import { BuildDataToSendToClient } from '..';
 
 import treeService from './tree.service';
@@ -186,7 +187,7 @@ class SocketService {
     // Server-generated-data
     client.emit(SocketEventName.serverHealth, BuildDataToSendToClient());
     client.emit(SocketEventName.startUpInBitSensors, { message: 'Sending here startUpInBitSensors!' });
-    client.emit(SocketEventName.mapsSelectionNames, { message: 'Sending here mapsSelectionNames!' });
+    client.emit(SocketEventName.mapsSelectionNames, GenerateMapsSelectionCollection());
     client.emit(SocketEventName.systemsUnreadAlertsCount, { message: 'Sending here systemsUnreadAlertsCount!' });
 
     // server-config

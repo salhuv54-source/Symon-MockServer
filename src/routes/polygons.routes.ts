@@ -51,7 +51,10 @@ function processPolygonResponse(data: any): any {
   if (diagramData && features && Array.isArray(features)) {
     GeoJsonConverterService.convertPolygonsToGeoJson(diagramData, features);
   }
-  return responseObj;
+  return {
+    type: "FeatureCollection",
+    features,
+  };
 }
 
 export default function polygonsRoutes(router: Router): void {

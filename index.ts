@@ -10,6 +10,7 @@ import swaggerJsdoc from 'swagger-jsdoc';
 import { DataStatusBuild, DataStatusType, ServerDataStatusToClient, ServerDataStatusToClientCollection } from './src/interfaces/DataStatusBuild.interface';
 import { getEventsAndFaultsForSystem } from './src/system-log.service';
 import { GenerateMapsSelectionCollection } from './src/maps-selection-generator';
+import cors from 'cors';
 
 class MockSymonServer {
     private app: express.Application;
@@ -56,6 +57,25 @@ class MockSymonServer {
             // Start all injectors 10 seconds after initialization completes
             socketService.startInjectorsWithDelay(10000);
         });
+
+        const options: cors.CorsOptions = {
+            allowedHeaders: [
+                "Origin",
+                "Access-Control-Allow-Headers",
+                "X-Requested-With",
+                "Content-Type",
+                "Accept",
+                "X-Access-With",
+                "Authorization"
+            ],
+            credentials: true,
+            methods: "GET,POST,HEAD,OPTIONS,PUT,PATCH,DELETE",
+            origin: (origin, callback) => {
+                callback(null, origin);
+            }
+        }
+        this.app.use(cors(options));
+
         // Parse JSON bodies
         this.app.use(express.json());
 

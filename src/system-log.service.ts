@@ -60,14 +60,6 @@ export function getAllModelEvents(): EventMsg[] {
       const eventId = parseInt(evt.id, 10) || 0;
       const nodeTypeId = parseInt(evt.nti, 10) || 0;
 
-      const eventClasses = [
-        E_EVENT_CLASS.E_EVENT_CLASS_HW_FAULT,
-        E_EVENT_CLASS.E_EVENT_CLASS_COMM_PROBLEM,
-        E_EVENT_CLASS.E_EVENT_CLASS_SW_PROBLEM,
-        E_EVENT_CLASS.E_EVENT_CLASS_CONFIGURATION,
-        E_EVENT_CLASS.E_EVENT_CLASS_DATA,
-        E_EVENT_CLASS.E_EVENT_CLASS_STATE_CHANGE
-      ];
       const eventClass = evt.severity === 'NG' ? E_EVENT_CLASS.E_EVENT_CLASS_SW_PROBLEM : E_EVENT_CLASS.E_EVENT_CLASS_COMM_PROBLEM;
       const serialNumber = parseInt(inst.sn, 10) || 1;
       const hwMapIndex = parseInt(inst.hmi, 10);
@@ -243,27 +235,46 @@ export function getAllModelFaults(): SingleFault[] {
 }
 
 /**
- * Traverses the sensor tree to collect the target ID and all descendant node IDs (children, grandchildren, etc.).
+ * Traverses the sensor tree and model instances to collect the target ID
+ * and all descendant node IDs (children, grandchildren, etc.).
  */
 function getAllDescendantIds(targetId: number): Set<number> {
   const ids = new Set<number>([targetId]);
   try {
+    // 1. Traverse Sensor tree from treeService
     const tree = treeService.buildTree();
     const sensorMap = new Map<number, Sensor>(tree.map(s => [s.id, s]));
 
-    function collect(id: number) {
+    function collectFromSensorMap(id: number) {
       const sensor = sensorMap.get(id);
       if (sensor && sensor.childrenIds && sensor.childrenIds.length > 0) {
         for (const childId of sensor.childrenIds) {
           if (!ids.has(childId)) {
             ids.add(childId);
-            collect(childId);
+            collectFromSensorMap(childId);
           }
         }
       }
     }
+    collectFromSensorMap(targetId);
 
-    collect(targetId);
+    // 2. Traverse ModelInstance hierarchy from activeModel
+    const activeModel = appStore.getActiveModel();
+    if (activeModel && activeModel.instances && activeModel.instances.length > 0) {
+      function collectFromInstances(instances: ModelInstance[], isTargetFound: boolean) {
+        for (const inst of instances) {
+          const instId = parseInt(inst.hmi, 10);
+          const isMatch = isTargetFound || instId === targetId || ids.has(instId);
+          if (isMatch && !isNaN(instId)) {
+            ids.add(instId);
+          }
+          if (inst.children && inst.children.length > 0) {
+            collectFromInstances(inst.children, isMatch);
+          }
+        }
+      }
+      collectFromInstances(activeModel.instances, false);
+    }
   } catch (err) {
     console.error('[SystemLogService] Error collecting descendant IDs:', (err as Error).message);
   }

@@ -246,9 +246,9 @@ class MockSymonServer {
         socketService.on(SocketEventName.commandsResults, (client, data) => {
             console.log(`[MockSymonServer] Received commandsResults:`, JSON.stringify(data));
         });
-        socketService.on(SocketEventName.systemLogTimeFilterChange, (client, data) => {
-            console.log(`[MockSymonServer] Received systemLogTimeFilterChange:`, JSON.stringify(data));
-            const selectedSystemId = data?.SelectedSystemId ?? data?.selectedSystemId ?? data?.systemId ?? data?.nodeId;
+        const handleSystemLogRequest = (client: any, data: any) => {
+            console.log(`[MockSymonServer] Received systemLog request:`, JSON.stringify(data));
+            const selectedSystemId = data?.SelectedSystemId ?? data?.selectedSystemId ?? data?.systemId ?? data?.nodeId ?? data?.id;
             const { events, faults } = getEventsAndFaultsForSystem(selectedSystemId);
 
             console.log(`[MockSymonServer] Emitting log data for SelectedSystemId "${selectedSystemId}": ${events.length} events, ${faults.length} faults`);
@@ -272,7 +272,18 @@ class MockSymonServer {
                 faults,
                 isOnline: false
             });
-        });
+
+            // Also emit response on systemLog
+            socketService.sendTo(client, 'systemLog', {
+                SelectedSystemId: selectedSystemId,
+                events,
+                faults,
+                isOnline: false
+            });
+        };
+
+        socketService.on(SocketEventName.systemLogTimeFilterChange, handleSystemLogRequest);
+        socketService.on('systemLog', handleSystemLogRequest);
         socketService.on(SocketEventName.treeMapFilterChange, (client, data) => {
             console.log(`[MockSymonServer] Received treeMapFilterChange:`, JSON.stringify(data));
         });

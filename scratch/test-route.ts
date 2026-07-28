@@ -20,7 +20,7 @@ const server = app.listen(0, () => {
       console.log('GET /api/polygons/tree/diagrams Status:', res.statusCode);
       console.log('Response:', data);
       server.close();
-      if (res.statusCode === 200 && data.includes('filename')) {
+      if (res.statusCode === 200 && (data.includes('diagramData') || data.includes('features'))) {
         console.log('Test PASSED!');
         process.exit(0);
       } else {

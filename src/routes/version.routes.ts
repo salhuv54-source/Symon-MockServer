@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { MainRoutes, SubRoutes } from '../types';
+import { MainRoutes, SubRoutes } from '../interfaces/routes.interface';
 
 export default function versionRoutes(router: Router): void {
   // GET /version/

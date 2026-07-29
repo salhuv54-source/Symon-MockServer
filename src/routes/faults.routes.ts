@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { MainRoutes } from '../types';
+import { MainRoutes } from '../interfaces/routes.interface';
 import appStore from '../app-store';
 
 export default function faultsRoutes(router: Router): void {

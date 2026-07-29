@@ -17,7 +17,9 @@ export enum BitOperationType {
 
 export enum BitReportDocTypes {
   REPORT_DOC_TYPE = 0,
+  REPORT_DEC_TYPE = 0,
   FAULT_DOC_TYPE = 1,
+  FAULT_DEC_TYPE = 1,
   SERVICEABILITY_DOC_TYPE = 2,
 }
 

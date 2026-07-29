@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express';
 import * as path from 'path';
 import * as fs from 'fs';
-import { MainRoutes, SubRoutes } from '../types';
+import { MainRoutes, SubRoutes } from '../interfaces/routes.interface';
 
 const MAPS_DIR = path.resolve(__dirname, '..', '..', 'assets', 'maps-and-polygons');
 

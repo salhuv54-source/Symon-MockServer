@@ -1,6 +1,6 @@
 import { Server as SocketIOServer, Socket } from 'socket.io';
 import http from 'http';
-import { SocketEventName } from './types';
+import { SocketEventName } from './interfaces/socket-events.interface';
 import { GenerateSensorsTree, toArray } from './sensor-generator';
 import { GenerateSensorsStatus } from './status-generator';
 import { EventInjector } from './event-injector';

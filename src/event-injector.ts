@@ -1,7 +1,8 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import appStore from './app-store';
-import { ModelInstance, SocketEventName } from './types';
+import { ModelInstance } from './types';
+import { SocketEventName } from './interfaces/socket-events.interface';
 import { EventMsg, E_EVENT_CLASS, E_FIE_PROCESS, EventsChangePayload } from './interfaces/event.interface';
 import { E_SIGN } from './interfaces/fault.interface';
 import { E_PRIMARY_STATE } from './interfaces/system-state.interface';

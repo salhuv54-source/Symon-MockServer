@@ -2,7 +2,8 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { XMLParser } from 'fast-xml-parser';
 import { Sensor, SensorsCollection } from './interfaces/sensor.interface';
-import { ModelData, ModelInstance, ModelNode, SocketEventName } from './types';
+import { ModelData, ModelInstance, ModelNode } from './types';
+import { SocketEventName } from './interfaces/socket-events.interface';
 import { loadModelFromFile } from './model-loader';
 import appStore from './app-store';
 

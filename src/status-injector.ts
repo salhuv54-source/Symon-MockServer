@@ -1,4 +1,4 @@
-import { SocketEventName } from './types';
+import { SocketEventName } from './interfaces/socket-events.interface';
 import { GenerateSensorsTree } from './sensor-generator';
 import { GenerateSensorsStatus } from './status-generator';
 

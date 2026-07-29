@@ -1,7 +1,8 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import appStore from './app-store';
-import { ModelInstance, SocketEventName, BitReportDocTypes, BitOperationType } from './types';
+import { ModelInstance, BitReportDocTypes, BitOperationType } from './types';
+import { SocketEventName } from './interfaces/socket-events.interface';
 import { E_SERVICEABILITY } from './interfaces/sensor.interface';
 import { SingleFault, E_SIGN, FaultsChangePayload } from './interfaces/fault.interface';
 import { E_PRIMARY_STATE } from './interfaces/system-state.interface';

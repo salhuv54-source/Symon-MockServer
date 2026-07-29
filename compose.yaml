@@ -1,6 +1,6 @@
 services:
   symon-mock-server:
-    image: ${MOCK_SERVER}:1.0.0
+    image: ${MOCK_SERVER}:${MOCK_SERVER_VERSION}
     container_name: symon-mock-server
     ports:
       - "9001:9001"

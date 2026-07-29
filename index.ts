@@ -15,7 +15,7 @@ import cors from 'cors';
 class MockSymonServer {
     private app: express.Application;
     private httpServer: http.Server;
-    private Port = 9001;
+    private Port = process.env.PORT ? parseInt(process.env.PORT, 10) : 9001;
     constructor() {
         this.app = express();
         this.httpServer = http.createServer(this.app);

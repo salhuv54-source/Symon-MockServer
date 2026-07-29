@@ -1,5 +1,5 @@
 # --- Stage 1: Build & Dependencies ---
-FROM node:20-alpine AS builder
+FROM artifactory.gcp.elta.co.il/docker.io/library/node:20-alpine AS builder
 WORKDIR /usr/src/app
 
 # Point NPM to the corporate Artifactory registry and system CA bundle
@@ -9,23 +9,27 @@ ENV NPM_CONFIG_CAFILE=/etc/ssl/certs/ca-certificates.crt
 # Copy the CA certificate bundle into the stage so npm trusts Artifactory
 COPY ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 
-# Copy package management files first to leverage Docker/Podman caching
+# Copy package management files first to leverage Docker caching
 COPY package*.json ./
 
-# Install all dependencies (including devDependencies)
+# Install all dependencies (including devDependencies required for TypeScript compilation)
 RUN npm ci
 
-# Copy the rest of your application source code
-COPY . .
+# Copy tsconfig and source code
+COPY tsconfig.json ./
+COPY index.ts ./
+COPY src/ ./src/
+COPY assets/ ./assets/
 
-# Build TypeScript
+# Build TypeScript code to dist/
 RUN npm run build
 
 # --- Stage 2: Production Runtime ---
-FROM node:20-alpine AS runner
+FROM artifactory.gcp.elta.co.il/docker.io/library/node:20-alpine AS runner
 WORKDIR /usr/src/app
 
 ENV NODE_ENV=production
+ENV PORT=9001
 
 # Point NPM to the corporate Artifactory registry and system CA bundle
 ENV NPM_CONFIG_REGISTRY=https://artifactory.gcp.elta.co.il/artifactory/api/npm/npmjs.org
@@ -34,17 +38,16 @@ ENV NPM_CONFIG_CAFILE=/etc/ssl/certs/ca-certificates.crt
 # Copy the CA certificate bundle into the stage so npm trusts Artifactory
 COPY ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 
-# Only install production dependencies to keep the image slim
+# Copy package files and install production-only dependencies
 COPY package*.json ./
-
-# Install only production dependencies
 RUN npm ci --omit=dev
 
-# Copy built code from the builder stage
+# Copy compiled JavaScript output and runtime assets from builder stage
 COPY --from=builder /usr/src/app/dist ./dist
+COPY --from=builder /usr/src/app/assets ./assets
 
-# Expose the port your Node app listens on (change 3000 if your app uses a different port)
-EXPOSE 8081
+# Expose port 9001 for REST API, Swagger UI, and Socket.IO connections
+EXPOSE 9001
 
-# Run the compiled application
+# Run the application
 CMD ["node", "dist/index.js"]

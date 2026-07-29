@@ -2,12 +2,12 @@ How to run the symon-mockserver:
 
 Via podman:
 1. podman load -i symon-mock-server.tar
-2. podman compose up -d
+2. docker-compose up -d
 
 
 Via Docker:
 1. docker load -i symon-mock-server.tar
-2. docker compose up -d
+docker-compose up -d
 
 Interfaces:
 1. In the routes.interface.ts you will find all the REST API of the server.

@@ -1,0 +1,4 @@
+How to run the symon-mockserver:
+
+1. podman load -i symon-server.tar
+2. podman compose up -d

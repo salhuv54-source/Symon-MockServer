@@ -1,0 +1,8 @@
+services:
+  symon-server:
+    image: docker.io/library/symon-server:1.0.0
+    container_name: symon-server
+    ports:
+      - "9001:9001"
+    environment:
+      PORT: 9001

@@ -38,7 +38,7 @@ export class GeoJsonConverterService {
       polygonId: TosJSON.polygonId,
       fontSize: TosJSON.fontSize,
       polygonTextColor: TosJSON.shapeTextBrush ? TosJSON.shapeTextBrush.toLowerCase() : "#000000",
-      shapeImageName: TosJSON.shapeImageName ?? undefined,
+      shapeImageName: TosJSON.shapeImageName ?? "bla",
       linkedDiagram: TosJSON.linkedDiagram,
       options: {
         ...initialSymonJSON.properties.options,
@@ -51,7 +51,7 @@ export class GeoJsonConverterService {
         radius:
           TosJSON.radius > 0
             ? GeoJsonConverterService.scalingRadiusCoords(TosJSON.radius, width)
-            : undefined,
+            : 0.1,
       },
     };
 
@@ -137,7 +137,7 @@ export class GeoJsonConverterService {
         options: {
           fill: true,
           stroke: true,
-          color: undefined,
+          color: "#ffffff",
           weight: 4,
           opacity: 1,
           initOpacity: 1,

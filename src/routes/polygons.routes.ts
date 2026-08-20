@@ -52,6 +52,7 @@ function processPolygonResponse(data: any): any {
     GeoJsonConverterService.convertPolygonsToGeoJson(diagramData, features);
   }
   return {
+    diagramData,
     type: "FeatureCollection",
     features,
   };

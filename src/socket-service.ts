@@ -7,6 +7,7 @@ import { EventInjector } from './event-injector';
 import { StatusInjector } from './status-injector';
 import { FaultsInjector } from './faults-injector';
 import { SystemInfoInjector } from './system-info-injector';
+import { SystemStateInjector } from './system-state-injector';
 import { GenerateKeepAlivePayload } from './keep-alive-generator';
 import { GenerateSystemStateCollection } from './system-state-generator';
 import { GenerateSystemInfoList } from './system-info-generator';
@@ -41,6 +42,10 @@ class SocketService {
     () => this.getClientCount() > 0
   );
   private systemInfoInjector = new SystemInfoInjector(
+    (event, data) => this.broadcast(event, data),
+    () => this.getClientCount() > 0
+  );
+  private systemStateInjector = new SystemStateInjector(
     (event, data) => this.broadcast(event, data),
     () => this.getClientCount() > 0
   );
@@ -96,7 +101,7 @@ class SocketService {
   }
 
   /**
-   * Starts all recurring data injectors (events, status, faults).
+   * Starts all recurring data injectors (events, status, faults, systemInfo, systemState).
    */
   startInjectors(): void {
     console.log('[SocketService] Starting all injectors...');
@@ -104,6 +109,7 @@ class SocketService {
     this.statusInjector.start();
     this.faultsInjector.start();
     this.systemInfoInjector.start();
+    this.systemStateInjector.start();
   }
 
   /**
@@ -205,6 +211,8 @@ class SocketService {
     this.eventInjector.stop();
     this.statusInjector.stop();
     this.faultsInjector.stop();
+    this.systemInfoInjector.stop();
+    this.systemStateInjector.stop();
     if (this.io) {
       this.io.close();
       this.clients.clear();

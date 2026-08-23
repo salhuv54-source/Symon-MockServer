@@ -6,7 +6,7 @@ import { ModelInstance, BitReportDocTypes, BitOperationType } from './types';
 import { EventMsg, E_EVENT_CLASS, E_FIE_PROCESS } from './interfaces/event.interface';
 import { SingleFault, E_SIGN } from './interfaces/fault.interface';
 import { E_PRIMARY_STATE } from './interfaces/system-state.interface';
-import { E_SERVICEABILITY, Sensor } from './interfaces/sensor.interface';
+import { E_SERVICEABILITY, Sensor, SensorStatus } from './interfaces/sensor.interface';
 
 interface EnrichedInstance {
   inst: ModelInstance;
@@ -234,6 +234,74 @@ export function getAllModelFaults(): SingleFault[] {
   return faultPayload;
 }
 
+export function getAllModelServiceability(): SensorStatus[] {
+  const activeModel = appStore.getActiveModel();
+  const serviceabilityPayload: SensorStatus[] = [];
+
+  if (activeModel && activeModel.instances && activeModel.instances.length > 0) {
+    const flatInstances = collectAllInstances(activeModel.instances);
+    const rootSystemId = (activeModel.instances && activeModel.instances.length > 0)
+      ? (parseInt(activeModel.instances[0].hmi, 10) || parseInt(activeModel.system.id, 10) || 1)
+      : (parseInt(activeModel.system.id, 10) || 1);
+
+    flatInstances.forEach((enriched, index) => {
+      const inst = enriched.inst;
+      const hwMapIndex = parseInt(inst.hmi, 10);
+      if (isNaN(hwMapIndex)) return;
+
+      const pssVal = inst.initPss ? (parseInt(inst.initPss, 10) as E_SERVICEABILITY) : E_SERVICEABILITY.E_SERVICEABILITY_OK;
+
+      serviceabilityPayload.push({
+        node_id: hwMapIndex,
+        sensorId: hwMapIndex,
+        systemId: hwMapIndex,
+        rootSystemId: rootSystemId,
+        systemName: activeModel.system.name,
+        nodeFullPath: enriched.fullPath,
+        nodeIndexPath: enriched.indexPath,
+        uniqueId: `uuid-serviceability-${hwMapIndex}-${Date.now()}-${index}`,
+        pss_e: pssVal,
+        fss_e: E_SERVICEABILITY.E_SERVICEABILITY_OK,
+        last_state_change_time: Date.now() - Math.floor(Math.random() * 86400000),
+        docType: BitReportDocTypes.SERVICEABILITY_DOC_TYPE,
+        bitOperationType: BitOperationType.BIT,
+        reportId: `rep-serv-${hwMapIndex}`,
+        isDeleted: false
+      });
+    });
+  }
+
+  // Fallback: build serviceability from sensor tree if no active model instances found
+  if (serviceabilityPayload.length === 0) {
+    try {
+      const tree = treeService.buildTree();
+      tree.forEach((sensor, index) => {
+        serviceabilityPayload.push({
+          node_id: sensor.id,
+          sensorId: sensor.id,
+          systemId: sensor.id,
+          rootSystemId: 1,
+          systemName: "FallbackSystem",
+          nodeFullPath: `/${sensor.name}`,
+          nodeIndexPath: sensor.nodeIndexPath || `/${sensor.id}`,
+          uniqueId: `uuid-serviceability-fallback-${sensor.id}-${Date.now()}-${index}`,
+          pss_e: E_SERVICEABILITY.E_SERVICEABILITY_OK,
+          fss_e: E_SERVICEABILITY.E_SERVICEABILITY_OK,
+          last_state_change_time: Date.now() - Math.floor(Math.random() * 86400000),
+          docType: BitReportDocTypes.SERVICEABILITY_DOC_TYPE,
+          bitOperationType: BitOperationType.BIT,
+          reportId: `rep-serv-fallback-${sensor.id}`,
+          isDeleted: false
+        });
+      });
+    } catch (err) {
+      console.error('[SystemLogService] Error generating fallback serviceability:', (err as Error).message);
+    }
+  }
+
+  return serviceabilityPayload;
+}
+
 /**
  * Traverses the sensor tree and model instances to collect the target ID
  * and all descendant node IDs (children, grandchildren, etc.).
@@ -282,10 +350,14 @@ function getAllDescendantIds(targetId: number): Set<number> {
 }
 
 /**
- * Returns the events and faults connected to a specific SelectedSystemId,
- * including all events and faults of its children and descendant nodes.
+ * Returns the events, faults, and serviceability connected to a specific SelectedSystemId,
+ * including all events, faults, and serviceability of its children and descendant nodes.
  */
-export function getEventsAndFaultsForSystem(selectedSystemIdInput: any): { events: EventMsg[]; faults: SingleFault[] } {
+export function getEventsAndFaultsForSystem(selectedSystemIdInput: any): {
+  events: EventMsg[];
+  faults: SingleFault[];
+  serviceability: SensorStatus[];
+} {
   let selectedId: number | null = null;
 
   if (typeof selectedSystemIdInput === 'number') {
@@ -299,16 +371,18 @@ export function getEventsAndFaultsForSystem(selectedSystemIdInput: any): { event
 
   const allEvents = getAllModelEvents();
   const allFaults = getAllModelFaults();
+  const allServiceability = getAllModelServiceability();
 
   if (selectedId === null || selectedId === 0) {
-    return { events: allEvents, faults: allFaults };
+    return { events: allEvents, faults: allFaults, serviceability: allServiceability };
   }
 
   const targetIds = getAllDescendantIds(selectedId);
 
-  const matchesSelectedId = (item: { sensorId?: number; systemId?: number; nodeIndexPath?: string }): boolean => {
+  const matchesSelectedId = (item: { sensorId?: number; systemId?: number; node_id?: number; nodeIndexPath?: string }): boolean => {
     if (item.sensorId !== undefined && targetIds.has(item.sensorId)) return true;
     if (item.systemId !== undefined && targetIds.has(item.systemId)) return true;
+    if (item.node_id !== undefined && targetIds.has(item.node_id)) return true;
 
     if (item.nodeIndexPath) {
       const parts = item.nodeIndexPath.split('/').map(p => parseInt(p, 10)).filter(n => !isNaN(n));
@@ -320,8 +394,12 @@ export function getEventsAndFaultsForSystem(selectedSystemIdInput: any): { event
 
   const filteredEvents = allEvents.filter(matchesSelectedId);
   const filteredFaults = allFaults.filter(matchesSelectedId);
+  const filteredServiceability = allServiceability.filter(matchesSelectedId);
 
-  console.log(`[SystemLogService] Filtered logs for node ${selectedId} (including ${targetIds.size - 1} children/descendant nodes): ${filteredEvents.length} events, ${filteredFaults.length} faults`);
+  console.log(`[SystemLogService] Filtered logs for node ${selectedId} (including ${targetIds.size - 1} children/descendant nodes): ${filteredEvents.length} events, ${filteredFaults.length} faults, ${filteredServiceability.length} serviceability records`);
 
-  return { events: filteredEvents, faults: filteredFaults };
+  return { events: filteredEvents, faults: filteredFaults, serviceability: filteredServiceability };
 }
+
+export const getSystemLogsForNode = getEventsAndFaultsForSystem;
+

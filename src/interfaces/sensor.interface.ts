@@ -27,6 +27,12 @@ export interface Sensor {
 
 export interface SensorStatus {
     node_id: number;
+    sensorId?: number;
+    systemId?: number;
+    rootSystemId?: number;
+    systemName?: string;
+    nodeFullPath?: string;
+    nodeIndexPath?: string;
     uniqueId: string;
     pss_e: E_SERVICEABILITY | E_SERVICEABILITY_Timeout;
     fss_e: E_SERVICEABILITY | E_SERVICEABILITY_Timeout;

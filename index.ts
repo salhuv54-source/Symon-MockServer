@@ -269,10 +269,13 @@ class MockSymonServer {
         });
         const handleSystemLogRequest = (client: any, data: any) => {
             console.log(`[MockSymonServer] Received systemLog request:`, JSON.stringify(data));
-            const selectedSystemId = data?.SelectedSystemId ?? data?.selectedSystemId ?? data?.systemId ?? data?.nodeId ?? data?.id;
-            const { events, faults } = getEventsAndFaultsForSystem(selectedSystemId);
+            let selectedSystemId = data;
+            if (typeof data === 'object' && data !== null) {
+                selectedSystemId = data?.SelectedSystemId ?? data?.selectedSystemId ?? data?.systemId ?? data?.nodeId ?? data?.id;
+            }
+            const { events, faults, serviceability } = getEventsAndFaultsForSystem(selectedSystemId);
 
-            console.log(`[MockSymonServer] Emitting log data for SelectedSystemId "${selectedSystemId}": ${events.length} events, ${faults.length} faults`);
+            console.log(`[MockSymonServer] Emitting log data for SelectedSystemId "${selectedSystemId}": ${events.length} events, ${faults.length} faults, ${serviceability.length} serviceability records`);
 
             // Emit connected events to the requesting client on eventsChange
             socketService.sendTo(client, SocketEventName.eventsChange, {
@@ -286,11 +289,15 @@ class MockSymonServer {
                 isOnline: false
             });
 
+            // Emit connected serviceability to the requesting client on serviceability
+            socketService.sendTo(client, SocketEventName.serviceability, serviceability);
+
             // Also emit response on systemLogTimeFilterChange
             socketService.sendTo(client, SocketEventName.systemLogTimeFilterChange, {
                 SelectedSystemId: selectedSystemId,
                 events,
                 faults,
+                serviceability,
                 isOnline: false
             });
 
@@ -299,6 +306,7 @@ class MockSymonServer {
                 SelectedSystemId: selectedSystemId,
                 events,
                 faults,
+                serviceability,
                 isOnline: false
             });
         };

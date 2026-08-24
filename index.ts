@@ -81,7 +81,7 @@ class MockSymonServer {
         // Parse JSON bodies
         this.app.use(express.json());
 
-        this.app.use("/images", express.static(path.join(__dirname, "assetes")));
+        this.app.use("/images", express.static(path.join(__dirname, "assets")));
 
         // Initialize Socket.IO
         this.initSocket();

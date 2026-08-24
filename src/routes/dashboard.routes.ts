@@ -7,9 +7,20 @@ export default function DashboardRoutes(router: Router): void {
   router.get(
     `${MainRoutes.DASHBOARD}${SubRoutes.SYMON_DATA_MAPPER}/:nodeId`,
     (req: Request, res: Response) => {
-      const { nodeId } = req.params;
-      console.log(`[RouteService] GET ${MainRoutes.DASHBOARD}${SubRoutes.SYMON_DATA_MAPPER}/${nodeId} received`);
-      res.json({ nodeId, data: {} });
+      try {
+        const { nodeId } = req.params;
+        console.log(`[RouteService] GET ${MainRoutes.DASHBOARD}${SubRoutes.SYMON_DATA_MAPPER}/${nodeId} received`);
+
+        const host = req.get('host') || 'localhost:9001';
+        const baseUrl = `${req.protocol}://${host}`;
+
+        res.status(200).json(
+          { "Good-Dash": `${baseUrl}/images/success.png`, "Good-Dash-2": `${baseUrl}/images/success.png` }
+        );
+      }
+      catch (e) {
+        res.status(400).json({ "Error": "Error in Dashboard supply." });
+      }
     }
   );
 }

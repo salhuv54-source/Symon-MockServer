@@ -12,6 +12,7 @@ import { DataStatusBuild, DataStatusType, ServerDataStatusToClient, ServerDataSt
 import { getEventsAndFaultsForSystem } from './src/system-log.service';
 import { GenerateMapsSelectionCollection } from './src/maps-selection-generator';
 import cors from 'cors';
+import path from 'path';
 
 class MockSymonServer {
     private app: express.Application;
@@ -79,6 +80,8 @@ class MockSymonServer {
 
         // Parse JSON bodies
         this.app.use(express.json());
+
+        this.app.use("/images", express.static(path.join(__dirname, "assetes")));
 
         // Initialize Socket.IO
         this.initSocket();

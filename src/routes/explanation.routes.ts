@@ -1,19 +1,17 @@
 import { Router, Request, Response } from 'express';
 import { MainRoutes, SubRoutes } from '../interfaces/routes.interface';
 import {
-  FaultExplanationCollection,
+  FaultExplanationToClient,
   FaultExplanationEventsCollection,
   E_EVENT_SIGN
 } from '../interfaces/fault-explanation.interface';
 import {
-  EventExplanationCollection,
+  EventExplanationToClient,
   EventExplanationFaultsCollection
 } from '../interfaces/event-explanation.interface';
-import {
-  ServiceabilityExplanationCollection
-} from '../interfaces/serviceability-explanation.interface';
+import { ServiceabilityExplanationClient } from '../interfaces/serviceability-explanation.interface';
 
-function generateRandomFaultExplanation(uniqueId: string): FaultExplanationCollection {
+function generateRandomFaultExplanation(uniqueId: string): FaultExplanationToClient {
   const parsedId = parseInt(uniqueId, 10);
   const numericId = isNaN(parsedId) ? Math.floor(Math.random() * 1000) + 1 : parsedId;
 
@@ -49,19 +47,17 @@ function generateRandomFaultExplanation(uniqueId: string): FaultExplanationColle
   const precentOfEventsToBlame = Math.round((numOfBlamingEvents / numOfEvents) * 100);
 
   return {
-    [uniqueId]: {
-      nodeId: numericId,
-      faultId: numericId,
-      faultName: `Fault_Explanation_${uniqueId}`,
-      numOfEvents,
-      numOfBlamingEvents,
-      precentOfEventsToBlame,
-      events: sampleEvents
-    }
+    nodeId: numericId,
+    faultId: numericId,
+    faultName: `Fault_Explanation_${uniqueId}`,
+    numOfEvents,
+    numOfBlamingEvents,
+    precentOfEventsToBlame,
+    events: sampleEvents
   };
 }
 
-function generateRandomEventExplanation(uniqueId: string): EventExplanationCollection {
+function generateRandomEventExplanation(uniqueId: string): EventExplanationToClient {
   const parsedId = parseInt(uniqueId, 10);
   const numericId = isNaN(parsedId) ? Math.floor(Math.random() * 1000) + 1 : parsedId;
 
@@ -85,34 +81,34 @@ function generateRandomEventExplanation(uniqueId: string): EventExplanationColle
   const numOfFaults = Object.keys(sampleFaults).length;
 
   return {
-    [uniqueId]: {
-      nodeId: numericId,
-      eventId: numericId,
-      eventName: `Event_Explanation_${uniqueId}`,
-      numOfFaults,
-      faults: sampleFaults
-    }
+    nodeId: numericId,
+    eventId: numericId,
+    eventName: `Event_Explanation_${uniqueId}`,
+    numOfFaults,
+    faults: sampleFaults
   };
 }
 
-function generateRandomServiceabilityExplanation(nodeIdStr: string): ServiceabilityExplanationCollection {
+function generateRandomServiceabilityExplanation(nodeIdStr: string): ServiceabilityExplanationClient[] {
   const parsedId = parseInt(nodeIdStr, 10);
   const numericId = isNaN(parsedId) ? Math.floor(Math.random() * 1000) + 1 : parsedId;
 
-  return {
-    [nodeIdStr]: {
+  return [
+    {
       nodeId: numericId,
-      data: [
-        {
-          nodeId: numericId,
-          nodeName: `Node_${nodeIdStr}`,
-          pssDescription: "Primary SubSystem operating nominally.",
-          fssDescription: "Functional SubSystem operational with minor warnings.",
-          faultId: numericId
-        }
-      ]
+      nodeName: `Node_${nodeIdStr}_Primary`,
+      pssDescription: "Primary SubSystem operating nominally.",
+      fssDescription: "Functional SubSystem operational with minor warnings.",
+      faultId: numericId
+    },
+    {
+      nodeId: numericId + 1,
+      nodeName: `Node_${nodeIdStr}_Secondary`,
+      pssDescription: "Secondary SubSystem degraded mode active.",
+      fssDescription: "Functional SubSystem reporting voltage instability.",
+      faultId: numericId + 100
     }
-  };
+  ];
 }
 
 export default function explanationRoutes(router: Router): void {

@@ -7,7 +7,7 @@ Via podman:
 
 Via Docker:
 1. docker load -i symon-mock-server.tar
-docker-compose up -d
+2. docker-compose up -d
 
 Interfaces:
 1. In the routes.interface.ts you will find all the REST API of the server.

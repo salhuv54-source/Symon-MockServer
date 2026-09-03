@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import appStore from './app-store';
+import { getAssetPath } from './path-utils';
 import { ModelInstance } from './types';
 import { SocketEventName } from './interfaces/socket-events.interface';
 import { EventMsg, E_EVENT_CLASS, E_FIE_PROCESS, EventsChangePayload } from './interfaces/event.interface';
@@ -186,7 +187,7 @@ export class EventInjector {
 
       // Fallback: Read eventmsg.json if no model matches were found or activeModel is missing
       if (eventPayload.length === 0) {
-        const eventMsgPath = path.resolve(__dirname, '..', 'assets', 'mock-data-jsons', 'fie_messages', 'eventmsg.json');
+        const eventMsgPath = getAssetPath('mock-data-jsons', 'fie_messages', 'eventmsg.json');
         if (fs.existsSync(eventMsgPath)) {
           const rawContent = fs.readFileSync(eventMsgPath, 'utf-8');
           const parsed = JSON.parse(rawContent);

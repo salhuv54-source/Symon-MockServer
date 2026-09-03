@@ -13,6 +13,7 @@ import { getEventsAndFaultsForSystem } from './src/system-log.service';
 import { GenerateMapsSelectionCollection } from './src/maps-selection-generator';
 import cors from 'cors';
 import path from 'path';
+import { getAssetsDir } from './src/path-utils';
 
 class MockSymonServer {
     private app: express.Application;
@@ -81,7 +82,7 @@ class MockSymonServer {
         // Parse JSON bodies
         this.app.use(express.json());
 
-        this.app.use("/images", express.static(path.join(__dirname, "assets")));
+        this.app.use("/images", express.static(getAssetsDir()));
 
         // Initialize Socket.IO
         this.initSocket();

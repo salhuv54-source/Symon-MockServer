@@ -3,8 +3,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import { MainRoutes, SubRoutes } from '../interfaces/routes.interface';
 import { GeoJsonConverterService } from '../geojson-converter.service';
-
-const MAPS_DIR = path.resolve(__dirname, '..', '..', 'assets', 'maps-and-polygons');
+import { getAssetPath } from '../path-utils';
 
 /**
  * Safely loads a map/polygon JSON file from the maps-and-polygons directory.
@@ -12,10 +11,7 @@ const MAPS_DIR = path.resolve(__dirname, '..', '..', 'assets', 'maps-and-polygon
  */
 function loadPolygonJson(filename: string): any {
   try {
-    let mapsDir = MAPS_DIR;
-    if (!fs.existsSync(mapsDir)) {
-      mapsDir = path.resolve(process.cwd(), 'assets', 'maps-and-polygons');
-    }
+    const mapsDir = getAssetPath('maps-and-polygons');
     const safeFilename = path.basename(filename);
     const possibleNames = [
       safeFilename,

@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import appStore from './app-store';
+import { getAssetPath } from './path-utils';
 
 /**
  * Loads the systeminfo.json template, modifies it with the current timestamp and server name,
@@ -8,7 +9,7 @@ import appStore from './app-store';
  */
 export function GenerateKeepAlivePayload(): any {
   try {
-    const systemInfoPath = path.resolve(__dirname, '..', 'assets', 'mock-data-jsons', 'agent_messages', 'systeminfo.json');
+    const systemInfoPath = getAssetPath('mock-data-jsons', 'agent_messages', 'systeminfo.json');
     if (fs.existsSync(systemInfoPath)) {
       const rawContent = fs.readFileSync(systemInfoPath, 'utf-8');
       const payload = JSON.parse(rawContent);

@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import appStore from './app-store';
+import { getAssetPath } from './path-utils';
 import { ModelInstance, BitReportDocTypes, BitOperationType } from './types';
 import { SocketEventName } from './interfaces/socket-events.interface';
 import { E_SERVICEABILITY } from './interfaces/sensor.interface';
@@ -212,7 +213,7 @@ export class FaultsInjector {
 
       // Fallback: Read occurredFaults.json if no model matches were found or activeModel is missing
       if (faultPayload.length === 0) {
-        const fallbackPath = path.resolve(__dirname, '..', 'assets', 'mock-data-jsons', 'fie_messages', 'occurredFaults.json');
+        const fallbackPath = getAssetPath('mock-data-jsons', 'fie_messages', 'occurredFaults.json');
         if (fs.existsSync(fallbackPath)) {
           const rawContent = fs.readFileSync(fallbackPath, 'utf-8');
           const parsed = JSON.parse(rawContent);

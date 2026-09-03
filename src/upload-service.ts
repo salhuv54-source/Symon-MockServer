@@ -3,11 +3,15 @@ import * as fs from 'fs';
 import { loadModelFromFile } from './model-loader';
 import appStore from './app-store';
 
+import { getAssetPath } from './path-utils';
+
 /**
  * Path to the directory where model .fsx files are stored.
- * Resolves to the workspace root: assets/model/
+ * Resolves reliably to assets/model/ in both dev and Docker container.
  */
-const MODELS_DIR = path.resolve(__dirname, '..', 'assets', 'model');
+function getModelsDir(): string {
+  return getAssetPath('model');
+}
 
 /**
  * Upload service that loads model .fsx files from the assets directory
@@ -25,7 +29,7 @@ class UploadService {
   async uploadModel(fileName: string): Promise<string> {
     // Normalize file name: ensure it has .fsx extension
     const normalizedName = fileName.endsWith('.fsx') ? fileName : `${fileName}.fsx`;
-    const filePath = path.join(MODELS_DIR, normalizedName);
+    const filePath = path.join(getModelsDir(), normalizedName);
 
     if (!fs.existsSync(filePath)) {
       throw new Error(`Model file not found: ${filePath}`);
@@ -50,12 +54,13 @@ class UploadService {
    * List all available .fsx model files in the models directory.
    */
   listAvailableModels(): string[] {
-    if (!fs.existsSync(MODELS_DIR)) {
+    const modelsDir = getModelsDir();
+    if (!fs.existsSync(modelsDir)) {
       return [];
     }
 
     return fs
-      .readdirSync(MODELS_DIR)
+      .readdirSync(modelsDir)
       .filter((file) => file.endsWith('.fsx'))
       .map((file) => file.replace('.fsx', ''));
   }

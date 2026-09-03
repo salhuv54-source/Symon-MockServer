@@ -2,6 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import appStore from './app-store';
 import treeService from './tree.service';
+import { getAssetPath } from './path-utils';
 import { ModelInstance, BitReportDocTypes, BitOperationType } from './types';
 import { EventMsg, E_EVENT_CLASS, E_FIE_PROCESS } from './interfaces/event.interface';
 import { SingleFault, E_SIGN } from './interfaces/fault.interface';
@@ -93,7 +94,7 @@ export function getAllModelEvents(): EventMsg[] {
 
   // Fallback: Read eventmsg.json if no model matches were found
   if (eventPayload.length === 0) {
-    const eventMsgPath = path.resolve(__dirname, '..', 'assets', 'mock-data-jsons', 'fie_messages', 'eventmsg.json');
+    const eventMsgPath = getAssetPath('mock-data-jsons', 'fie_messages', 'eventmsg.json');
     if (fs.existsSync(eventMsgPath)) {
       const rawContent = fs.readFileSync(eventMsgPath, 'utf-8');
       const parsed = JSON.parse(rawContent);
@@ -188,7 +189,7 @@ export function getAllModelFaults(): SingleFault[] {
 
   // Fallback: Read occurredFaults.json if no model matches were found
   if (faultPayload.length === 0) {
-    const fallbackPath = path.resolve(__dirname, '..', 'assets', 'mock-data-jsons', 'fie_messages', 'occurredFaults.json');
+    const fallbackPath = getAssetPath('mock-data-jsons', 'fie_messages', 'occurredFaults.json');
     if (fs.existsSync(fallbackPath)) {
       const rawContent = fs.readFileSync(fallbackPath, 'utf-8');
       const parsed = JSON.parse(rawContent);

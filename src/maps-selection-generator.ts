@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { MapsSelectionCollection, MapSelectionTypes } from './interfaces/maps-selection-names.interface';
+import { getAssetPath } from './path-utils';
 
 /**
  * Loads JSON diagram files located inside the maps-and-polygons directory,
@@ -8,10 +9,7 @@ import { MapsSelectionCollection, MapSelectionTypes } from './interfaces/maps-se
  */
 export function GenerateMapsSelectionCollection(): MapsSelectionCollection {
   // Determine MAPS_DIR path
-  let mapsDir = path.resolve(__dirname, '..', 'assets', 'maps-and-polygons');
-  if (!fs.existsSync(mapsDir)) {
-    mapsDir = path.resolve(process.cwd(), 'assets', 'maps-and-polygons');
-  }
+  const mapsDir = getAssetPath('maps-and-polygons');
 
   // Base collection structure
   const collection: MapsSelectionCollection = {

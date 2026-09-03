@@ -6,6 +6,7 @@ import { ModelData, ModelInstance, ModelNode } from './types';
 import { SocketEventName } from './interfaces/socket-events.interface';
 import { loadModelFromFile } from './model-loader';
 import appStore from './app-store';
+import { getAssetPath } from './path-utils';
 
 export interface UserAttributeRecord {
   hidden?: boolean;
@@ -15,8 +16,31 @@ export interface UserAttributeRecord {
 }
 
 export class TreeService {
-  private defaultModelPath = path.resolve(__dirname, '..', 'assets', 'model', 'System1_Export.fsx');
-  private defaultAttrPath = path.resolve(__dirname, '..', 'assets', 'model', 'System1_UAttr.xml');
+  private getDefaultModelPath(): string | null {
+    const modelsDir = getAssetPath('model');
+    const system1Path = path.join(modelsDir, 'System1_Export.fsx');
+    if (fs.existsSync(system1Path)) return system1Path;
+    if (fs.existsSync(modelsDir)) {
+      const fsxFiles = fs.readdirSync(modelsDir).filter(f => f.endsWith('.fsx'));
+      if (fsxFiles.length > 0) {
+        return path.join(modelsDir, fsxFiles[0]);
+      }
+    }
+    return null;
+  }
+
+  private getDefaultAttrPath(): string | null {
+    const modelsDir = getAssetPath('model');
+    const system1Attr = path.join(modelsDir, 'System1_UAttr.xml');
+    if (fs.existsSync(system1Attr)) return system1Attr;
+    if (fs.existsSync(modelsDir)) {
+      const xmlFiles = fs.readdirSync(modelsDir).filter(f => f.endsWith('_UAttr.xml'));
+      if (xmlFiles.length > 0) {
+        return path.join(modelsDir, xmlFiles[0]);
+      }
+    }
+    return null;
+  }
 
   /**
    * Helper function to safely convert values/collections to arrays
@@ -117,21 +141,25 @@ export class TreeService {
     const activeModel = appStore.getActiveModel();
     const systemName = activeModel?.system?.name;
 
-    const candidates = [
-      path.resolve(__dirname, '..', 'assets', 'model', 'System1_UAttr.xml'),
-    ];
-
-    if (systemName) {
-      candidates.unshift(
-        path.resolve(__dirname, '..', 'assets', 'model', `${systemName}_UAttr.xml`)
-      );
-    }
+    const candidates: string[] = [];
 
     if (modelFileName) {
       const baseName = modelFileName.replace(/\.(fsx|xml)$/, '');
-      candidates.unshift(
-        path.resolve(__dirname, '..', 'assets', 'model', `${baseName}_UAttr.xml`)
-      );
+      candidates.push(getAssetPath('model', `${baseName}_UAttr.xml`));
+    }
+
+    if (systemName) {
+      candidates.push(getAssetPath('model', `${systemName}_UAttr.xml`));
+    }
+
+    candidates.push(getAssetPath('model', 'System1_UAttr.xml'));
+
+    const modelsDir = getAssetPath('model');
+    if (fs.existsSync(modelsDir)) {
+      const uattrs = fs.readdirSync(modelsDir)
+        .filter((file) => file.endsWith('_UAttr.xml'))
+        .map((file) => path.join(modelsDir, file));
+      candidates.push(...uattrs);
     }
 
     for (const cand of candidates) {
@@ -153,11 +181,8 @@ export class TreeService {
     }
 
     if (!modelData) {
-      const fallbackPath = fs.existsSync(this.defaultModelPath)
-        ? this.defaultModelPath
-        : path.resolve(__dirname, '..', 'assets', 'model', 'System1_Export.fsx');
-
-      if (fs.existsSync(fallbackPath)) {
+      const fallbackPath = this.getDefaultModelPath();
+      if (fallbackPath && fs.existsSync(fallbackPath)) {
         modelData = await loadModelFromFile(fallbackPath);
       }
     }
@@ -176,11 +201,8 @@ export class TreeService {
     }
 
     if (!modelData) {
-      const fallbackPath = fs.existsSync(this.defaultModelPath)
-        ? this.defaultModelPath
-        : path.resolve(__dirname, '..', 'assets', 'model', 'System1_Export.fsx');
-
-      if (fs.existsSync(fallbackPath)) {
+      const fallbackPath = this.getDefaultModelPath();
+      if (fallbackPath && fs.existsSync(fallbackPath)) {
         modelData = this.loadModelDataSync(fallbackPath);
       }
     }

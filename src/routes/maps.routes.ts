@@ -2,8 +2,7 @@ import { Router, Request, Response } from 'express';
 import * as path from 'path';
 import * as fs from 'fs';
 import { MainRoutes, SubRoutes } from '../interfaces/routes.interface';
-
-const MAPS_DIR = path.resolve(__dirname, '..', '..', 'assets', 'maps-and-polygons');
+import { getAssetPath } from '../path-utils';
 
 function getRequestParam(key: string): string {
   if (!key) return '';
@@ -16,10 +15,7 @@ function getRequestParam(key: string): string {
  */
 function getMapFilePath(filename: string): string | null {
   try {
-    let mapsDir = MAPS_DIR;
-    if (!fs.existsSync(mapsDir)) {
-      mapsDir = path.resolve(process.cwd(), 'assets', 'maps-and-polygons');
-    }
+    const mapsDir = getAssetPath('maps-and-polygons');
     const safeFilename = path.basename(filename);
     const possibleNames = [
       safeFilename,
